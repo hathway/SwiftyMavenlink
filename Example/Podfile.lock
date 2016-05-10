@@ -1,0 +1,47 @@
+PODS:
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - JSONRequest (0.4.0)
+  - SwiftyJSON (2.3.2)
+  - SwiftyMavenlink (0.1.0):
+    - AFNetworking (~> 2.3)
+    - JSONRequest
+    - SwiftyJSON
+
+DEPENDENCIES:
+  - JSONRequest
+  - SwiftyJSON
+  - SwiftyMavenlink (from `../`)
+
+EXTERNAL SOURCES:
+  SwiftyMavenlink:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  JSONRequest: 12d3364607e70ff76cdd295b0c9c3e98e7c92bdb
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyMavenlink: 3c8bfc653e940d14faecee8a4d407d3d2555aa9d
+
+PODFILE CHECKSUM: b71f78496817742502fc92d7aa274c23d01cdf21
+
+COCOAPODS: 1.0.0.beta.8

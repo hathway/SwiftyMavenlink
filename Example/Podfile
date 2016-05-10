@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'SwiftyMavenlink_Tests' do
+  pod 'SwiftyMavenlink', :path => '../'
+
+  pod 'JSONRequest'
+  pod 'SwiftyJSON'
+
+end

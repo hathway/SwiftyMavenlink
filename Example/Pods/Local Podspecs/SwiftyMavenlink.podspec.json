@@ -1,0 +1,30 @@
+{
+  "name": "SwiftyMavenlink",
+  "version": "0.1.0",
+  "summary": "An SDK library for MavenLink written in Swift.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/hathway/SwiftyMavenlink",
+  "license": "MIT",
+  "authors": {
+    "Mike Maxwell": "mike@wearehathway.com"
+  },
+  "source": {
+    "git": "https://github.com/hathway/SwiftyMavenlink.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SwiftyMavenlink/Classes/**/*",
+  "dependencies": {
+    "AFNetworking": [
+      "~> 2.3"
+    ],
+    "SwiftyJSON": [
+
+    ],
+    "JSONRequest": [
+
+    ]
+  }
+}

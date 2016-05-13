@@ -5,5 +5,6 @@ target 'SwiftyMavenlink_Tests' do
 
   pod 'JSONRequest'
   pod 'SwiftyJSON'
+  pod 'ObjectMapper'
 
 end

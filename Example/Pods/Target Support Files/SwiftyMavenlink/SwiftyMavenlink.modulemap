@@ -1,0 +1,6 @@
+framework module SwiftyMavenlink {
+  umbrella header "SwiftyMavenlink-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '43E9640F3EF4911354F599F59C92B184'
+               BlueprintIdentifier = '9CAAC335737CF0E93B584E56B418B48E'
                BlueprintName = 'SwiftyMavenlink'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SwiftyMavenlink.framework'>

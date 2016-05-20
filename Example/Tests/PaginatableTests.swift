@@ -7,11 +7,20 @@
 //
 
 import XCTest
+import SwiftyMavenlink
 
 class PaginatableTests: XCTestCase {
-        
+
+    let resource = "test"
+    let perPage = 50
+
+    var testObject: MavenlinkResponse<TestClass>?
+
     override func setUp() {
         super.setUp()
+
+        let params: MavenlinkQueryParams = [ "TestQuery" : "TestThing"]
+        testObject = MavenlinkResponse<TestClass>(resource: resource, itemsPerPage: perPage, params: params)
     }
     
     override func tearDown() {
@@ -19,8 +28,32 @@ class PaginatableTests: XCTestCase {
         super.tearDown()
     }
 
-    func testInitializePaginatableResult() {
+    func testDictionaryAddition() {
+        var destDict = [
+            "key1": "value1",
+            "key2": "value2"
+        ]
 
+        let otherDict = [
+            "key3": "value3",
+            "key4": "value4"
+        ]
+
+        var testResultDict = destDict
+        otherDict.forEach { key, value in testResultDict[key] = value }
+
+        destDict += otherDict
+        XCTAssertEqual(destDict, testResultDict)
+    }
+
+    func testAppendingQueryParams() {
+        
+    }
+
+    func testInitializePaginatableResult() {
+        XCTAssertNotNil(testObject)
+        XCTAssertEqual(testObject?.resource, resource)
+        XCTAssertNotNil(testObject?.queryParams)
     }
     
 }

@@ -13,6 +13,14 @@ import JSONRequest
 public typealias MavenlinkQueryParams = [String: AnyObject]
 public typealias MavenlinkPayload = AnyObject
 
+protocol RestSession {
+    associatedtype SessionType
+    static var instance: SessionType { get }
+    func configure(oAuthToken: String)
+    func get(urlPath: String, params: MavenlinkQueryParams?) -> JSONResult
+    func post(urlPath: String, params: MavenlinkQueryParams?, payload: MavenlinkPayload?) -> JSONResult
+}
+
 public class MavenlinkSession {
     public static let instance: MavenlinkSession = MavenlinkSession()
     private let apiHost = "https://api.mavenlink.com/api/v1/"

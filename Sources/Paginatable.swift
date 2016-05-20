@@ -79,7 +79,7 @@ public class MavenlinkResponse<T:Mappable>: Paginatable, CustomStringConvertible
 
     public var description: String {
         get {
-            return "\(resource): resultType=\(ResultType.self); totalCount=\(totalItemCount); currentPage=\(_currentPage);"
+            return "\(resource): resultType=\(ResultType.self); totalCount=\(_totalItemCount); currentPage=\(_currentPage);"
         }
     }
 
@@ -102,13 +102,13 @@ public class MavenlinkResponse<T:Mappable>: Paginatable, CustomStringConvertible
     // MARK: Private methods
 
     private func parseResult(result: JSONResult, addToCache: Bool = false) -> Results<T>? {
-        var totalItemCount = 0
+        var totalCount = 0
         var parsedItems: [T] = []
 
         guard let data = result.data as? NSDictionary else { return nil }
 
         if let count = data["count"] as? Int {
-            totalItemCount = count
+            totalCount = count
         }
 
         if let items = data[resource] as? NSDictionary {
@@ -118,7 +118,7 @@ public class MavenlinkResponse<T:Mappable>: Paginatable, CustomStringConvertible
             }
         }
 
-        return Results(items: parsedItems, totalCount: totalItemCount)
+        return Results(items: parsedItems, totalCount: totalCount)
     }
 
     private func queryParamsAppendedWith(params: MavenlinkQueryParams) -> MavenlinkQueryParams {

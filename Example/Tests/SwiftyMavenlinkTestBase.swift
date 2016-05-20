@@ -25,6 +25,6 @@ class SwiftyMavenlinkTestBase: XCTestCase {
     
     func testConfigNotEmpty() {
         let session = MavenlinkSession.instance
-        XCTAssertNotEqual(session.oAuthToken, "")
+        XCTAssertNotNil(session, "")
     }
 }

@@ -22,7 +22,7 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     func testWorkspacesGet() {
         let result = WorkspaceService.get()
-        let firstPage = try? result.getPage(1)
+        let firstPage = try? result.getItems(1)
         XCTAssertNotNil(result, "Result set should not be empty")
         XCTAssertNotNil(firstPage)
         let secondPage = result.getNextPage()

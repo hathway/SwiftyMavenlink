@@ -7,7 +7,27 @@
 //
 
 import UIKit
+/*
+class MavenlinkSessionMock: MavenlinkSession {
+    private static let _instance = MavenlinkSessionMock()
+    override static func instance() -> MavenlinkSessionMock {
+        return _instance
+    }
 
-class MavenlinkSessionMock: NSObject {
+    func get(urlPath: String, params: MavenlinkQueryParams?) -> JSONResult {
+        return Success(
+    }
 
+    func post(urlPath: String, params: MavenlinkQueryParams?, payload: MavenlinkPayload?) -> JSONResult {
+
+    }
+
+    func put(urlPath: String, params: MavenlinkQueryParams?, payload: MavenlinkPayload?) -> JSONResult {
+
+    }
+
+    func buildUrl(urlPath: String) -> String? {
+
+    }
 }
+*/

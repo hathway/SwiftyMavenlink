@@ -9,6 +9,11 @@
 import Foundation
 import ObjectMapper
 
+protocol JsonParsable {
+    associatedtype ObjectType
+    func parse(object: AnyObject) -> ObjectType
+}
+
 public class MavenlinkWorkspace: MavenlinkObject {
     public var access_level: String?
     public var archived: Bool?
@@ -117,16 +122,16 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService {
-    public class func get(searchTerm: String? = nil) -> MavenlinkResponse<MavenlinkWorkspace> {
+    public class func get(searchTerm: String? = nil) -> PagedResultSet<MavenlinkWorkspace> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
             params[MavenlinkWorkspace.Params.Search.rawValue] = search
         }
-        return MavenlinkResponse<MavenlinkWorkspace>(resource: "workspaces", params: params)
+        return PagedResultSet<MavenlinkWorkspace>(resource: "workspaces", params: params)
     }
 
     public class func get(workspaceId: Int) -> MavenlinkWorkspace? {
-        let response = MavenlinkResponse<MavenlinkWorkspace>(resource: MavenlinkWorkspace.resourceName())
+        let response = PagedResultSet<MavenlinkWorkspace>(resource: MavenlinkWorkspace.resourceName())
         return response.getNextPage()?.first
     }
 }

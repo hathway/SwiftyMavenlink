@@ -11,6 +11,12 @@ import SwiftyJSON
 import JSONRequest
 
 public typealias MavenlinkQueryParams = [String: AnyObject]
+func +=<K, V> (inout left: [K : V], right: [K : V]) {
+    for (k, v) in right {
+        left[k] = v
+    }
+}
+
 public typealias MavenlinkPayload = AnyObject
 
 /*
@@ -25,8 +31,8 @@ protocol RestSession {
 
 public class MavenlinkSession {
     public static let instance: MavenlinkSession = MavenlinkSession()
-    private let apiHost = "https://api.mavenlink.com/api/v1/"
-    private var request = JSONRequest()
+    private let apiHost: String! = "https://api.mavenlink.com/api/v1/"
+    private var request: JSONRequest! = JSONRequest()
 
     public func configure(oAuthToken: String) {
         precondition(oAuthToken != "", "oAuthToken parameter cannot be blank")
@@ -57,7 +63,7 @@ public class MavenlinkSession {
     }
 
     func buildUrl(urlPath: String) -> String? {
-        return NSURL(string: apiHost ?? "")?
+        return NSURL(string: apiHost)?
             .URLByAppendingPathComponent(urlPath ?? "")
             .absoluteString
     }

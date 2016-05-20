@@ -14,13 +14,13 @@ class PaginatableTests: XCTestCase {
     let resource = "test"
     let perPage = 50
 
-    var testObject: MavenlinkResponse<TestClass>?
+    var testObject: PagedResultSet<TestClass>?
 
     override func setUp() {
         super.setUp()
 
         let params: MavenlinkQueryParams = [ "TestQuery" : "TestThing"]
-        testObject = MavenlinkResponse<TestClass>(resource: resource, itemsPerPage: perPage, params: params)
+        testObject = PagedResultSet<TestClass>(resource: resource, itemsPerPage: perPage, params: params)
     }
     
     override func tearDown() {

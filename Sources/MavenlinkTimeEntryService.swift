@@ -64,7 +64,7 @@ public class TimeEntry: MavenlinkObject {
 
 // MARK: - REST operations
 public class TimeEntryService {
-    public class func get(workspace: String?, startDate: NSDate?, endDate: NSDate?) -> MavenlinkResponse<TimeEntry> {
+    public class func get(workspace: String?, startDate: NSDate?, endDate: NSDate?) -> PagedResultSet<TimeEntry> {
         var params: MavenlinkQueryParams = [:]
         if let workspaceId = workspace {
             params[TimeEntry.Params.WorkspaceId.rawValue] = workspaceId
@@ -77,6 +77,6 @@ public class TimeEntryService {
             params[TimeEntry.Params.BetweenDate.rawValue] = "\(startString):\(endString)"
         }
 
-        return MavenlinkResponse<TimeEntry>(resource: TimeEntry.resourceName(), itemsPerPage: 100, params: params)
+        return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName(), itemsPerPage: 100, params: params)
     }
 }

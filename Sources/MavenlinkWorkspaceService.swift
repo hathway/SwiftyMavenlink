@@ -127,7 +127,7 @@ public class WorkspaceService {
 
     public class func get(workspaceId: Int) -> MavenlinkWorkspace? {
         let response = MavenlinkResponse<MavenlinkWorkspace>(resource: MavenlinkWorkspace.resourceName())
-        return response.getPage(0)?.first
+        return response.getNextPage()?.first
     }
 }
 

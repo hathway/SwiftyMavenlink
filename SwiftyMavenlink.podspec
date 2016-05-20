@@ -19,5 +19,6 @@ Pod::Spec.new do |s|
   s.dependency "SwiftyJSON"
   s.dependency "JSONRequest"
   s.dependency "ObjectMapper"
+  s.dependency "AsyncSwift"
 
 end

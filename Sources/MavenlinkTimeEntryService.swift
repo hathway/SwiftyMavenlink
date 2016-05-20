@@ -69,11 +69,14 @@ public class TimeEntryService {
         if let workspaceId = workspace {
             params[TimeEntry.Params.WorkspaceId.rawValue] = workspaceId
         }
-        if let start = startDate, end = endDate {
-            let formatter = MavenlinkLongDateTransform()
-            params[TimeEntry.Params.BetweenDate.rawValue] = "\(formatter.transformToJSON(start)):\(formatter.transformToJSON(end))"
+        
+        if let start = startDate,
+            startString = ShortDateFormatter.transformToJSON(start),
+            end = endDate,
+            endString = ShortDateFormatter.transformToJSON(end) {
+            params[TimeEntry.Params.BetweenDate.rawValue] = "\(startString):\(endString)"
         }
 
-        return MavenlinkResponse<TimeEntry>(resource: TimeEntry.resourceName(), params: params)
+        return MavenlinkResponse<TimeEntry>(resource: TimeEntry.resourceName(), itemsPerPage: 100, params: params)
     }
 }

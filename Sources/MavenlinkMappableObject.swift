@@ -29,10 +29,13 @@ public class MavenlinkObject: Mappable, CustomStringConvertible {
     }
 
     public var description: String {
-        get { return (self.toJSONString() ?? "JSON error") }
+        get {
+            guard let string = self.toJSONString() else { return "JSON error" }
+            return string
+        }
     }
 
-    public static func objectForMapping(map: Map) -> Mappable? {
-        return self.mappingObject()
-    }
+//    public static func objectForMapping(map: Map) -> Mappable? {
+//        return self.mappingObject()
+//    }
 }

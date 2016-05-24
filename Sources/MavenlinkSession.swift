@@ -31,7 +31,7 @@ protocol RestSession {
 
 public class MavenlinkSession {
     public static let instance: MavenlinkSession = MavenlinkSession()
-    private let apiHost: String! = "https://api.mavenlink.com/api/v1/"
+    static let apiHost: String! = "https://api.mavenlink.com/api/v1/"
     private var request: JSONRequest! = JSONRequest()
 
     public func configure(oAuthToken: String) {
@@ -40,7 +40,7 @@ public class MavenlinkSession {
     }
 
     func get(urlPath: String, params: MavenlinkQueryParams? = nil) -> JSONResult {
-        guard let url = buildUrl(urlPath) else {
+        guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
         return request.get(url, queryParams: params)
@@ -48,7 +48,7 @@ public class MavenlinkSession {
 
     func post(urlPath: String, params: MavenlinkQueryParams? = nil,
               payload: MavenlinkPayload? = nil) -> JSONResult {
-        guard let url = buildUrl(urlPath) else {
+        guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
         return request.post(url, queryParams: params, payload: payload)
@@ -56,13 +56,13 @@ public class MavenlinkSession {
 
     func put(urlPath: String, params: MavenlinkQueryParams? = nil,
              payload: MavenlinkPayload? = nil) -> JSONResult {
-        guard let url = buildUrl(urlPath) else {
+        guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
         return request.put(url, queryParams: params, payload: payload)
     }
 
-    func buildUrl(urlPath: String) -> String? {
+    class func buildUrl(urlPath: String) -> String? {
         return NSURL(string: apiHost)?
             .URLByAppendingPathComponent(urlPath ?? "")
             .absoluteString

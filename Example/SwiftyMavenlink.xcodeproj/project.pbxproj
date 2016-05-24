@@ -10,12 +10,15 @@
 		01F855DCBCA34294DF0086B2 /* Pods_SwiftyMavenlink_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C15A602212B349DE6D5D3A /* Pods_SwiftyMavenlink_Tests.framework */; };
 		607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift */; };
 		DB34A0611CE288000099941A /* MavenlinkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34A0601CE288000099941A /* MavenlinkSession.swift */; };
+		DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34DAE01CF4D895008663A6 /* TestUtils.swift */; };
 		DB6741221CE28FDA00EA71D2 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB6741211CE28FDA00EA71D2 /* Config.plist */; };
 		DB6741241CE29A0700EA71D2 /* MavenlinkTimeEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6741231CE29A0700EA71D2 /* MavenlinkTimeEntryService.swift */; };
 		DB7537671CEF76E100E1FDDB /* MappableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7537661CEF76E100E1FDDB /* MappableObjectTests.swift */; };
 		DB7537691CEF78F700E1FDDB /* WorkspaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */; };
 		DB75376B1CEF790100E1FDDB /* TimeEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */; };
-		DB75376D1CEF96A100E1FDDB /* MavenlinkSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB75376C1CEF96A100E1FDDB /* MavenlinkSessionMock.swift */; };
+		DB9C5F4C1CF41A3A008C8787 /* TimeEntries.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F491CF41A3A008C8787 /* TimeEntries.json */; };
+		DB9C5F4D1CF41A3A008C8787 /* Users.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F4A1CF41A3A008C8787 /* Users.json */; };
+		DB9C5F4E1CF41A3A008C8787 /* Workspaces.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */; };
 		DBACE8EE1CE3DDB800F13572 /* PaginatableResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */; };
 		DBACE8F01CE5077300F13572 /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */; };
 		DBACE8F21CE51BB200F13572 /* MavenlinkWorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8F11CE51BB200F13572 /* MavenlinkWorkspaceService.swift */; };
@@ -33,13 +36,16 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyMavenlinkTestBase.swift; sourceTree = "<group>"; };
 		DB34A0601CE288000099941A /* MavenlinkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkSession.swift; sourceTree = "<group>"; };
+		DB34DAE01CF4D895008663A6 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		DB6741211CE28FDA00EA71D2 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		DB6741231CE29A0700EA71D2 /* MavenlinkTimeEntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MavenlinkTimeEntryService.swift; sourceTree = "<group>"; };
 		DB7537661CEF76E100E1FDDB /* MappableObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappableObjectTests.swift; sourceTree = "<group>"; };
 		DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceTests.swift; sourceTree = "<group>"; };
 		DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTests.swift; sourceTree = "<group>"; };
-		DB75376C1CEF96A100E1FDDB /* MavenlinkSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkSessionMock.swift; sourceTree = "<group>"; };
-		DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableResultSet.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		DB9C5F491CF41A3A008C8787 /* TimeEntries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TimeEntries.json; sourceTree = "<group>"; };
+		DB9C5F4A1CF41A3A008C8787 /* Users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Users.json; sourceTree = "<group>"; };
+		DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Workspaces.json; sourceTree = "<group>"; };
+		DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableResultSet.swift; sourceTree = "<group>"; };
 		DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		DBACE8F11CE51BB200F13572 /* MavenlinkWorkspaceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MavenlinkWorkspaceService.swift; sourceTree = "<group>"; };
 		DBACE8F31CE544E200F13572 /* MavenlinkMappableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkMappableObject.swift; sourceTree = "<group>"; };
@@ -90,12 +96,13 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				DB75376E1CEF96AA00E1FDDB /* Mocks */,
+				DB9C5F481CF41A3A008C8787 /* Fixtures */,
 				DB7537661CEF76E100E1FDDB /* MappableObjectTests.swift */,
 				DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */,
 				607FACEB1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift */,
 				DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */,
 				DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */,
+				DB34DAE01CF4D895008663A6 /* TestUtils.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -143,12 +150,14 @@
 			path = ../Sources;
 			sourceTree = "<group>";
 		};
-		DB75376E1CEF96AA00E1FDDB /* Mocks */ = {
+		DB9C5F481CF41A3A008C8787 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				DB75376C1CEF96A100E1FDDB /* MavenlinkSessionMock.swift */,
+				DB9C5F491CF41A3A008C8787 /* TimeEntries.json */,
+				DB9C5F4A1CF41A3A008C8787 /* Users.json */,
+				DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */,
 			);
-			name = Mocks;
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +222,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB9C5F4E1CF41A3A008C8787 /* Workspaces.json in Resources */,
+				DB9C5F4C1CF41A3A008C8787 /* TimeEntries.json in Resources */,
 				DB6741221CE28FDA00EA71D2 /* Config.plist in Resources */,
+				DB9C5F4D1CF41A3A008C8787 /* Users.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +284,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB75376D1CEF96A100E1FDDB /* MavenlinkSessionMock.swift in Sources */,
 				DBACE8F01CE5077300F13572 /* JSONTransformers.swift in Sources */,
 				DBACE8EE1CE3DDB800F13572 /* PaginatableResultSet.swift in Sources */,
 				DB34A0611CE288000099941A /* MavenlinkSession.swift in Sources */,
@@ -280,6 +291,7 @@
 				DBACE8F41CE544E200F13572 /* MavenlinkMappableObject.swift in Sources */,
 				DBACE8F21CE51BB200F13572 /* MavenlinkWorkspaceService.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */,
+				DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */,
 				DB6741241CE29A0700EA71D2 /* MavenlinkTimeEntryService.swift in Sources */,
 				DB7537671CEF76E100E1FDDB /* MappableObjectTests.swift in Sources */,
 				DB75376B1CEF790100E1FDDB /* TimeEntryTests.swift in Sources */,

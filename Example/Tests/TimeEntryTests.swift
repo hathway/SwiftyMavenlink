@@ -7,12 +7,31 @@
 //
 
 import XCTest
+import Mockingjay
+import URITemplate
+import SwiftyJSON
 
 class TimeEntryTests: SwiftyMavenlinkTestBase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("TimeEntries", ofType: "json")!
+        let data = NSData(contentsOfFile: path)!
+        let dataPages = JSON(data: data).arrayObject!
+
+        stub(uri("/api/v1/time_entries.json")) { (request) -> (Response) in
+            let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
+
+            guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
+                pageNum = Int(page) else {
+                    let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[0], options: NSJSONWritingOptions())
+                    return .Success(response, responseData)
+            }
+
+            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum], options: NSJSONWritingOptions())
+            return .Success(response, responseData)
+        }
     }
     
     override func tearDown() {

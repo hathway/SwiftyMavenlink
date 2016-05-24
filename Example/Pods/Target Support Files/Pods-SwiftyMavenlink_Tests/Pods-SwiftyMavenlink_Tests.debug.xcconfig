@@ -1,8 +1,8 @@
 EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$CONFIGURATION_BUILD_DIR/AsyncSwift" "$CONFIGURATION_BUILD_DIR/JSONRequest" "$CONFIGURATION_BUILD_DIR/ObjectMapper" "$CONFIGURATION_BUILD_DIR/SwiftyJSON" "$CONFIGURATION_BUILD_DIR/SwiftyMavenlink"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$CONFIGURATION_BUILD_DIR/AsyncSwift" "$CONFIGURATION_BUILD_DIR/JSONRequest" "$CONFIGURATION_BUILD_DIR/Mockingjay" "$CONFIGURATION_BUILD_DIR/ObjectMapper" "$CONFIGURATION_BUILD_DIR/SwiftyJSON" "$CONFIGURATION_BUILD_DIR/SwiftyMavenlink" "$CONFIGURATION_BUILD_DIR/URITemplate"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/AsyncSwift/Async.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JSONRequest/JSONRequest.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ObjectMapper/ObjectMapper.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyMavenlink/SwiftyMavenlink.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "Async" -framework "JSONRequest" -framework "ObjectMapper" -framework "SwiftyJSON" -framework "SwiftyMavenlink"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/AsyncSwift/Async.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JSONRequest/JSONRequest.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Mockingjay/Mockingjay.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ObjectMapper/ObjectMapper.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyMavenlink/SwiftyMavenlink.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/URITemplate/URITemplate.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "Async" -framework "JSONRequest" -framework "Mockingjay" -framework "ObjectMapper" -framework "SwiftyJSON" -framework "SwiftyMavenlink" -framework "URITemplate"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_ROOT = ${SRCROOT}/Pods

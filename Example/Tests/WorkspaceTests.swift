@@ -7,14 +7,18 @@
 //
 
 import XCTest
+import Mockingjay
 
 class WorkspaceTests: SwiftyMavenlinkTestBase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("Workspaces", ofType: "json")!
+        let data = NSData(contentsOfFile: path)!
+        stub(uri("/api/v1/workspaces.json"), builder: jsonData(data))
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()

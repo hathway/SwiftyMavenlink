@@ -11,7 +11,7 @@ import SwiftyJSON
 import ObjectMapper
 
 /// Class for TimeEntry resources in MavenLink
-public class TimeEntry: MavenlinkObject {
+public struct TimeEntry: Mappable {
     // i-vars
     public var id: String?
     public var created_at: NSDate?
@@ -31,8 +31,10 @@ public class TimeEntry: MavenlinkObject {
     public var user_id: Int?
     public var approved: Bool?
 
-    override public class func resourceName() -> String {
-        return "time_entries"
+    public init?(_ map: Map) { }
+
+    public static var resourceName: String {
+        get { return "time_entries" }
     }
 
     // Enums
@@ -41,7 +43,7 @@ public class TimeEntry: MavenlinkObject {
         case BetweenDate = "date_performed_between"
     }
 
-    public override func mapping(map: Map) {
+    mutating public func mapping(map: Map) {
         id <- map["id"]
         created_at <- (map["created_at"], LongDateFormatter)
         updated_at <- (map["updated_at"], LongDateFormatter)
@@ -77,6 +79,6 @@ public class TimeEntryService {
             params[TimeEntry.Params.BetweenDate.rawValue] = "\(startString):\(endString)"
         }
 
-        return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName(), itemsPerPage: 100, params: params)
+        return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName, itemsPerPage: 100, params: params)
     }
 }

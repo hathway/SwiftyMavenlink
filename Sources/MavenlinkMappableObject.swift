@@ -8,30 +8,15 @@
 
 import ObjectMapper
 
-public class MavenlinkObject: Mappable, CustomStringConvertible {
-    static var _mappingObject: MavenlinkObject?
-    class func mappingObject() -> MavenlinkObject {
-        if (_mappingObject == nil) {
-            _mappingObject = self.init()
-        }
-        return _mappingObject!
-    }
-
+public class MavenlinkObject<T:Mappable>: CustomStringConvertible {
     required public init() {}
     required public init?(_ map: Map) { }
 
-    public func mapping(map: Map) {
-        preconditionFailure("This method must be overridden")
-    }
-
-    public class func resourceName() -> String {
-        preconditionFailure("This method must be overridden")
-    }
-
     public var description: String {
         get {
-            guard let string = self.toJSONString() else { return "JSON error" }
-            return string
+//            guard let string = self.toJSONString() else { return "JSON error" }
+//            return string
+            return "test"
         }
     }
 

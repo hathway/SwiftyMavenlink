@@ -44,6 +44,7 @@ public enum PaginationError: ErrorType {
     - Abstracts away the need to keep track of concepts like the total result count, page count, and current page
     - Protects against requesting things that don't exist (i.e. getting the next page of results when the end has already been reached)
     - Makes dealing with paged results generic regardless of the specific resource being returned
+    - Caches results that have already been fetched (by this instance only) and uses those results when re-requested by the consumer
  */
 public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     typealias ResultType = T

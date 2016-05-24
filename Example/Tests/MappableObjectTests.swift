@@ -30,15 +30,17 @@ class MapableObjectTests: XCTestCase {
     }
 
     func testStringDescription() {
-        XCTAssertEqual((mappingResult!.description), JsonStringTest)
+        XCTAssertEqual((mappingResult!.toJSONString()), JsonStringTest)
     }
 }
 
-public class TestClass: MavenlinkObject {
+struct TestClass: Mappable {
     var testProperty: String?
     var otherProperty: String?
 
-    public override func mapping(map: Map) {
+    init?(_ map: Map) { }
+
+    mutating func mapping(map: Map) {
         testProperty <- map["TestProperty"]
     }
 }

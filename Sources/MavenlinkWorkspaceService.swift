@@ -9,12 +9,7 @@
 import Foundation
 import ObjectMapper
 
-protocol JsonParsable {
-    associatedtype ObjectType
-    func parse(object: AnyObject) -> ObjectType
-}
-
-public class MavenlinkWorkspace: MavenlinkObject {
+public struct Workspace: Mappable {
     public var access_level: String?
     public var archived: Bool?
     public var budget_used: String?
@@ -54,10 +49,6 @@ public class MavenlinkWorkspace: MavenlinkObject {
     public var updated_at: NSDate?
     public var workspace_invoice_preference_id: Int?
 
-    override public class func resourceName() -> String {
-        return "workspaces"
-    }
-
     // Enums
     public enum Params: String {
         // bool
@@ -68,7 +59,11 @@ public class MavenlinkWorkspace: MavenlinkObject {
         case Search = "search"
     }
 
-    public override func mapping(map: Map) {
+    public init?(_ map: Map) { }
+
+    static var resourceName: String { get { return "workspaces" } }
+
+    mutating public func mapping(map: Map) {
         access_level <- map["access_level"]
         archived <- map["archived"]
         budget_used <- map["budget_used"]
@@ -122,16 +117,16 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService {
-    public class func get(searchTerm: String? = nil) -> PagedResultSet<MavenlinkWorkspace> {
+    public class func get(searchTerm: String? = nil) -> PagedResultSet<Workspace> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
-            params[MavenlinkWorkspace.Params.Search.rawValue] = search
+            params[Workspace.Params.Search.rawValue] = search
         }
-        return PagedResultSet<MavenlinkWorkspace>(resource: "workspaces", params: params)
+        return PagedResultSet<Workspace>(resource: "workspaces", params: params)
     }
 
-    public class func get(workspaceId: Int) -> MavenlinkWorkspace? {
-        let response = PagedResultSet<MavenlinkWorkspace>(resource: MavenlinkWorkspace.resourceName())
+    public class func get(workspaceId: Int) -> Workspace? {
+        let response = PagedResultSet<Workspace>(resource: Workspace.resourceName)
         return response.getNextPage()?.first
     }
 }

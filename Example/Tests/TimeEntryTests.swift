@@ -8,7 +8,7 @@
 
 import XCTest
 
-class TimeEntryTests: XCTestCase {
+class TimeEntryTests: SwiftyMavenlinkTestBase {
     
     override func setUp() {
         super.setUp()

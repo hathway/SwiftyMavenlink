@@ -39,12 +39,26 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         super.tearDown()
     }
     
-    func testTimeEntryGet() {
-        let result = TimeEntryService.get(nil, startDate: nil, endDate: nil)
-        let firstPage = try? result.getItems(1)
-        XCTAssertNotNil(result, "Result set should not be empty")
-        XCTAssertNotNil(firstPage)
-        let secondPage = result.getNextPage()
+    func testTimeEntryDataMapping() {
+        let result = (TimeEntryService.get(nil, startDate: nil, endDate: nil).getNextPage()?.first)!
+        let message = "No properties should be nil, mapping test data should always succeed"
+        XCTAssertNotNil(result.id, message)
+        XCTAssertNotNil(result.created_at, message)
+        XCTAssertNotNil(result.updated_at, message)
+        XCTAssertNotNil(result.date_performed, message)
+        XCTAssertNotNil(result.story_id, message)
+        XCTAssertNotNil(result.time_in_minutes, message)
+        XCTAssertNotNil(result.billable, message)
+        XCTAssertNotNil(result.notes, message)
+        XCTAssertNotNil(result.rate_in_cents, message)
+        XCTAssertNotNil(result.currency, message)
+        XCTAssertNotNil(result.currency_symbol, message)
+        XCTAssertNotNil(result.currency_base_unit, message)
+        XCTAssertNotNil(result.user_can_edit, message)
+        XCTAssertNotNil(result.taxable, message)
+        XCTAssertNotNil(result.workspace_id, message)
+        XCTAssertNotNil(result.user_id, message)
+        XCTAssertNotNil(result.approved, message)
     }
 
 }

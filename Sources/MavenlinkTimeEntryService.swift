@@ -21,7 +21,7 @@ public struct TimeEntry: Mappable {
     public var time_in_minutes: Int?
     public var billable: Bool?
     public var notes: String?
-    public var rate_in_cents: String?
+    public var rate_in_cents: Int?
     public var currency: String?
     public var currency_symbol: String?
     public var currency_base_unit: Int?
@@ -52,7 +52,7 @@ public struct TimeEntry: Mappable {
         time_in_minutes <- (map["time_in_minutes"], IntFormatter)
         billable <- map["billable"]
         notes <- map["notes"]
-        rate_in_cents <- map["rate_in_cents"]
+        rate_in_cents <- (map["rate_in_cents"], IntFormatter)
         currency <- map["currency"]
         currency_symbol <- map["currency_symbol"]
         currency_base_unit <- (map["currency_base_unit"], IntFormatter)

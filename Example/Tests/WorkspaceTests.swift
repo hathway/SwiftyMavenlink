@@ -97,5 +97,20 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
         setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
             WorkspaceService.get(includeArchived: includeArchived).getNextPage()
         }
+
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+            WorkspaceService.getSpecific("test", includeArchived: includeArchived).getNextPage()
+        }
+
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+            WorkspaceService.getWorkspace(9999, includeArchived: includeArchived)
+        }
+    }
+
+    func testGetSpecificWorkspace() {
+        let id = 123458
+        setupQueryParamTestExpectation(Workspace.Params.Only.rawValue, expectedValue: String(id), uriTemplate: uriPath) {
+            WorkspaceService.getWorkspace(id)
+        }
     }
 }

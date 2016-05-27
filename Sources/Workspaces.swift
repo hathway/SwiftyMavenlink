@@ -57,6 +57,8 @@ public struct Workspace: Mappable {
         case MatchesTitle = "matching"
         // string of title, description, or team lead names
         case Search = "search"
+        // get a specific workspace by ID
+        case Only = "only"
     }
 
     public init?(_ map: Map) { }
@@ -140,9 +142,12 @@ public class WorkspaceService {
                                          params: params)
     }
 
-    public class func getWorkspace(workspaceId: Int) -> Workspace? {
-        let response = PagedResultSet<Workspace>(resource: Workspace.resourceName)
-        return response.getNextPage()?.first
+    public class func getWorkspace(workspaceId: Int, includeArchived: Bool? = nil) -> Workspace? {
+        var params: MavenlinkQueryParams = [Workspace.Params.Only.rawValue: workspaceId]
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params).getNextPage()?.first
     }
 }
 

@@ -10,13 +10,15 @@ import XCTest
 import Mockingjay
 
 class WorkspaceTests: SwiftyMavenlinkTestBase {
+
+    let uriPath = "/api/v1/workspaces.json"
     
     override func setUp() {
         super.setUp()
 
         let path = NSBundle(forClass: self.dynamicType).pathForResource("Workspaces", ofType: "json")!
         let data = NSData(contentsOfFile: path)!
-        stub(uri("/api/v1/workspaces.json"), builder: jsonData(data))
+        stub(uri(uriPath), builder: jsonData(data))
     }
 
     override func tearDown() {
@@ -73,5 +75,27 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
         XCTAssertNotNil(result.total_expenses_in_cents, message)
         XCTAssertNotNil(result.updated_at, message)
 //        XCTAssertNotNil(result.workspace_invoice_preference_id, message)
+    }
+
+    func testWorkspaceSearchParam() {
+        let searchTerm = "testing"
+        setupQueryParamTestExpectation(Workspace.Params.Search.rawValue, expectedValue: searchTerm, uriTemplate: uriPath) {
+            WorkspaceService.get(searchTerm).getNextPage()
+        }
+
+    }
+
+    func testWorkspaceMatchingNameParam() {
+        let matchingName = "testing"
+        setupQueryParamTestExpectation(Workspace.Params.MatchesTitle.rawValue, expectedValue: matchingName, uriTemplate: uriPath) {
+            WorkspaceService.getSpecific(matchingName).getNextPage()
+        }
+    }
+
+    func testIncludeArchiveParam() {
+        let includeArchived = true
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+            WorkspaceService.get(includeArchived: includeArchived).getNextPage()
+        }
     }
 }

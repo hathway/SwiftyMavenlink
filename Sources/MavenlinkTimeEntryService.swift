@@ -66,7 +66,7 @@ public struct TimeEntry: Mappable {
 
 // MARK: - REST operations
 public class TimeEntryService {
-    public class func get(workspace: String?, startDate: NSDate?, endDate: NSDate?) -> PagedResultSet<TimeEntry> {
+    public class func get(workspace: String? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> PagedResultSet<TimeEntry> {
         var params: MavenlinkQueryParams = [:]
         if let workspaceId = workspace {
             params[TimeEntry.Params.WorkspaceId.rawValue] = workspaceId

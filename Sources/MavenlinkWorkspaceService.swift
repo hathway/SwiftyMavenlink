@@ -120,15 +120,27 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService {
-    public class func get(searchTerm: String? = nil) -> PagedResultSet<Workspace> {
+    public class func get(searchTerm: String? = nil, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
             params[Workspace.Params.Search.rawValue] = search
         }
-        return PagedResultSet<Workspace>(resource: "workspaces", params: params)
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params)
     }
 
-    public class func get(workspaceId: Int) -> Workspace? {
+    public class func getSpecific(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
+        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName,
+                                         params: params)
+    }
+
+    public class func getWorkspace(workspaceId: Int) -> Workspace? {
         let response = PagedResultSet<Workspace>(resource: Workspace.resourceName)
         return response.getNextPage()?.first
     }

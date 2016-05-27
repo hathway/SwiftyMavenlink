@@ -12,6 +12,8 @@ import URITemplate
 import SwiftyJSON
 
 class TimeEntryTests: SwiftyMavenlinkTestBase {
+
+    let uriPath = "/api/v1/time_entries.json"
     
     override func setUp() {
         super.setUp()
@@ -20,7 +22,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         let data = NSData(contentsOfFile: path)!
         let dataPages = JSON(data: data).arrayObject!
 
-        stub(uri("/api/v1/time_entries.json")) { (request) -> (Response) in
+        stub(uri(uriPath)) { (request) -> (Response) in
             let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
 
             guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
@@ -61,4 +63,18 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         XCTAssertNotNil(result.approved, message)
     }
 
+    func testGet_WorkspaceParameter() {
+        let workspaceId = "9999"
+        setupQueryParamTestExpectation(TimeEntry.Params.WorkspaceId.rawValue, expectedValue: workspaceId, uriTemplate: uriPath) {
+            TimeEntryService.get(workspaceId).getNextPage()
+        }
+    }
+
+    func testGet_TimeParameters() {
+        let startTime = NSDate(timeIntervalSinceNow: -(60*60*24*7)), endTime = NSDate()
+        let expectedValue = ShortDateFormatter.transformToJSON(startTime)! + "%3A" + ShortDateFormatter.transformToJSON(endTime)!
+        setupQueryParamTestExpectation(TimeEntry.Params.BetweenDate.rawValue, expectedValue: expectedValue, uriTemplate: uriPath) {
+            TimeEntryService.get(startDate: startTime, endDate: endTime).getNextPage()
+        }
+    }
 }

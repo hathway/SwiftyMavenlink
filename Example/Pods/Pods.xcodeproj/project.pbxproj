@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0421849DD19CFA83E86AFB6318A1630F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
 		0E040B15AC045AF858C29149CE91960A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
-		11DDB7133C3CF9C32186B7293627CB60 /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE5EE10FA3FF027D3E5FB60B4E54A2 /* JSONTransformers.swift */; };
 		126169B8BF7430D89BB990B97C36D75F /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEA5D16C73F0855F3F980B5AD16D36B /* Async.swift */; };
 		161036BCB12F9B0C90DDF0EC5C516020 /* JSONRequest-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 17CE7CDB9322A9E1F1F1C5294E570F85 /* JSONRequest-dummy.m */; };
 		16291169698F6F4913E9FCBA081129A2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C677223E29157FAF1AA55514E625E50 /* XCTest.framework */; };
@@ -20,31 +19,28 @@
 		28A2955C5C8F3813B83CAAF96E8894C9 /* Pods-SwiftyMavenlink_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EE9203B7A7D391D3D865193AF6CCD85F /* Pods-SwiftyMavenlink_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C7F26BF9FE552A8CB00FE9882E4C09A /* SwiftyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8B58EE7F0F4534E858B39BBCE632C5 /* SwiftyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F903EAED6109D3BF3F180DDFD24D62A /* AsyncSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBAF3BD193BB92E2F54D10D5EF85326 /* AsyncSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		31137D12F129A107844D8A904A3E64CB /* MavenlinkWorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDF9068EEE1E23C3EDBE6A6D953C039 /* MavenlinkWorkspaceService.swift */; };
 		3A2E3EDE26025CE42066FB3A4D19EEDA /* SwiftyJSON-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66FD3D77413F127A3430D51F232F9EC1 /* SwiftyJSON-dummy.m */; };
 		3F14CC9A9E37284F3C3F8A0FA4B60970 /* JSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153ACCCEE59D8C7EDFF07974588EFC07 /* JSONRequest.swift */; };
 		4074700554CED0AC6F9B6C3C3A9D1D11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
 		418134548DBB8A1168C6DB0984827234 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = F504C812B3D73F07113F5E71D76851E3 /* Map.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		48C0E193D666FDA1E469770B7CD43FFB /* ObjectMapper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CADEB0DA601EDA7CFE1D4CE9434BDBEA /* ObjectMapper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4D28D7580BFC0290A5EB45556E6CE00C /* MavenlinkTimeEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109C3914DC79100E7EAF263E2F0B888 /* MavenlinkTimeEntryService.swift */; };
 		4E90AC88177A3F9C22A63DF638C6B317 /* URITemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = D0005D96D42327C5E12190E9C1BC17C3 /* URITemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B7CC0B8889D2B06875AA9514F32B409 /* Mockingjay-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EACF774FAAD514A7308202909F50C7 /* Mockingjay-dummy.m */; };
 		5B8FBE9ADBFD4EA3AFBC4DAAF4BF97B7 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B2ABE06DA4F4EA337BDE3D45D584E9 /* XCTest.swift */; };
-		5F344A85405CF1EF158B5BE16D2587FD /* MavenlinkMappableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D93A2AF5C646F1962E78FACD0802CF /* MavenlinkMappableObject.swift */; };
 		62263E7C66B40DEE94C22E589A53470A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
 		62A6E30DB3348AF32184235809696096 /* ObjectMapper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 545CF7B76ED608D5314C5A72303B469D /* ObjectMapper-dummy.m */; };
-		6409DB5ECE04C666F831A1CAAF0A59DA /* MavenlinkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102BBCDABB6801C1BE0ED717E7946564 /* MavenlinkSession.swift */; };
-		677BABF829BF7A9C753DC29AE767D5FA /* SwiftyMavenlink-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 386B58EB4C2EBD366A670130BC67FF5A /* SwiftyMavenlink-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		677BABF829BF7A9C753DC29AE767D5FA /* SwiftyMavenlink-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 979F7517C3FA2BA8CA54DEEEBE4139E9 /* SwiftyMavenlink-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6DBB6C199FD4AD725ACFC68F16A3ED99 /* JSONRequestVerbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED67F831AEECD1635CAF9E5CBE4163CA /* JSONRequestVerbs.swift */; };
 		6E8554783FFA9CFC65A0D1ECCC1ED0D8 /* Matchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D059ACDC464D38E9D323CD894F04F59 /* Matchers.swift */; };
 		6F0F1DF9981E2BDEFDBDE7E7F2A5E851 /* URITemplate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC017BD3274160973297124CC6779BB /* URITemplate-dummy.m */; };
+		6F23DD4CED1C3DB45498AD145D4B2736 /* SwiftyMavenlink-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD48AF3F4549C2722BF1029353A7D7A /* SwiftyMavenlink-dummy.m */; };
 		6F6935DE624507427C4CEF6965A68ECF /* TransformType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C9928B77E698CAE9CDEB01947CFCC /* TransformType.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		70DCE334A4B5CC65CABF11811D36DD67 /* PaginatableResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6EAB46A1A5DC798580F0405C7E978A /* PaginatableResultSet.swift */; };
 		719EDF5AF3FF987E6C130AA6310F6B3A /* Mockingjay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48D29D63B0A28749E019D3BB1D68EC /* Mockingjay.swift */; };
 		7393153B8ADAEBE0FA05EDCA9886740F /* NSDecimalNumberTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E2367A5585ADB4FDD66E3A65872D4 /* NSDecimalNumberTransform.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D2537BE59E81695137ACEE1CAE3C56E /* TransformOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55494751E66818B4A04DF1CC96A88D66 /* TransformOf.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		93891326E415660F208490D132B1C59D /* DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86684465B46053EFFCF9F3D4239E0F8D /* DateTransform.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A2E123E31611934DE7CD4876B4372C88 /* SwiftyMavenlink-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 277D9A6AB7309869B5166F8EB3FE3342 /* SwiftyMavenlink-dummy.m */; };
+		94D21F6EB8CBB5B18BF20DD53D610055 /* MavenlinkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3CE33C5B4C7EAC86A5F4DB26CD103 /* MavenlinkSession.swift */; };
+		99190181C218C382259E92F268427666 /* MavenlinkTimeEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868168F9E9B489A113BB015026E52031 /* MavenlinkTimeEntryService.swift */; };
 		B6787EF4309E9AF4770382A91AD7C394 /* Mockingjay-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B8F359BA9C4F30C5D8E99112F7E57F51 /* Mockingjay-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6EE2699B0036851D84E6513BA66F105 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
 		B9D6828121A50E8D765B244FE1A9E928 /* DateFormatterTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93ACAA5BB3BCEE1F2DA804617CC6E5F0 /* DateFormatterTransform.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -60,8 +56,10 @@
 		C990A170E340EAEBC70F88C37508F248 /* Pods-SwiftyMavenlink_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A872EE446C17539C90C9AD4398CBD0B9 /* Pods-SwiftyMavenlink_Tests-dummy.m */; };
 		CBE1D7BA06B9B36F950618C911377F52 /* URITemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79B36A938B9CD58F5F0B4ABF0012391 /* URITemplate.swift */; };
 		D638B87CE9D6068BCB6185D0A3007971 /* JSONRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D55DAB96E7DDC2655B045063EB970E9 /* JSONRequest.framework */; };
+		D719332567D5F063C9786A5BEDCC75E0 /* PaginatableResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBE2BF1577D101AB59FE48477965C41 /* PaginatableResultSet.swift */; };
 		DBB2F76D21FC9CBD3AD67D8071C9C9F2 /* ToJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1480BDE86827E565152F1CC371E20E16 /* ToJSON.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF55B45D6CCEE2C97E0FD3D00B3E4BBB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
+		E1178CC60C2B8EC58D5DC17085686466 /* MavenlinkWorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57487BC978F4905632F0B0E24A420D04 /* MavenlinkWorkspaceService.swift */; };
 		E437C1E272C35D0D65146C983B0195C9 /* CustomDateFormatTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8F26B684EED92E456D3CFDBCCA6D40 /* CustomDateFormatTransform.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E6ABAD1063A8CB12D73A2783D0DB7216 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */; };
 		EC480AE9F809A869B0A6E6BA4F4C1320 /* URITemplate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B46307B6AD9CA51EBCEB8D6AD7AC92 /* URITemplate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,6 +69,7 @@
 		FB5291D5DC0D88C8DC804B39DC25132E /* URLTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA8CDEF3F734579B21F12E223FAC1A /* URLTransform.swift */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FC99F10C6823107260E766F6086BDC4A /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F45DA1050981497993612EFCEFB29C /* ObjectMapper.framework */; };
 		FEBA136F7785DF461FE8369D0A235C63 /* Mockingjay.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ED24DA38286DACDD1846963786B6AF9 /* Mockingjay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF7ABA9F9A19AA4034E28E39A17F3A8A /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CB421C62CF608D6385F015D6529B0C /* JSONTransformers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,8 +161,8 @@
 
 /* Begin PBXFileReference section */
 		078D36BDE5128BB2216C74686572C2B7 /* Pods-SwiftyMavenlink_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftyMavenlink_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		0C3310B5C3BC7DE28DEE37EF7338978F /* SwiftyMavenlink.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyMavenlink.modulemap; sourceTree = "<group>"; };
 		0F252C981BB4CE4067ABD45F9D043853 /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON.swift; sourceTree = "<group>"; };
-		102BBCDABB6801C1BE0ED717E7946564 /* MavenlinkSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkSession.swift; sourceTree = "<group>"; };
 		10E263DD96FC67771D554C04B035404E /* JSONRequest-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONRequest-umbrella.h"; sourceTree = "<group>"; };
 		1480BDE86827E565152F1CC371E20E16 /* ToJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToJSON.swift; path = ObjectMapper/Core/ToJSON.swift; sourceTree = "<group>"; };
 		1501BD6705926C07C7604D2308704118 /* Pods-SwiftyMavenlink_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SwiftyMavenlink_Tests.modulemap"; sourceTree = "<group>"; };
@@ -174,34 +173,35 @@
 		1D55DAB96E7DDC2655B045063EB970E9 /* JSONRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSONRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E48D29D63B0A28749E019D3BB1D68EC /* Mockingjay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Mockingjay.swift; path = Mockingjay/Mockingjay.swift; sourceTree = "<group>"; };
 		24BEF229EA9A4CC293DB2E03345E20FC /* Mockingjay.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Mockingjay.xcconfig; sourceTree = "<group>"; };
-		277D9A6AB7309869B5166F8EB3FE3342 /* SwiftyMavenlink-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyMavenlink-dummy.m"; sourceTree = "<group>"; };
 		27EACF774FAAD514A7308202909F50C7 /* Mockingjay-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Mockingjay-dummy.m"; sourceTree = "<group>"; };
 		28B2ABE06DA4F4EA337BDE3D45D584E9 /* XCTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = XCTest.swift; path = Mockingjay/XCTest.swift; sourceTree = "<group>"; };
 		2A5D9B2125124B9DD37925E3A796642A /* Mockingjay-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Mockingjay-prefix.pch"; sourceTree = "<group>"; };
 		2D059ACDC464D38E9D323CD894F04F59 /* Matchers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Matchers.swift; path = Mockingjay/Matchers.swift; sourceTree = "<group>"; };
+		2EB3CE33C5B4C7EAC86A5F4DB26CD103 /* MavenlinkSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkSession.swift; sourceTree = "<group>"; };
 		318A69BEED6F7B0991A4EE9F29A1BB2B /* Async.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Async.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3238265651DA1EB149EDA8E84D4BF56A /* AsyncSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AsyncSwift.modulemap; sourceTree = "<group>"; };
 		32B46307B6AD9CA51EBCEB8D6AD7AC92 /* URITemplate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "URITemplate-umbrella.h"; sourceTree = "<group>"; };
-		386B58EB4C2EBD366A670130BC67FF5A /* SwiftyMavenlink-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyMavenlink-umbrella.h"; sourceTree = "<group>"; };
+		384F4168DDB5A75D6B3DC2E4D9A4582D /* SwiftyMavenlink-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyMavenlink-prefix.pch"; sourceTree = "<group>"; };
 		3F500D47F268E1ACD74BDCD16EC29F47 /* FromJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FromJSON.swift; path = ObjectMapper/Core/FromJSON.swift; sourceTree = "<group>"; };
 		476E0FD37C6184C8522030178CE9C2C3 /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
 		4A6B115A0C527E986C14C397206DA618 /* Pods_SwiftyMavenlink_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyMavenlink_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C6EAB46A1A5DC798580F0405C7E978A /* PaginatableResultSet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaginatableResultSet.swift; sourceTree = "<group>"; };
 		4FBAF3BD193BB92E2F54D10D5EF85326 /* AsyncSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AsyncSwift-umbrella.h"; sourceTree = "<group>"; };
 		53FEBE9695D9F32B5154AA8334C7BCBE /* Pods-SwiftyMavenlink_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftyMavenlink_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		545CF7B76ED608D5314C5A72303B469D /* ObjectMapper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ObjectMapper-dummy.m"; sourceTree = "<group>"; };
 		55494751E66818B4A04DF1CC96A88D66 /* TransformOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransformOf.swift; path = ObjectMapper/Transforms/TransformOf.swift; sourceTree = "<group>"; };
+		57487BC978F4905632F0B0E24A420D04 /* MavenlinkWorkspaceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkWorkspaceService.swift; sourceTree = "<group>"; };
 		59ADB56C5D66AD334F6D661C5C2F7EA9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5B52E49CE44631A7DF9722DA26327813 /* SwiftyMavenlink.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyMavenlink.xcconfig; sourceTree = "<group>"; };
+		5BD48AF3F4549C2722BF1029353A7D7A /* SwiftyMavenlink-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyMavenlink-dummy.m"; sourceTree = "<group>"; };
 		5F26DFD60EC0C829800BAF1F323ADEF3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6106BEBADE495C543A64B0F5146D6708 /* URITemplate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = URITemplate.modulemap; sourceTree = "<group>"; };
 		63F45DA1050981497993612EFCEFB29C /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6568DC8FA4BDCF6C9E330783200B0102 /* SwiftyMavenlink-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyMavenlink-prefix.pch"; sourceTree = "<group>"; };
 		66C009BCF8D2587DF2010D9BC447427C /* SwiftyJSON-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-prefix.pch"; sourceTree = "<group>"; };
 		66FD3D77413F127A3430D51F232F9EC1 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
 		69B61FC24E8B20D54D9A6AE6C6EF8782 /* Builders.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Builders.swift; path = Mockingjay/Builders.swift; sourceTree = "<group>"; };
 		6AD332741CAE2258FE7A238326A73E97 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6BC2951E8B9604D232C49477DD34FCFC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C677223E29157FAF1AA55514E625E50 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		6EBE2BF1577D101AB59FE48477965C41 /* PaginatableResultSet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaginatableResultSet.swift; sourceTree = "<group>"; };
 		7454EA427DD5320E400FD5DC18E45FF7 /* URITemplate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = URITemplate.xcconfig; sourceTree = "<group>"; };
 		753C9928B77E698CAE9CDEB01947CFCC /* TransformType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransformType.swift; path = ObjectMapper/Transforms/TransformType.swift; sourceTree = "<group>"; };
 		761984E8EAC03F8CAD4664FBBB6D61C8 /* Pods-SwiftyMavenlink_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftyMavenlink_Tests-frameworks.sh"; sourceTree = "<group>"; };
@@ -210,9 +210,12 @@
 		7CF2167FD4285557F5EFDE9C781F1A90 /* JSONRequest.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = JSONRequest.modulemap; sourceTree = "<group>"; };
 		7E9F4B97314DE953E25AA8C05433DE07 /* AsyncSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AsyncSwift-prefix.pch"; sourceTree = "<group>"; };
 		7EE731CC021DB5B3C72022A909BEF128 /* JSONRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSONRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F0A9FE48D1FB92CF4BAE132E8771C7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8327850BCD191B5D8B6883163B7FB9E3 /* JSONRequest-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONRequest-prefix.pch"; sourceTree = "<group>"; };
+		83CB421C62CF608D6385F015D6529B0C /* JSONTransformers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		859C9605A3D4D0614997760453F21738 /* ObjectMapper-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ObjectMapper-prefix.pch"; sourceTree = "<group>"; };
 		86684465B46053EFFCF9F3D4239E0F8D /* DateTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateTransform.swift; path = ObjectMapper/Transforms/DateTransform.swift; sourceTree = "<group>"; };
+		868168F9E9B489A113BB015026E52031 /* MavenlinkTimeEntryService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkTimeEntryService.swift; sourceTree = "<group>"; };
 		8AF85F064A1D50FE32E6548CA7292E94 /* Pods-SwiftyMavenlink_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftyMavenlink_Tests-resources.sh"; sourceTree = "<group>"; };
 		8E3ED2C1ED39385042153C40EBCF5737 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FF9332E62FD9E3410A0C41D4FEF4C17 /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,26 +223,23 @@
 		93ACAA5BB3BCEE1F2DA804617CC6E5F0 /* DateFormatterTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateFormatterTransform.swift; path = ObjectMapper/Transforms/DateFormatterTransform.swift; sourceTree = "<group>"; };
 		93F8543DF42B959F66BA4F28CD49F9D1 /* Mappable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Mappable.swift; path = ObjectMapper/Core/Mappable.swift; sourceTree = "<group>"; };
 		94405AF8BDC569A35EC229BEB2CA27B0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		979F7517C3FA2BA8CA54DEEEBE4139E9 /* SwiftyMavenlink-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyMavenlink-umbrella.h"; sourceTree = "<group>"; };
 		98CB5036409987153CEBBFD5514C2FF5 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C18AEA780A52810A2E4237D73D2114 /* MockingjayProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MockingjayProtocol.swift; path = Mockingjay/MockingjayProtocol.swift; sourceTree = "<group>"; };
 		9ED24DA38286DACDD1846963786B6AF9 /* Mockingjay.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Mockingjay.h; path = Mockingjay/Mockingjay.h; sourceTree = "<group>"; };
-		A1EE5EE10FA3FF027D3E5FB60B4E54A2 /* JSONTransformers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		A79B36A938B9CD58F5F0B4ABF0012391 /* URITemplate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URITemplate.swift; path = Sources/URITemplate.swift; sourceTree = "<group>"; };
 		A872EE446C17539C90C9AD4398CBD0B9 /* Pods-SwiftyMavenlink_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftyMavenlink_Tests-dummy.m"; sourceTree = "<group>"; };
 		AAD1681C253D05B51A0EEE94AE63979F /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
-		ABDF9068EEE1E23C3EDBE6A6D953C039 /* MavenlinkWorkspaceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkWorkspaceService.swift; sourceTree = "<group>"; };
 		ACC017BD3274160973297124CC6779BB /* URITemplate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "URITemplate-dummy.m"; sourceTree = "<group>"; };
 		B35B1B2286B119B87A27A762D352B52A /* Async.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Async.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E3DADE70E7EF94D47EDDACE09CCBA9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8F359BA9C4F30C5D8E99112F7E57F51 /* Mockingjay-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Mockingjay-umbrella.h"; sourceTree = "<group>"; };
-		B9B54F5EB1330BB7B69D4A4AF48CDF79 /* SwiftyMavenlink.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyMavenlink.xcconfig; sourceTree = "<group>"; };
 		BA66563254A125F6AB1F0BC91631E5EC /* ObjectMapper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ObjectMapper.modulemap; sourceTree = "<group>"; };
 		BAB4688550388BD12696A4731433DF44 /* Mockingjay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mockingjay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC206F03A994004F41C1B63E7FCE917 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = ObjectMapper/Core/Operators.swift; sourceTree = "<group>"; };
 		BD40D247B777F342C6CEC4B18EBD0CB6 /* AsyncSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AsyncSwift.xcconfig; sourceTree = "<group>"; };
 		BF50E473A7D780D11B883C9725346454 /* Mockingjay.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Mockingjay.modulemap; sourceTree = "<group>"; };
 		C6F74A3FEDBA65B35369A60550F997E4 /* Mapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Mapper.swift; path = ObjectMapper/Core/Mapper.swift; sourceTree = "<group>"; };
-		C9D93A2AF5C646F1962E78FACD0802CF /* MavenlinkMappableObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkMappableObject.swift; sourceTree = "<group>"; };
 		CADEB0DA601EDA7CFE1D4CE9434BDBEA /* ObjectMapper-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ObjectMapper-umbrella.h"; sourceTree = "<group>"; };
 		CD8B58EE7F0F4534E858B39BBCE632C5 /* SwiftyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-umbrella.h"; sourceTree = "<group>"; };
 		CED0E5A52B1FB67D826100A7B46B2811 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -247,7 +247,6 @@
 		D1F2FBC975FF8600D20E04B7E63C6BC3 /* EnumTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EnumTransform.swift; path = ObjectMapper/Transforms/EnumTransform.swift; sourceTree = "<group>"; };
 		D498D76666CEE18A3105473A147F1E76 /* ObjectMapper.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ObjectMapper.xcconfig; sourceTree = "<group>"; };
 		DE4E2367A5585ADB4FDD66E3A65872D4 /* NSDecimalNumberTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSDecimalNumberTransform.swift; path = ObjectMapper/Transforms/NSDecimalNumberTransform.swift; sourceTree = "<group>"; };
-		E109C3914DC79100E7EAF263E2F0B888 /* MavenlinkTimeEntryService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MavenlinkTimeEntryService.swift; sourceTree = "<group>"; };
 		E484F00EC82D2DBE88F94000C2DE5AC5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB1C6BCDD9DB122141C72F90C2ACD821 /* NSURLSessionConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSURLSessionConfiguration.swift; path = Mockingjay/NSURLSessionConfiguration.swift; sourceTree = "<group>"; };
 		EB977DC5E651C73519C3967EBEDE12AD /* Pods-SwiftyMavenlink_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftyMavenlink_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -260,7 +259,6 @@
 		F34CE494A9D7A7899460F994C89341B0 /* URITemplate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "URITemplate-prefix.pch"; sourceTree = "<group>"; };
 		F504C812B3D73F07113F5E71D76851E3 /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = ObjectMapper/Core/Map.swift; sourceTree = "<group>"; };
 		F78B5A2B0F7CC8C392E5F6982C8CF992 /* URITemplate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = URITemplate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F79BCC71AF8F2F520627F123FCF3E18C /* SwiftyMavenlink.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyMavenlink.modulemap; sourceTree = "<group>"; };
 		F80288B3839B09775F7C032474B8719D /* URITemplate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = URITemplate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC9A6B5A27FE7E77275AEF3F6A47B85D /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -428,6 +426,16 @@
 			path = ObjectMapper;
 			sourceTree = "<group>";
 		};
+		45D47A4BC24B14A3EDA30C7CDB3F4676 /* SwiftyMavenlink */ = {
+			isa = PBXGroup;
+			children = (
+				8474A60567239F04BE256D5D3EA13DDF /* Sources */,
+				9B5095990A64D490461585F17DAA358B /* Support Files */,
+			);
+			name = SwiftyMavenlink;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		4BEB5EEE93F1C7576D31BADEB984F0A5 /* Mockingjay */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,22 +530,38 @@
 			path = "../Target Support Files/ObjectMapper";
 			sourceTree = "<group>";
 		};
+		8474A60567239F04BE256D5D3EA13DDF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				83CB421C62CF608D6385F015D6529B0C /* JSONTransformers.swift */,
+				2EB3CE33C5B4C7EAC86A5F4DB26CD103 /* MavenlinkSession.swift */,
+				868168F9E9B489A113BB015026E52031 /* MavenlinkTimeEntryService.swift */,
+				57487BC978F4905632F0B0E24A420D04 /* MavenlinkWorkspaceService.swift */,
+				6EBE2BF1577D101AB59FE48477965C41 /* PaginatableResultSet.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		90C2A44CAAFE23F3E558F1C06B7DAF92 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A27FFE6CA5B67F82DD19FADCC35062BA /* SwiftyMavenlink */,
+				45D47A4BC24B14A3EDA30C7CDB3F4676 /* SwiftyMavenlink */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		A27FFE6CA5B67F82DD19FADCC35062BA /* SwiftyMavenlink */ = {
+		9B5095990A64D490461585F17DAA358B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				BEC083E2A0785DF576B63556B515F159 /* Sources */,
-				ED6DE225858B718F1BB40EEA43634BAA /* Support Files */,
+				81F0A9FE48D1FB92CF4BAE132E8771C7 /* Info.plist */,
+				0C3310B5C3BC7DE28DEE37EF7338978F /* SwiftyMavenlink.modulemap */,
+				5B52E49CE44631A7DF9722DA26327813 /* SwiftyMavenlink.xcconfig */,
+				5BD48AF3F4549C2722BF1029353A7D7A /* SwiftyMavenlink-dummy.m */,
+				384F4168DDB5A75D6B3DC2E4D9A4582D /* SwiftyMavenlink-prefix.pch */,
+				979F7517C3FA2BA8CA54DEEEBE4139E9 /* SwiftyMavenlink-umbrella.h */,
 			);
-			name = SwiftyMavenlink;
-			path = ../..;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/SwiftyMavenlink";
 			sourceTree = "<group>";
 		};
 		A3FFFE858E65EBC98A58C10E44A23661 /* Pods */ = {
@@ -565,19 +589,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/AsyncSwift";
-			sourceTree = "<group>";
-		};
-		BEC083E2A0785DF576B63556B515F159 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				A1EE5EE10FA3FF027D3E5FB60B4E54A2 /* JSONTransformers.swift */,
-				C9D93A2AF5C646F1962E78FACD0802CF /* MavenlinkMappableObject.swift */,
-				102BBCDABB6801C1BE0ED717E7946564 /* MavenlinkSession.swift */,
-				E109C3914DC79100E7EAF263E2F0B888 /* MavenlinkTimeEntryService.swift */,
-				ABDF9068EEE1E23C3EDBE6A6D953C039 /* MavenlinkWorkspaceService.swift */,
-				4C6EAB46A1A5DC798580F0405C7E978A /* PaginatableResultSet.swift */,
-			);
-			path = Sources;
 			sourceTree = "<group>";
 		};
 		BF5E56164918CF886844544EB419F576 /* Targets Support Files */ = {
@@ -632,20 +643,6 @@
 				E4CBC395A0DB48056DFF2C902C4600AB /* Support Files */,
 			);
 			path = JSONRequest;
-			sourceTree = "<group>";
-		};
-		ED6DE225858B718F1BB40EEA43634BAA /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				6BC2951E8B9604D232C49477DD34FCFC /* Info.plist */,
-				F79BCC71AF8F2F520627F123FCF3E18C /* SwiftyMavenlink.modulemap */,
-				B9B54F5EB1330BB7B69D4A4AF48CDF79 /* SwiftyMavenlink.xcconfig */,
-				277D9A6AB7309869B5166F8EB3FE3342 /* SwiftyMavenlink-dummy.m */,
-				6568DC8FA4BDCF6C9E330783200B0102 /* SwiftyMavenlink-prefix.pch */,
-				386B58EB4C2EBD366A670130BC67FF5A /* SwiftyMavenlink-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/SwiftyMavenlink";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -765,7 +762,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7D8CCEDAB9BB0639317C945C02981D6E /* Build configuration list for PBXNativeTarget "SwiftyMavenlink" */;
 			buildPhases = (
-				31D7999383D6275FE90005ECE4B05D47 /* Sources */,
+				BFD2C9692A1D8481EE2617E81C02FA1C /* Sources */,
 				573E730884045F3DC738F327716675C1 /* Frameworks */,
 				88A0603E76777A159E4DDBB6615C7F97 /* Headers */,
 			);
@@ -933,20 +930,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		31D7999383D6275FE90005ECE4B05D47 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				11DDB7133C3CF9C32186B7293627CB60 /* JSONTransformers.swift in Sources */,
-				5F344A85405CF1EF158B5BE16D2587FD /* MavenlinkMappableObject.swift in Sources */,
-				6409DB5ECE04C666F831A1CAAF0A59DA /* MavenlinkSession.swift in Sources */,
-				4D28D7580BFC0290A5EB45556E6CE00C /* MavenlinkTimeEntryService.swift in Sources */,
-				31137D12F129A107844D8A904A3E64CB /* MavenlinkWorkspaceService.swift in Sources */,
-				70DCE334A4B5CC65CABF11811D36DD67 /* PaginatableResultSet.swift in Sources */,
-				A2E123E31611934DE7CD4876B4372C88 /* SwiftyMavenlink-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		452031CAB85D1FEADD71A9D467FBF12E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -985,6 +968,19 @@
 			files = (
 				126169B8BF7430D89BB990B97C36D75F /* Async.swift in Sources */,
 				2754C4E95E265639D7CFC90BA8264476 /* AsyncSwift-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFD2C9692A1D8481EE2617E81C02FA1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF7ABA9F9A19AA4034E28E39A17F3A8A /* JSONTransformers.swift in Sources */,
+				94D21F6EB8CBB5B18BF20DD53D610055 /* MavenlinkSession.swift in Sources */,
+				99190181C218C382259E92F268427666 /* MavenlinkTimeEntryService.swift in Sources */,
+				E1178CC60C2B8EC58D5DC17085686466 /* MavenlinkWorkspaceService.swift in Sources */,
+				D719332567D5F063C9786A5BEDCC75E0 /* PaginatableResultSet.swift in Sources */,
+				6F23DD4CED1C3DB45498AD145D4B2736 /* SwiftyMavenlink-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,7 +1322,7 @@
 		};
 		694CFC39EAA341DAAEAA3EBEC2572FA6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9B54F5EB1330BB7B69D4A4AF48CDF79 /* SwiftyMavenlink.xcconfig */;
+			baseConfigurationReference = 5B52E49CE44631A7DF9722DA26327813 /* SwiftyMavenlink.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1425,7 +1421,7 @@
 		};
 		91A8A3D6B9B3F1770D9D3FAB65111F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9B54F5EB1330BB7B69D4A4AF48CDF79 /* SwiftyMavenlink.xcconfig */;
+			baseConfigurationReference = 5B52E49CE44631A7DF9722DA26327813 /* SwiftyMavenlink.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

@@ -22,7 +22,6 @@
 		DBACE8EE1CE3DDB800F13572 /* PaginatableResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */; };
 		DBACE8F01CE5077300F13572 /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */; };
 		DBACE8F21CE51BB200F13572 /* MavenlinkWorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8F11CE51BB200F13572 /* MavenlinkWorkspaceService.swift */; };
-		DBACE8F41CE544E200F13572 /* MavenlinkMappableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8F31CE544E200F13572 /* MavenlinkMappableObject.swift */; };
 		DBEC7AA81CEF759600EC98E8 /* PaginatableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +47,6 @@
 		DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableResultSet.swift; sourceTree = "<group>"; };
 		DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		DBACE8F11CE51BB200F13572 /* MavenlinkWorkspaceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MavenlinkWorkspaceService.swift; sourceTree = "<group>"; };
-		DBACE8F31CE544E200F13572 /* MavenlinkMappableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkMappableObject.swift; sourceTree = "<group>"; };
 		DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F4FE5063E94272FEC43EE2CF /* SwiftyMavenlink.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftyMavenlink.podspec; path = ../SwiftyMavenlink.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,7 +138,6 @@
 			isa = PBXGroup;
 			children = (
 				DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */,
-				DBACE8F31CE544E200F13572 /* MavenlinkMappableObject.swift */,
 				DB34A0601CE288000099941A /* MavenlinkSession.swift */,
 				DB6741231CE29A0700EA71D2 /* MavenlinkTimeEntryService.swift */,
 				DBACE8F11CE51BB200F13572 /* MavenlinkWorkspaceService.swift */,
@@ -288,7 +285,6 @@
 				DBACE8EE1CE3DDB800F13572 /* PaginatableResultSet.swift in Sources */,
 				DB34A0611CE288000099941A /* MavenlinkSession.swift in Sources */,
 				DB7537691CEF78F700E1FDDB /* WorkspaceTests.swift in Sources */,
-				DBACE8F41CE544E200F13572 /* MavenlinkMappableObject.swift in Sources */,
 				DBACE8F21CE51BB200F13572 /* MavenlinkWorkspaceService.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */,
 				DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */,

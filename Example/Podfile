@@ -7,4 +7,6 @@ target 'SwiftyMavenlink_Tests' do
   pod 'SwiftyJSON'
   pod 'ObjectMapper'
 
+  pod 'Mockingjay'
+
 end

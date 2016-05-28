@@ -1,6 +1,7 @@
 import UIKit
 import XCTest
 import SwiftyMavenlink
+import Mockingjay
 
 class SwiftyMavenlinkTestBase: XCTestCase {
 

@@ -11,7 +11,6 @@
 		607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift */; };
 		DB34A0611CE288000099941A /* MavenlinkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34A0601CE288000099941A /* MavenlinkSession.swift */; };
 		DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34DAE01CF4D895008663A6 /* TestUtils.swift */; };
-		DB6741221CE28FDA00EA71D2 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB6741211CE28FDA00EA71D2 /* Config.plist */; };
 		DB6741241CE29A0700EA71D2 /* TimeEntries.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6741231CE29A0700EA71D2 /* TimeEntries.swift */; };
 		DB7537671CEF76E100E1FDDB /* MappableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7537661CEF76E100E1FDDB /* MappableObjectTests.swift */; };
 		DB7537691CEF78F700E1FDDB /* WorkspaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */; };
@@ -19,6 +18,8 @@
 		DB9C5F4C1CF41A3A008C8787 /* TimeEntries.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F491CF41A3A008C8787 /* TimeEntries.json */; };
 		DB9C5F4D1CF41A3A008C8787 /* Users.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F4A1CF41A3A008C8787 /* Users.json */; };
 		DB9C5F4E1CF41A3A008C8787 /* Workspaces.json in Resources */ = {isa = PBXBuildFile; fileRef = DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */; };
+		DBA655811CFA56680075A1D7 /* TimeEntry.json in Resources */ = {isa = PBXBuildFile; fileRef = DBA655801CFA56680075A1D7 /* TimeEntry.json */; };
+		DBA655831CFA57A30075A1D7 /* Workspace.json in Resources */ = {isa = PBXBuildFile; fileRef = DBA655821CFA57A30075A1D7 /* Workspace.json */; };
 		DBACE8EE1CE3DDB800F13572 /* PaginatableResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */; };
 		DBACE8F01CE5077300F13572 /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */; };
 		DBACE8F21CE51BB200F13572 /* Workspaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8F11CE51BB200F13572 /* Workspaces.swift */; };
@@ -44,6 +45,8 @@
 		DB9C5F491CF41A3A008C8787 /* TimeEntries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TimeEntries.json; sourceTree = "<group>"; };
 		DB9C5F4A1CF41A3A008C8787 /* Users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Users.json; sourceTree = "<group>"; };
 		DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Workspaces.json; sourceTree = "<group>"; };
+		DBA655801CFA56680075A1D7 /* TimeEntry.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TimeEntry.json; sourceTree = "<group>"; };
+		DBA655821CFA57A30075A1D7 /* Workspace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Workspace.json; sourceTree = "<group>"; };
 		DBACE8ED1CE3DDB800F13572 /* PaginatableResultSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableResultSet.swift; sourceTree = "<group>"; };
 		DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		DBACE8F11CE51BB200F13572 /* Workspaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Workspaces.swift; sourceTree = "<group>"; };
@@ -150,8 +153,10 @@
 		DB9C5F481CF41A3A008C8787 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				DBA655801CFA56680075A1D7 /* TimeEntry.json */,
 				DB9C5F491CF41A3A008C8787 /* TimeEntries.json */,
 				DB9C5F4A1CF41A3A008C8787 /* Users.json */,
+				DBA655821CFA57A30075A1D7 /* Workspace.json */,
 				DB9C5F4B1CF41A3A008C8787 /* Workspaces.json */,
 			);
 			path = Fixtures;
@@ -219,9 +224,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBA655811CFA56680075A1D7 /* TimeEntry.json in Resources */,
+				DBA655831CFA57A30075A1D7 /* Workspace.json in Resources */,
 				DB9C5F4E1CF41A3A008C8787 /* Workspaces.json in Resources */,
 				DB9C5F4C1CF41A3A008C8787 /* TimeEntries.json in Resources */,
-				DB6741221CE28FDA00EA71D2 /* Config.plist in Resources */,
 				DB9C5F4D1CF41A3A008C8787 /* Users.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

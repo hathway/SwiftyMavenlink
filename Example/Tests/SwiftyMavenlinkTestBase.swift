@@ -9,13 +9,13 @@ class SwiftyMavenlinkTestBase: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: SwiftyMavenlinkTestBase.self)
-        if let path = bundle.pathForResource("Config", ofType: "plist") {
-            if let config = NSDictionary(contentsOfFile: path) as? [String : AnyObject] {
-                oAuthToken = config["oAuthToken"] as? String ?? ""
-                MavenlinkSession.instance.configure(oAuthToken)
-            }
-        }
+//        let bundle = NSBundle(forClass: SwiftyMavenlinkTestBase.self)
+//        if let path = bundle.pathForResource("Config", ofType: "plist") {
+//            if let config = NSDictionary(contentsOfFile: path) as? [String : AnyObject] {
+//                oAuthToken = config["oAuthToken"] as? String ?? ""
+//                MavenlinkSession.instance.configure(oAuthToken)
+//            }
+//        }
     }
 
     

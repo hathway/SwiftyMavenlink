@@ -9,21 +9,39 @@
 import XCTest
 import SwiftyMavenlink
 import ObjectMapper
+import Mockingjay
+import SwiftyJSON
 
 class PaginatableTests: SwiftyMavenlinkTestBase {
 
-    let resource = "workspaces"
-    let perPage = 10
+    let resource = "time_entries"
+    let perPage = 200
 
-    var testObject: PagedResultSet<WorkspaceTestClass>?
+    var testObject: PagedResultSet<TimeEntryTestClass>?
 
     override func setUp() {
         super.setUp()
 
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("TimeEntries", ofType: "json")!
+        let data = NSData(contentsOfFile: path)!
+        let dataPages = JSON(data: data).arrayObject!
+        stub(uri("/api/v1/time_entries.json")) { (request) -> (Response) in
+            let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
+
+            guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
+                pageNum = Int(page) else {
+                    let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[0], options: NSJSONWritingOptions())
+                    return .Success(response, responseData)
+            }
+
+            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum], options: NSJSONWritingOptions())
+            return .Success(response, responseData)
+        }
+
         let params: MavenlinkQueryParams = [ "TestQuery" : "TestThing"]
-        testObject = PagedResultSet<WorkspaceTestClass>(resource: resource, itemsPerPage: perPage, params: params)
+        testObject = PagedResultSet<TimeEntryTestClass>(resource: resource, itemsPerPage: perPage, params: params)
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
@@ -54,7 +72,7 @@ class PaginatableTests: SwiftyMavenlinkTestBase {
     }
 
     func testPageChanges() {
-        var pages: [[WorkspaceTestClass]] = []
+        var pages: [[TimeEntryTestClass]] = []
         while let currentPage = testObject?.getNextPage() {
             pages.append(currentPage)
         }
@@ -70,7 +88,7 @@ class PaginatableTests: SwiftyMavenlinkTestBase {
     
 }
 
-public struct WorkspaceTestClass: Mappable {
+public struct TimeEntryTestClass: Mappable {
     public var entityId: Int?
     public var name: String?
 

@@ -10,10 +10,15 @@ import XCTest
 import Mockingjay
 import URITemplate
 import SwiftyJSON
+import ObjectMapper
 
 class TimeEntryTests: SwiftyMavenlinkTestBase {
 
-    let uriPath = "/api/v1/time_entries.json"
+    let uriPath = "/api/v1/\(TimeEntry.resourceName).json"
+    let singleJson: String = {
+        let path = NSBundle(forClass: TimeEntryTests.self).pathForResource("TimeEntry", ofType: "json")!
+        return try! String(contentsOfFile: path)
+    }()
     
     override func setUp() {
         super.setUp()
@@ -42,7 +47,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
     }
     
     func testTimeEntryDataMapping() {
-        let result = (TimeEntryService.get(nil, startDate: nil, endDate: nil).getNextPage()?.first)!
+        let result = Mapper<TimeEntry>().map(singleJson)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.id, message)
         XCTAssertNotNil(result.created_at, message)
@@ -51,7 +56,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         XCTAssertNotNil(result.story_id, message)
         XCTAssertNotNil(result.time_in_minutes, message)
         XCTAssertNotNil(result.billable, message)
-        XCTAssertNotNil(result.notes, message)
+        XCTAssertTrue(result.notes != nil, message)
         XCTAssertNotNil(result.rate_in_cents, message)
         XCTAssertNotNil(result.currency, message)
         XCTAssertNotNil(result.currency_symbol, message)

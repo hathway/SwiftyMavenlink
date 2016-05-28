@@ -8,10 +8,15 @@
 
 import XCTest
 import Mockingjay
+import ObjectMapper
 
 class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     let uriPath = "/api/v1/workspaces.json"
+    let singleJson: String = {
+        let path = NSBundle(forClass: WorkspaceTests.self).pathForResource("Workspace", ofType: "json")!
+        return try! String(contentsOfFile: path)
+    }()
     
     override func setUp() {
         super.setUp()
@@ -27,7 +32,7 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
     }
 
     func testTimeEntryDataMapping() {
-        let result = (WorkspaceService.get().getNextPage()?.first)!
+        let result = Mapper<Workspace>().map(singleJson)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.access_level, message)
         XCTAssertNotNil(result.archived, message)

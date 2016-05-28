@@ -23,12 +23,12 @@ public struct Workspace: Mappable {
     public var created_at: NSDate?
     public var creator_id: Int?
     public var currency: String?
-    public var currency_base_unit: String?
+    public var currency_base_unit: Int?
     public var currency_symbol: String?
     public var default_rate: String?
     public var workspace_description: String?
-    public var due_date: String?
-    public var effective_due_date: String?
+    public var due_date: NSDate?
+    public var effective_due_date: NSDate?
     public var exclude_archived_stories_percent_complete: Bool?
     public var expenses_in_burn_rate: Bool?
     public var has_budget_access: Bool?
@@ -57,6 +57,8 @@ public struct Workspace: Mappable {
         case MatchesTitle = "matching"
         // string of title, description, or team lead names
         case Search = "search"
+        // get a specific workspace by ID
+        case Only = "only"
     }
 
     public init?(_ map: Map) { }
@@ -76,12 +78,15 @@ public struct Workspace: Mappable {
         consultant_role_name <- map["consultant_role_name"]
         created_at <- (map["created_at"], LongDateFormatter)
         creator_id <- (map["creator_id"], IntFormatter)
-        currency_base_unit <- map["currency_base_unit"]
+        currency_base_unit <- (map["currency_base_unit"], IntFormatter)
         currency_symbol <- map["currency_symbol"]
         currency <- map["currency"]
         default_rate <- map["default_rate"]
         workspace_description <- map["description"]
-        due_date <- map["due_date"]
+        due_date <- (map["due_date"], ShortDateFormatter)
+        effective_due_date <- (map["effective_due_date"], ShortDateFormatter)
+        exclude_archived_stories_percent_complete <- map["exclude_archived_stories_percent_complete"]
+        expenses_in_burn_rate <- map["expenses_in_burn_rate"]
         has_budget_access <- map["has_budget_access"]
         id <- (map["id"], IntFormatter)
         over_budget <- map["over_budget"]
@@ -117,17 +122,32 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService {
-    public class func get(searchTerm: String? = nil) -> PagedResultSet<Workspace> {
+    public class func get(searchTerm: String? = nil, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
             params[Workspace.Params.Search.rawValue] = search
         }
-        return PagedResultSet<Workspace>(resource: "workspaces", params: params)
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params)
     }
 
-    public class func get(workspaceId: Int) -> Workspace? {
-        let response = PagedResultSet<Workspace>(resource: Workspace.resourceName)
-        return response.getNextPage()?.first
+    public class func getSpecific(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
+        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName,
+                                         params: params)
+    }
+
+    public class func getWorkspace(workspaceId: Int, includeArchived: Bool? = nil) -> Workspace? {
+        var params: MavenlinkQueryParams = [Workspace.Params.Only.rawValue: workspaceId]
+        if let includeArchived = includeArchived {
+            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+        }
+        return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params).getNextPage()?.first
     }
 }
 

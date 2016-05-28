@@ -26,14 +26,6 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
         super.tearDown()
     }
 
-    func testWorkspacesGet() {
-        let result = WorkspaceService.get()
-        let firstPage = try? result.getItems(1)
-        XCTAssertNotNil(result, "Result set should not be empty")
-        XCTAssertNotNil(firstPage)
-        let secondPage = result.getNextPage()
-    }
-
     func testTimeEntryDataMapping() {
         let result = (WorkspaceService.get().getNextPage()?.first)!
         let message = "No properties should be nil, mapping test data should always succeed"
@@ -75,6 +67,11 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
         XCTAssertNotNil(result.total_expenses_in_cents, message)
         XCTAssertNotNil(result.updated_at, message)
 //        XCTAssertNotNil(result.workspace_invoice_preference_id, message)
+
+        // Test nested elements
+        XCTAssertNotNil(result.status?.color, message)
+        XCTAssertNotNil(result.status?.key, message)
+        XCTAssertNotNil(result.status?.message, message)
     }
 
     func testWorkspaceSearchParam() {

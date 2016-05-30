@@ -13,6 +13,6 @@ script:
  - xctool -workspace ./Example/SwiftyMavenlink.xcworkspace -scheme SwiftyMavenlink-Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
  # xctool doesn't support the required code coverage params yet, so use xcodebuild to run tests
  - xcodebuild -scheme SwiftyMavenlink-Example -workspace ./Example/SwiftyMavenlink.xcworkspace -sdk iphonesimulator test -enableCodeCoverage YES
- - pod lib lint --allow-warnings
+# - pod lib lint --allow-warnings
 after_success:
  - bash <(curl -s https://codecov.io/bash)

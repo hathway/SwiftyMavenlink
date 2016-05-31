@@ -1,0 +1,4 @@
+# Why won't this thing work
+coverage: 
+  ignore:
+    - Example/.*

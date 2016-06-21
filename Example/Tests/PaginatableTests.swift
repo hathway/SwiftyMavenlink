@@ -12,7 +12,7 @@ import ObjectMapper
 import Mockingjay
 import SwiftyJSON
 
-class PaginatableTests: SwiftyMavenlinkTestBase {
+class PaginatableTests: XCTestCase {
 
     let resource = "time_entries"
     let perPage = 200
@@ -22,7 +22,7 @@ class PaginatableTests: SwiftyMavenlinkTestBase {
     override func setUp() {
         super.setUp()
 
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("TimeEntries", ofType: "json")!
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("time_entries", ofType: "json")!
         let data = NSData(contentsOfFile: path)!
         let dataPages = JSON(data: data).arrayObject!
         stub(uri("/api/v1/time_entries.json")) { (request) -> (Response) in

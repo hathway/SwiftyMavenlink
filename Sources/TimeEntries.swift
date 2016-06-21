@@ -11,7 +11,7 @@ import SwiftyJSON
 import ObjectMapper
 
 /// Class for TimeEntry resources in MavenLink
-public struct TimeEntry: Mappable {
+public struct TimeEntry: Mappable, MavenlinkResource {
     // i-vars
     public var id: String?
     public var created_at: NSDate?

@@ -14,20 +14,11 @@ import ObjectMapper
 
 class TimeEntryTests: SwiftyMavenlinkTestBase {
 
-    let uriPath = "/api/v1/\(TimeEntry.resourceName).json"
-    let singleJson: String = {
-        let path = NSBundle(forClass: TimeEntryTests.self).pathForResource("TimeEntry", ofType: "json")!
-        return try! String(contentsOfFile: path)
-    }()
-    
     override func setUp() {
         super.setUp()
+        let dataPages = JSON(data: self.fullJson(TimeEntry)).arrayObject!
 
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("TimeEntries", ofType: "json")!
-        let data = NSData(contentsOfFile: path)!
-        let dataPages = JSON(data: data).arrayObject!
-
-        stub(uri(uriPath)) { (request) -> (Response) in
+        stub(uri(uriPath(TimeEntry))) { (request) -> (Response) in
             let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
 
             guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
@@ -47,6 +38,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
     }
     
     func testTimeEntryDataMapping() {
+        let singleJson = singleJsonFixture(TimeEntry)
         let result = Mapper<TimeEntry>().map(singleJson)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.id, message)
@@ -70,7 +62,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
 
     func testGet_WorkspaceParameter() {
         let workspaceId = "9999"
-        setupQueryParamTestExpectation(TimeEntry.Params.WorkspaceId.rawValue, expectedValue: workspaceId, uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(TimeEntry.Params.WorkspaceId.rawValue, expectedValue: workspaceId, uriTemplate: uriPath(TimeEntry)) {
             TimeEntryService.get(workspaceId).getNextPage()
         }
     }
@@ -78,7 +70,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
     func testGet_TimeParameters() {
         let startTime = NSDate(timeIntervalSinceNow: -(60*60*24*7)), endTime = NSDate()
         let expectedValue = ShortDateFormatter.transformToJSON(startTime)! + "%3A" + ShortDateFormatter.transformToJSON(endTime)!
-        setupQueryParamTestExpectation(TimeEntry.Params.BetweenDate.rawValue, expectedValue: expectedValue, uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(TimeEntry.Params.BetweenDate.rawValue, expectedValue: expectedValue, uriTemplate: uriPath(TimeEntry)) {
             TimeEntryService.get(startDate: startTime, endDate: endTime).getNextPage()
         }
     }

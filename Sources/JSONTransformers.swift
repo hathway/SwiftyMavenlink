@@ -23,6 +23,7 @@ public class MavenlinkDateTransform: TransformType {
     public init(format: MavenlinkDateFormat) {
         formatter = NSDateFormatter()
         formatter.dateFormat = format.rawValue
+        formatter.timeZone = NSTimeZone(abbreviation: "GMT")
     }
 
     public func transformFromJSON(value: AnyObject?) -> NSDate? {
@@ -43,6 +44,7 @@ public class MavenlinkDateTransform: TransformType {
 let ShortDateFormatter = MavenlinkShortDateTransform()
 let LongDateFormatter = MavenlinkLongDateTransform()
 let IntFormatter = NumericalStringConverter()
+let URLFormatter = URLTransform()
 
 public class MavenlinkShortDateTransform: MavenlinkDateTransform {
     init() {
@@ -54,7 +56,6 @@ public class MavenlinkLongDateTransform: MavenlinkDateTransform {
     init() {
         super.init(format: .Long)
         formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        formatter.timeZone = NSTimeZone(abbreviation: "GMT")
     }
 }
 
@@ -64,6 +65,19 @@ public class NumericalStringConverter: TransformType {
     public init() {}
     public func transformFromJSON(value: AnyObject?) -> Object? {
         return value?.integerValue
+    }
+    public func transformToJSON(value: Object?) -> JSON? {
+        return String(value)
+    }
+}
+
+public class URLTransform: TransformType {
+    public typealias Object = NSURL
+    public typealias JSON = String
+    public init() {}
+    public func transformFromJSON(value: AnyObject?) -> Object? {
+        guard let urlString = value as? String else { return nil }
+        return NSURL(string: urlString)
     }
     public func transformToJSON(value: Object?) -> JSON? {
         return String(value)

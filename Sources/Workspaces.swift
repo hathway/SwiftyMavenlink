@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-public struct Workspace: Mappable {
+public struct Workspace: Mappable, MavenlinkResource {
     public var access_level: String?
     public var archived: Bool?
     public var budget_used: String?

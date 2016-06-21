@@ -11,28 +11,10 @@ import Mockingjay
 import ObjectMapper
 
 class WorkspaceTests: SwiftyMavenlinkTestBase {
-
-    let uriPath = "/api/v1/workspaces.json"
-    let singleJson: String = {
-        let path = NSBundle(forClass: WorkspaceTests.self).pathForResource("Workspace", ofType: "json")!
-        return try! String(contentsOfFile: path)
-    }()
     
-    override func setUp() {
-        super.setUp()
-
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("Workspaces", ofType: "json")!
-        let data = NSData(contentsOfFile: path)!
-        stub(uri(uriPath), builder: jsonData(data))
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-
     func testTimeEntryDataMapping() {
-        let result = Mapper<Workspace>().map(singleJson)!
+        let jsonText = self.singleJsonFixture(Workspace)
+        let result = Mapper<Workspace>().map(jsonText)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.access_level, message)
         XCTAssertNotNil(result.archived, message)
@@ -81,7 +63,7 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     func testWorkspaceSearchParam() {
         let searchTerm = "testing"
-        setupQueryParamTestExpectation(Workspace.Params.Search.rawValue, expectedValue: searchTerm, uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.Search.rawValue, expectedValue: searchTerm, uriTemplate: uriPath(Workspace)) {
             WorkspaceService.get(searchTerm).getNextPage()
         }
 
@@ -89,29 +71,29 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     func testWorkspaceMatchingNameParam() {
         let matchingName = "testing"
-        setupQueryParamTestExpectation(Workspace.Params.MatchesTitle.rawValue, expectedValue: matchingName, uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.MatchesTitle.rawValue, expectedValue: matchingName, uriTemplate: uriPath(Workspace)) {
             WorkspaceService.getSpecific(matchingName).getNextPage()
         }
     }
 
     func testIncludeArchiveParam() {
         let includeArchived = true
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
             WorkspaceService.get(includeArchived: includeArchived).getNextPage()
         }
 
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
             WorkspaceService.getSpecific("test", includeArchived: includeArchived).getNextPage()
         }
 
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
             WorkspaceService.getWorkspace(9999, includeArchived: includeArchived)
         }
     }
 
     func testGetSpecificWorkspace() {
         let id = 123458
-        setupQueryParamTestExpectation(Workspace.Params.Only.rawValue, expectedValue: String(id), uriTemplate: uriPath) {
+        setupQueryParamTestExpectation(Workspace.Params.Only.rawValue, expectedValue: String(id), uriTemplate: uriPath(Workspace)) {
             WorkspaceService.getWorkspace(id)
         }
     }

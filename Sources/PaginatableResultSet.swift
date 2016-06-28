@@ -151,14 +151,14 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
         var allItems: [T] = []
         let group = AsyncGroup()
-        (1..<_maxPage+1).forEach {i in
-            group.background {
+        (1..._maxPage).forEach {i in
+//            group.background {
                 guard let page = try? self.getItems(i),
                     stuff = page?.items else { return }
                 allItems.appendContentsOf(stuff)
-            }
+//            }
         }
-        group.wait()
+//        group.wait()
 
         completion(allItems, nil)
     }
@@ -211,7 +211,7 @@ extension PagedResultSet {
     }
 
     internal func getItems(page: Int) throws -> ResultsPage<T>? {
-        guard page > 0 && page < _maxPage else { return nil }
+        guard page > 0 && page <= _maxPage else { return nil }
 
         if let cachedResults = getCacheForPage(page) {
             return ResultsPage<T>(items: cachedResults, totalCount: _totalItemCount)

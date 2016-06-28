@@ -63,7 +63,8 @@ public struct Workspace: Mappable, MavenlinkResource {
 
     public init?(_ map: Map) { }
 
-    static var resourceName: String { get { return "workspaces" } }
+    public static var resourceName: String { get { return "workspaces" } }
+    public static var searchable: Bool { get { return true } }
 
     mutating public func mapping(map: Map) {
         access_level <- map["access_level"]
@@ -121,7 +122,7 @@ public struct WorkspaceStatus: Mappable {
     }
 }
 
-public class WorkspaceService {
+public class WorkspaceService: MavenlinkResourceService<Workspace> {
     public class func get(searchTerm: String? = nil, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
@@ -133,13 +134,12 @@ public class WorkspaceService {
         return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params)
     }
 
-    public class func getSpecific(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
-        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
+    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
+        var params: MavenlinkQueryParams = [:]
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
         }
-        return PagedResultSet<Workspace>(resource: Workspace.resourceName,
-                                         params: params)
+        return super.search(matchingTitle, extraParams: params)
     }
 
     public class func getWorkspace(workspaceId: Int, includeArchived: Bool? = nil) -> Workspace? {
@@ -147,7 +147,7 @@ public class WorkspaceService {
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
         }
-        return PagedResultSet<Workspace>(resource: Workspace.resourceName, params: params).getNextPage()?.first
+        return super.getSpecific(workspaceId, params: params)
     }
 }
 

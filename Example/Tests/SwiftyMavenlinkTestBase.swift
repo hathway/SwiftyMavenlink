@@ -34,11 +34,6 @@ class SwiftyMavenlinkTestBase: XCTestCase {
         super.tearDown()
     }
 
-//    override func performTest(run: XCTestRun) {
-//        super.performTest(run)
-//        print(run)
-//    }
-
     func testConfigNotEmpty() {
         let session = MavenlinkSession.instance
         XCTAssertNotNil(session, "")

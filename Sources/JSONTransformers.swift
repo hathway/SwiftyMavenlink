@@ -83,3 +83,9 @@ public class URLTransform: TransformType {
         return String(value)
     }
 }
+
+extension Array {
+    func toJSONString() -> String {
+        return self.reduce("") { $0 + "," + String($1) }
+    }
+}

@@ -34,7 +34,7 @@ extension XCTestCase {
         }
 
         executionBlock()
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectationsWithTimeout(4, handler: nil)
     }
     
 }

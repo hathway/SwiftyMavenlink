@@ -34,7 +34,7 @@ class PaginatableTests: XCTestCase {
                     return .Success(response, responseData)
             }
 
-            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum], options: NSJSONWritingOptions())
+            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum-1], options: NSJSONWritingOptions())
             return .Success(response, responseData)
         }
 
@@ -84,6 +84,10 @@ class PaginatableTests: XCTestCase {
         }
 
         XCTAssert(count == 0, "Page count should be 0 after iterating through all pages")
+    }
+
+    func testPreloading() {
+        
     }
     
 }

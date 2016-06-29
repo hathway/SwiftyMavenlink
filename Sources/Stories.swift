@@ -43,7 +43,7 @@ public class StoryService: MavenlinkResourceService<Story> {
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
         }
-        return PagedResultSet<Story>(resource: Workspace.resourceName, params: params)
+        return super.get(params)
     }
 
     public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Story> {
@@ -54,12 +54,12 @@ public class StoryService: MavenlinkResourceService<Story> {
         return super.search(matchingTitle, extraParams: params)
     }
 
-    public class func getSpecific(workspaceId: Int, includeArchived: Bool? = nil) -> Story? {
-        var params: MavenlinkQueryParams = [Workspace.Params.Only.rawValue: workspaceId]
+    public class func getSpecific(id: Int, includeArchived: Bool? = nil) -> Story? {
+        var params: MavenlinkQueryParams = [:]
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
         }
-        return super.getSpecific(workspaceId, params: params)
+        return super.getSpecific(id, params: params)
     }
 }
 

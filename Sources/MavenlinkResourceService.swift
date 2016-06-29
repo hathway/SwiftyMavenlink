@@ -12,6 +12,15 @@ import ObjectMapper
 public class MavenlinkResourceService<T> { }
 
 extension MavenlinkResourceService where T:MavenlinkResource, T:Mappable {
+
+    public class func get(params: MavenlinkQueryParams? = nil) -> PagedResultSet<T> {
+        return PagedResultSet<T>(resource: T.resourceName, params: params)
+    }
+
+    public class func getSpecific(id: Int) -> T? {
+        return getSpecific(id, params: nil)
+    }
+
     public class func getSpecific(id: Int, params: MavenlinkQueryParams? = nil) -> T? {
         var finalParams = (params ?? [:])
         finalParams += GenericParams.Only(id).queryParam()

@@ -13,6 +13,10 @@
 		DB12817A1D14D115009FF732 /* UsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1281791D14D115009FF732 /* UsersTests.swift */; };
 		DB12817C1D14D365009FF732 /* users_single.json in Resources */ = {isa = PBXBuildFile; fileRef = DB12817B1D14D365009FF732 /* users_single.json */; };
 		DB180D3F1D21CC8400A462D2 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB180D3E1D21CC8400A462D2 /* Stories.swift */; };
+		DB180D411D23251300A462D2 /* WorkspaceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB180D401D23251300A462D2 /* WorkspaceGroup.swift */; };
+		DB180D431D232A6300A462D2 /* workspace_groups.json in Resources */ = {isa = PBXBuildFile; fileRef = DB180D421D232A6300A462D2 /* workspace_groups.json */; };
+		DB180D451D232A7800A462D2 /* workspace_groups_single.json in Resources */ = {isa = PBXBuildFile; fileRef = DB180D441D232A7800A462D2 /* workspace_groups_single.json */; };
+		DB180D481D232AE700A462D2 /* WorkspaceGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB180D471D232AE700A462D2 /* WorkspaceGroupTests.swift */; };
 		DB34A0611CE288000099941A /* MavenlinkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34A0601CE288000099941A /* MavenlinkSession.swift */; };
 		DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB34DAE01CF4D895008663A6 /* TestUtils.swift */; };
 		DB6741241CE29A0700EA71D2 /* TimeEntries.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6741231CE29A0700EA71D2 /* TimeEntries.swift */; };
@@ -46,6 +50,10 @@
 		DB1281791D14D115009FF732 /* UsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTests.swift; sourceTree = "<group>"; };
 		DB12817B1D14D365009FF732 /* users_single.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users_single.json; sourceTree = "<group>"; };
 		DB180D3E1D21CC8400A462D2 /* Stories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
+		DB180D401D23251300A462D2 /* WorkspaceGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceGroup.swift; sourceTree = "<group>"; };
+		DB180D421D232A6300A462D2 /* workspace_groups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = workspace_groups.json; sourceTree = "<group>"; };
+		DB180D441D232A7800A462D2 /* workspace_groups_single.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = workspace_groups_single.json; sourceTree = "<group>"; };
+		DB180D471D232AE700A462D2 /* WorkspaceGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceGroupTests.swift; sourceTree = "<group>"; };
 		DB34A0601CE288000099941A /* MavenlinkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkSession.swift; sourceTree = "<group>"; };
 		DB34DAE01CF4D895008663A6 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		DB6741211CE28FDA00EA71D2 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
@@ -112,14 +120,12 @@
 			isa = PBXGroup;
 			children = (
 				DB9C5F481CF41A3A008C8787 /* Fixtures */,
+				DB180D461D232AC500A462D2 /* Resource Tests */,
 				DBFDDD431CFE2DEC00D9EBF5 /* JSONTransformersTests.swift */,
 				DB7537661CEF76E100E1FDDB /* MappableObjectTests.swift */,
 				DB34DAE01CF4D895008663A6 /* TestUtils.swift */,
 				DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */,
 				607FACEB1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift */,
-				DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */,
-				DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */,
-				DB1281791D14D115009FF732 /* UsersTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -153,6 +159,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DB180D461D232AC500A462D2 /* Resource Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */,
+				DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */,
+				DB1281791D14D115009FF732 /* UsersTests.swift */,
+				DB180D471D232AE700A462D2 /* WorkspaceGroupTests.swift */,
+			);
+			name = "Resource Tests";
+			sourceTree = "<group>";
+		};
 		DB34A05F1CE287D70099941A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +191,8 @@
 				DB12817B1D14D365009FF732 /* users_single.json */,
 				DBA655821CFA57A30075A1D7 /* workspaces_single.json */,
 				DB9C5F4B1CF41A3A008C8787 /* workspaces.json */,
+				DB180D421D232A6300A462D2 /* workspace_groups.json */,
+				DB180D441D232A7800A462D2 /* workspace_groups_single.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -185,6 +204,7 @@
 				DB6741231CE29A0700EA71D2 /* TimeEntries.swift */,
 				DBACE8F11CE51BB200F13572 /* Workspaces.swift */,
 				DB1281771D14CFC4009FF732 /* Users.swift */,
+				DB180D401D23251300A462D2 /* WorkspaceGroup.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -270,7 +290,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBA655811CFA56680075A1D7 /* time_entries_single.json in Resources */,
+				DB180D431D232A6300A462D2 /* workspace_groups.json in Resources */,
 				DBA655831CFA57A30075A1D7 /* workspaces_single.json in Resources */,
+				DB180D451D232A7800A462D2 /* workspace_groups_single.json in Resources */,
 				DB9C5F4E1CF41A3A008C8787 /* workspaces.json in Resources */,
 				DB9C5F4C1CF41A3A008C8787 /* time_entries.json in Resources */,
 				DB12817C1D14D365009FF732 /* users_single.json in Resources */,
@@ -342,6 +364,7 @@
 				DB7537691CEF78F700E1FDDB /* WorkspaceTests.swift in Sources */,
 				DBACE8F21CE51BB200F13572 /* Workspaces.swift in Sources */,
 				DBB5FF551D1DD4FE000E8884 /* MavenlinkGenerics.swift in Sources */,
+				DB180D411D23251300A462D2 /* WorkspaceGroup.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */,
 				DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */,
 				DB6741241CE29A0700EA71D2 /* TimeEntries.swift in Sources */,
@@ -349,6 +372,7 @@
 				DB7537671CEF76E100E1FDDB /* MappableObjectTests.swift in Sources */,
 				DB75376B1CEF790100E1FDDB /* TimeEntryTests.swift in Sources */,
 				DB12817A1D14D115009FF732 /* UsersTests.swift in Sources */,
+				DB180D481D232AE700A462D2 /* WorkspaceGroupTests.swift in Sources */,
 				DBEC7AA81CEF759600EC98E8 /* PaginatableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

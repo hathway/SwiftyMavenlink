@@ -78,7 +78,7 @@ public class TimeEntryService {
             endString = ShortDateFormatter.transformToJSON(end) {
             params[TimeEntry.Params.BetweenDate.rawValue] = "\(startString):\(endString)"
         }
-
+        
         return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName, itemsPerPage: 100, params: params)
     }
 }

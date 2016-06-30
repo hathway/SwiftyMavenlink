@@ -49,20 +49,22 @@ extension Users {
         // Get a specific user
         case SpecificUsers(userIds: [Int])
 
-        public func queryParam() -> MavenlinkQueryParams {
-            switch(self) {
-            case .OnMyAccount:
-                return ["on_my_account": true]
-            case .ParticipantIn(let id):
-                return ["participant_in": id]
-            case .ByAccount(let id):
-                return ["account_id": id]
-            case .ConsultantsOnly:
-                return ["consultants_only": true]
-            case ClientsOnly:
-                return ["clients_only": true]
-            case .SpecificUsers(let userIds):
-                return ["only": userIds.toJSONString()]
+        public var queryParam: MavenlinkQueryParams {
+            get {
+                switch(self) {
+                case .OnMyAccount:
+                    return ["on_my_account": true]
+                case .ParticipantIn(let id):
+                    return ["participant_in": id]
+                case .ByAccount(let id):
+                    return ["account_id": id]
+                case .ConsultantsOnly:
+                    return ["consultants_only": true]
+                case ClientsOnly:
+                    return ["clients_only": true]
+                case .SpecificUsers(let userIds):
+                    return ["only": userIds.toJSONString()]
+                }
             }
         }
     }
@@ -86,11 +88,11 @@ public class UserService: MavenlinkResourceService<Users> {
 
     public class func getAccountUsers() -> PagedResultSet<Users> {
         return PagedResultSet<Users>(resource: Users.resourceName, params:
-            Users.Params.OnMyAccount.queryParam()
+            Users.Params.OnMyAccount.queryParam
         )
     }
 
     public class func getSpecificUsers(userIds: [Int]) -> PagedResultSet<Users> {
-        return PagedResultSet<Users>(resource: Users.resourceName, params: Users.Params.SpecificUsers(userIds: userIds).queryParam())
+        return PagedResultSet<Users>(resource: Users.resourceName, params: Users.Params.SpecificUsers(userIds: userIds).queryParam)
     }
 }

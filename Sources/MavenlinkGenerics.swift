@@ -12,30 +12,34 @@ enum GenericParams: RESTApiParams {
     case Only(_: Int)
     case Search(_: String)
 
-    func paramName() -> String {
-        switch(self) {
-        case .Only:
-            return "only"
-        case .Search:
-            return "search"
+    var paramName: String {
+        get {
+            switch(self) {
+            case .Only:
+                return "only"
+            case .Search:
+                return "search"
+            }
         }
     }
 
-    func queryParam() -> MavenlinkQueryParams {
-        let value: AnyObject
-        switch(self) {
-        case .Only(let id):
-            value = id
-        case .Search(let searchString):
-            value = searchString
-        }
+    var queryParam: MavenlinkQueryParams {
+        get {
+            let value: AnyObject
+            switch(self) {
+            case .Only(let id):
+                value = id
+            case .Search(let searchString):
+                value = searchString
+            }
 
-        return [self.paramName(): value]
+            return [self.paramName: value]
+        }
     }
 }
 
 public protocol RESTApiParams {
-    func queryParam() -> MavenlinkQueryParams
+    var queryParam: MavenlinkQueryParams { get }
 }
 
 public protocol MavenlinkResource {

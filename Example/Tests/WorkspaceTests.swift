@@ -63,15 +63,15 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     func testWorkspaceSearchParam() {
         let searchTerm = "testing"
-        setupQueryParamTestExpectation(Workspace.Params.Search.rawValue, expectedValue: searchTerm, uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.get(searchTerm).getNextPage()
+        setupQueryParamTestExpectation(GenericParams.Search(searchTerm).paramName, expectedValue: searchTerm, uriTemplate: uriPath(Workspace)) {
+            WorkspaceService.search(searchTerm, includeArchived: false).getNextPage()
         }
 
     }
 
     func testWorkspaceMatchingNameParam() {
         let matchingName = "testing"
-        setupQueryParamTestExpectation(GenericParams.Search(matchingName).paramName(), expectedValue: matchingName, uriTemplate: uriPath(Workspace)) {
+        setupQueryParamTestExpectation(GenericParams.Search(matchingName).paramName, expectedValue: matchingName, uriTemplate: uriPath(Workspace)) {
             WorkspaceService.search(matchingName, includeArchived: true).getNextPage()
         }
     }
@@ -79,7 +79,7 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
     func testIncludeArchiveParam() {
         let includeArchived = true
         setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.get(includeArchived: includeArchived).getNextPage()
+            WorkspaceService.get(includeArchived).getNextPage()
         }
 
         setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {

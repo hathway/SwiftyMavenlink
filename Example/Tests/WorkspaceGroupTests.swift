@@ -27,7 +27,7 @@ class WorkspaceGroupTests: SwiftyMavenlinkTestBase {
 
     func testGetSpecific() {
         let id = 12345
-        let param = GenericParams.Only(id).queryParam().first!.0
+        let param = GenericParams.Only(id).queryParam.first!.0
         setupQueryParamTestExpectation(param, expectedValue: String(id), uriTemplate: uriPath(WorkspaceGroup)) {
             WorkspaceGroupService.getSpecific(id)
         }

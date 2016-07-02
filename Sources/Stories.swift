@@ -35,7 +35,7 @@ public struct Story: Mappable, MavenlinkResource {
 }
 
 public class StoryService: MavenlinkResourceService<Story> {
-    public class func get(searchTerm: String? = nil, includeArchived: Bool? = nil) -> PagedResultSet<Story> {
+    public class func get(searchTerm: String? = nil, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
         var params: MavenlinkQueryParams = [:]
         if let search = searchTerm {
             params[Workspace.Params.Search.rawValue] = search
@@ -46,7 +46,7 @@ public class StoryService: MavenlinkResourceService<Story> {
         return super.get(params)
     }
 
-    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Story> {
+    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
         var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived

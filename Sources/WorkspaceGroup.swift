@@ -32,6 +32,36 @@ public struct WorkspaceGroup: Mappable, MavenlinkResource {
     }
 }
 
+extension WorkspaceGroup {
+    public enum Params: RESTApiParams {
+        /// Include the workspace IDs contained in each group in the response. 
+        case IncludeWorkspaces
+
+        public var paramName: String {
+            get {
+                switch(self) {
+                case .IncludeWorkspaces:
+                    return "include"
+                }
+            }
+        }
+
+        public var queryParam: MavenlinkQueryParams {
+            get {
+                let value: AnyObject
+                switch(self) {
+                case .IncludeWorkspaces:
+                    value = "workspaces"
+                }
+                return [self.paramName: value]
+            }
+        }
+    }
+}
+
 
 public class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroup> {
+    override public class func get(params: MavenlinkQueryParams? = WorkspaceGroup.Params.IncludeWorkspaces.queryParam) -> PagedResultSet<Resource> {
+        return PagedResultSet<Resource>(resource: Resource.resourceName, params: params)
+    }
 }

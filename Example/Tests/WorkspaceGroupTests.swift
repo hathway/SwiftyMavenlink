@@ -23,6 +23,7 @@ class WorkspaceGroupTests: SwiftyMavenlinkTestBase {
         XCTAssertNotNil(result.id, message)
         XCTAssertNotNil(result.name, message)
         XCTAssertNotNil(result.company, message)
+        XCTAssertNotNil(result.workspace_ids, message)
     }
 
     func testGetSpecific() {

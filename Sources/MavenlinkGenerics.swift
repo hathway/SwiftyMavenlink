@@ -40,6 +40,7 @@ enum GenericParams: RESTApiParams {
 
 public protocol RESTApiParams {
     var queryParam: MavenlinkQueryParams { get }
+    var paramName: String { get }
 }
 
 public protocol MavenlinkResource {

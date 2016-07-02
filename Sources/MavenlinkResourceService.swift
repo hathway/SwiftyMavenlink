@@ -9,9 +9,10 @@
 import Foundation
 import ObjectMapper
 
-public class MavenlinkResourceService<T> { }
 
-extension MavenlinkResourceService where T:MavenlinkResource, T:Mappable {
+
+public class MavenlinkResourceService<T where T:MavenlinkResource, T:Mappable> {
+    public typealias Resource = T
 
     public class func get(params: MavenlinkQueryParams? = nil) -> PagedResultSet<T> {
         return PagedResultSet<T>(resource: T.resourceName, params: params)

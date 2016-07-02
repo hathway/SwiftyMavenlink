@@ -123,7 +123,7 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService: MavenlinkResourceService<Workspace> {
-    public class func get(includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
+    public class func get(includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
         var params: MavenlinkQueryParams = [:]
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
@@ -131,7 +131,7 @@ public class WorkspaceService: MavenlinkResourceService<Workspace> {
         return super.get(params)
     }
 
-    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Workspace> {
+    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
         var params: MavenlinkQueryParams = [:]
         if let includeArchived = includeArchived {
             params[Workspace.Params.IncludeArchived.rawValue] = includeArchived

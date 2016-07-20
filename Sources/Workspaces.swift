@@ -10,44 +10,44 @@ import Foundation
 import ObjectMapper
 
 public struct Workspace: Mappable, MavenlinkResource {
-    public var access_level: String?
-    public var archived: Bool?
-    public var budget_used: String?
-    public var budget_used_in_cents: Int?
-    public var budgeted: Bool?
-    public var can_create_line_items: Bool?
-    public var can_invite: Bool?
-    public var change_orders_enabled: Bool?
-    public var client_role_name: String?
-    public var consultant_role_name: String?
-    public var created_at: NSDate?
-    public var creator_id: Int?
-    public var currency: String?
-    public var currency_base_unit: Int?
-    public var currency_symbol: String?
-    public var default_rate: String?
-    public var workspace_description: String?
-    public var due_date: NSDate?
-    public var effective_due_date: NSDate?
-    public var exclude_archived_stories_percent_complete: Bool?
-    public var expenses_in_burn_rate: Bool?
-    public var has_budget_access: Bool?
-    public var id: Int?
-    public var over_budget: Bool?
-    public var percentage_complete: Int?
-    public var posts_require_privacy_decision: Bool?
-    public var price: String?
-    public var price_in_cents: Int?
-    public var rate_card_id: Int?
-    public var require_expense_approvals: Bool?
-    public var require_time_approvals: Bool?
-    public var start_date: NSDate?
-    public var status: WorkspaceStatus?
-    public var tasks_default_non_billable: Bool?
-    public var title: String?
-    public var total_expenses_in_cents: Int?
-    public var updated_at: NSDate?
-    public var workspace_invoice_preference_id: Int?
+    public private(set) var access_level: String?
+    public private(set) var archived: Bool?
+    public private(set) var budget_used: String?
+    public private(set) var budget_used_in_cents: Int?
+    public private(set) var budgeted: Bool?
+    public private(set) var can_create_line_items: Bool?
+    public private(set) var can_invite: Bool?
+    public private(set) var change_orders_enabled: Bool?
+    public private(set) var client_role_name: String?
+    public private(set) var consultant_role_name: String?
+    public private(set) var created_at: NSDate?
+    public private(set) var creator_id: Int?
+    public private(set) var currency: String?
+    public private(set) var currency_base_unit: Int?
+    public private(set) var currency_symbol: String?
+    public private(set) var default_rate: String?
+    public private(set) var workspace_description: String?
+    public private(set) var due_date: NSDate?
+    public private(set) var effective_due_date: NSDate?
+    public private(set) var exclude_archived_stories_percent_complete: Bool?
+    public private(set) var expenses_in_burn_rate: Bool?
+    public private(set) var has_budget_access: Bool?
+    public private(set) var id: Int?
+    public private(set) var over_budget: Bool?
+    public private(set) var percentage_complete: Int?
+    public private(set) var posts_require_privacy_decision: Bool?
+    public private(set) var price: String?
+    public private(set) var price_in_cents: Int?
+    public private(set) var rate_card_id: Int?
+    public private(set) var require_expense_approvals: Bool?
+    public private(set) var require_time_approvals: Bool?
+    public private(set) var start_date: NSDate?
+    public private(set) var status: WorkspaceStatus?
+    public private(set) var tasks_default_non_billable: Bool?
+    public private(set) var title: String?
+    public private(set) var total_expenses_in_cents: Int?
+    public private(set) var updated_at: NSDate?
+    public private(set) var workspace_invoice_preference_id: Int?
 
     // Enums
     public enum Params: String {
@@ -109,10 +109,48 @@ public struct Workspace: Mappable, MavenlinkResource {
     }
 }
 
+public func ==(lhs: Workspace, rhs: Workspace) -> Bool {
+    return (lhs.id ?? 0) == (rhs.id ?? 0)
+}
+
+extension Workspace: Hashable {
+    public var hashValue: Int {
+        get {
+            return self.id ?? 0
+        }
+    }
+}
+
 public struct WorkspaceStatus: Mappable {
-    public var color: String?
+    public var color: Color?
     public var message: String?
     public var key: Int?
+
+    public enum Color: String {
+        case Green = "green"
+        case Grey = "grey"
+        case Red = "red"
+        case Blue = "blue"
+        case LightGreen = "light-green"
+        case Yellow = "yellow"
+
+        public var priorityStatus: Int {
+            switch self {
+            case Red:
+                return 1
+            case Yellow:
+                return 2
+            case Green:
+                return 3
+            case LightGreen:
+                return 4
+            case Blue:
+                return 5
+            case Grey:
+                return 6
+            }
+        }
+    }
 
     public init?(_ map: Map) { }
     mutating public func mapping(map: Map) {

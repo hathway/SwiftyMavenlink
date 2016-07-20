@@ -13,23 +13,23 @@ import ObjectMapper
 /// Class for TimeEntry resources in MavenLink
 public struct TimeEntry: Mappable, MavenlinkResource {
     // i-vars
-    public var id: String?
-    public var created_at: NSDate?
-    public var updated_at: NSDate?
-    public var date_performed: NSDate?
-    public var story_id: Int?
-    public var time_in_minutes: Int?
-    public var billable: Bool?
-    public var notes: String?
-    public var rate_in_cents: Int?
-    public var currency: String?
-    public var currency_symbol: String?
-    public var currency_base_unit: Int?
-    public var user_can_edit: Bool?
-    public var taxable: Bool?
-    public var workspace_id: Int?
-    public var user_id: Int?
-    public var approved: Bool?
+    public private(set) var id: String?
+    public private(set) var created_at: NSDate?
+    public private(set) var updated_at: NSDate?
+    public private(set) var date_performed: NSDate?
+    public private(set) var story_id: Int?
+    public private(set) var time_in_minutes: Int?
+    public private(set) var billable: Bool?
+    public private(set) var notes: String?
+    public private(set) var rate_in_cents: Int?
+    public private(set) var currency: String?
+    public private(set) var currency_symbol: String?
+    public private(set) var currency_base_unit: Int?
+    public private(set) var user_can_edit: Bool?
+    public private(set) var taxable: Bool?
+    public private(set) var workspace_id: Int?
+    public private(set) var user_id: Int?
+    public private(set) var approved: Bool?
 
     public init?(_ map: Map) { }
 

@@ -11,12 +11,12 @@ import ObjectMapper
 import SwiftyJSON
 
 public struct Users: Mappable, MavenlinkResource {
-    public var full_name: String?
-    public var photo_path: NSURL?
-    public var email_address: String?
-    public var headline: String?
-    public var account_id: Int?
-    public var id: Int?
+    public private(set) var full_name: String?
+    public private(set) var photo_path: NSURL?
+    public private(set) var email_address: String?
+    public private(set) var headline: String?
+    public private(set) var account_id: Int?
+    public private(set) var id: Int?
 
     public init?(_ map: Map) { }
 

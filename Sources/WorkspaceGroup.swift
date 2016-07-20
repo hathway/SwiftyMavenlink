@@ -10,12 +10,12 @@ import Foundation
 import ObjectMapper
 
 public struct WorkspaceGroup: Mappable, MavenlinkResource {
-    public var id: Int?
-    public var name: String?
-    public var company: Bool?
-    public var created_at: NSDate?
-    public var updated_at: NSDate?
-    public var workspace_ids: [Int]?
+    public private(set) var id: Int?
+    public private(set) var name: String?
+    public private(set) var company: Bool?
+    public private(set) var created_at: NSDate?
+    public private(set) var updated_at: NSDate?
+    public private(set) var workspace_ids: [Int]?
 
     public init?(_ map: Map) { }
 

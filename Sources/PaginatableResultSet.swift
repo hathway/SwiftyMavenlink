@@ -144,23 +144,24 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
      - parameter completion: block that will be called when the results have been fetched, or if an error occurs.
      */
     public func preloadData(completion: CompletionBlock) {
-        // Get total count so we can parallelize the rest of the fetching
-        guard let result = getItems(1, offset: 0) else { return completion(nil, .NoData) }
-        guard let totalCount = result.totalCount else { return completion(nil, .ParseError) }
-        _totalItemCount = totalCount
+        Async.background {
+            // Get total count so we can parallelize the rest of the fetching
+            guard let result = self.getItems(1, offset: 0) where result.totalCount != 0 else { completion(nil, .NoData); return }
+            guard let totalCount = result.totalCount else { completion(nil, .ParseError); return }
+            self._totalItemCount = totalCount
 
-        var allItems: [T] = []
-        let group = AsyncGroup()
-        (1..._maxPage).forEach {i in
-//            group.background {
+            var allItems: [T] = []
+
+            (1...self._maxPage).forEach {i in
                 guard let page = try? self.getItems(i),
                     stuff = page?.items else { return }
                 allItems.appendContentsOf(stuff)
+            }
+
+//            Async.main {
+                completion(allItems, nil)
 //            }
         }
-//        group.wait()
-
-        completion(allItems, nil)
     }
 }
 
@@ -206,7 +207,10 @@ extension PagedResultSet {
     }
 
     private func getItems(limit: Int = 1, offset: Int = 0) -> ResultsPage<T>? {
-        let response = MavenlinkSession.instance.get(resource + ".json", params: queryParamsAppendedWith(PagingParams.Indexed(offset: offset, limit: limit).getQueryParams()))
+        let response = MavenlinkSession.instance.get(
+            resource + ".json",
+            params: queryParamsAppendedWith(PagingParams.Indexed(offset: offset, limit: limit)
+                .getQueryParams()))
         return parseResult(response)
     }
 

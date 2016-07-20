@@ -31,19 +31,25 @@ protocol RestSession {
 
 public class MavenlinkSession {
     public static let instance: MavenlinkSession = MavenlinkSession()
+    private var oAuthToken: String?
     static let apiHost: String! = "https://api.mavenlink.com/api/v1/"
-    private var request: JSONRequest! = JSONRequest()
+
+    private func request() -> JSONRequest {
+        let result = JSONRequest()
+        result.httpRequest?.setValue("Bearer \(oAuthToken!)", forHTTPHeaderField: "Authorization")
+        return result
+    }
 
     public func configure(oAuthToken: String) {
         precondition(oAuthToken != "", "oAuthToken parameter cannot be blank")
-        self.request.httpRequest?.setValue("Bearer \(oAuthToken)", forHTTPHeaderField: "Authorization")
+        self.oAuthToken = oAuthToken
     }
 
     func get(urlPath: String, params: MavenlinkQueryParams? = nil) -> JSONResult {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
-        return request.get(url, queryParams: params)
+        return request().get(url, queryParams: params)
     }
 
     func post(urlPath: String, params: MavenlinkQueryParams? = nil,
@@ -51,7 +57,7 @@ public class MavenlinkSession {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
-        return request.post(url, queryParams: params, payload: payload)
+        return request().post(url, queryParams: params, payload: payload)
     }
 
     func put(urlPath: String, params: MavenlinkQueryParams? = nil,
@@ -59,7 +65,7 @@ public class MavenlinkSession {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.Failure(error: JSONError.InvalidURL, response: nil, body: nil)
         }
-        return request.put(url, queryParams: params, payload: payload)
+        return request().put(url, queryParams: params, payload: payload)
     }
 
     class func buildUrl(urlPath: String) -> String? {

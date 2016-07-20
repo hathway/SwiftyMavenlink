@@ -44,6 +44,7 @@ public class MavenlinkDateTransform: TransformType {
 let ShortDateFormatter = MavenlinkShortDateTransform()
 let LongDateFormatter = MavenlinkLongDateTransform()
 let IntFormatter = NumericalStringConverter()
+let IntArrayFormatter = NumericalArrayConverter()
 let URLFormatter = URLTransform()
 
 public class MavenlinkShortDateTransform: MavenlinkDateTransform {
@@ -56,6 +57,25 @@ public class MavenlinkLongDateTransform: MavenlinkDateTransform {
     init() {
         super.init(format: .Long)
         formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    }
+}
+
+public class NumericalArrayConverter: TransformType {
+    public typealias Object = [Int]
+    public typealias JSON = [String]
+    public init() {}
+    public func transformFromJSON(value: AnyObject?) -> Object? {
+        guard let array = value as? [String] else { return [] }
+        var numArray: [Int] = []
+        array.forEach { value in
+            if let int = Int(value) {
+                numArray.append(int)
+            }
+        }
+        return numArray
+    }
+    public func transformToJSON(value: Object?) -> JSON? {
+        return value?.map { String($0) }
     }
 }
 

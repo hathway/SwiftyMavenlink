@@ -32,6 +32,9 @@
 		DBACE8F01CE5077300F13572 /* JSONTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */; };
 		DBACE8F21CE51BB200F13572 /* Workspaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACE8F11CE51BB200F13572 /* Workspaces.swift */; };
 		DBB5FF551D1DD4FE000E8884 /* MavenlinkGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB5FF541D1DD4FE000E8884 /* MavenlinkGenerics.swift */; };
+		DBBCCC761D3EE45A003F8B13 /* StoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBCCC751D3EE45A003F8B13 /* StoriesTests.swift */; };
+		DBBCCC791D3EE548003F8B13 /* stories_single.json in Resources */ = {isa = PBXBuildFile; fileRef = DBBCCC771D3EE548003F8B13 /* stories_single.json */; };
+		DBBCCC7A1D3EE548003F8B13 /* stories.json in Resources */ = {isa = PBXBuildFile; fileRef = DBBCCC781D3EE548003F8B13 /* stories.json */; };
 		DBE621B21D19B14200305909 /* MavenlinkResourceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE621B11D19B14200305909 /* MavenlinkResourceService.swift */; };
 		DBEC7AA81CEF759600EC98E8 /* PaginatableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */; };
 		DBFDDD441CFE2DEC00D9EBF5 /* JSONTransformersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFDDD431CFE2DEC00D9EBF5 /* JSONTransformersTests.swift */; };
@@ -70,6 +73,9 @@
 		DBACE8EF1CE5077300F13572 /* JSONTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTransformers.swift; sourceTree = "<group>"; };
 		DBACE8F11CE51BB200F13572 /* Workspaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Workspaces.swift; sourceTree = "<group>"; };
 		DBB5FF541D1DD4FE000E8884 /* MavenlinkGenerics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkGenerics.swift; sourceTree = "<group>"; };
+		DBBCCC751D3EE45A003F8B13 /* StoriesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTests.swift; sourceTree = "<group>"; };
+		DBBCCC771D3EE548003F8B13 /* stories_single.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stories_single.json; sourceTree = "<group>"; };
+		DBBCCC781D3EE548003F8B13 /* stories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stories.json; sourceTree = "<group>"; };
 		DBE621B11D19B14200305909 /* MavenlinkResourceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MavenlinkResourceService.swift; sourceTree = "<group>"; };
 		DBEC7AA71CEF759600EC98E8 /* PaginatableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PaginatableTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DBFDDD431CFE2DEC00D9EBF5 /* JSONTransformersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTransformersTests.swift; sourceTree = "<group>"; };
@@ -162,6 +168,7 @@
 		DB180D461D232AC500A462D2 /* Resource Tests */ = {
 			isa = PBXGroup;
 			children = (
+				DBBCCC751D3EE45A003F8B13 /* StoriesTests.swift */,
 				DB75376A1CEF790100E1FDDB /* TimeEntryTests.swift */,
 				DB7537681CEF78F700E1FDDB /* WorkspaceTests.swift */,
 				DB1281791D14D115009FF732 /* UsersTests.swift */,
@@ -185,6 +192,8 @@
 		DB9C5F481CF41A3A008C8787 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				DBBCCC771D3EE548003F8B13 /* stories_single.json */,
+				DBBCCC781D3EE548003F8B13 /* stories.json */,
 				DBA655801CFA56680075A1D7 /* time_entries_single.json */,
 				DB9C5F491CF41A3A008C8787 /* time_entries.json */,
 				DB9C5F4A1CF41A3A008C8787 /* users.json */,
@@ -290,9 +299,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBA655811CFA56680075A1D7 /* time_entries_single.json in Resources */,
+				DBBCCC7A1D3EE548003F8B13 /* stories.json in Resources */,
 				DB180D431D232A6300A462D2 /* workspace_groups.json in Resources */,
 				DBA655831CFA57A30075A1D7 /* workspaces_single.json in Resources */,
 				DB180D451D232A7800A462D2 /* workspace_groups_single.json in Resources */,
+				DBBCCC791D3EE548003F8B13 /* stories_single.json in Resources */,
 				DB9C5F4E1CF41A3A008C8787 /* workspaces.json in Resources */,
 				DB9C5F4C1CF41A3A008C8787 /* time_entries.json in Resources */,
 				DB12817C1D14D365009FF732 /* users_single.json in Resources */,
@@ -368,6 +379,7 @@
 				607FACEC1AFB9204008FA782 /* SwiftyMavenlinkTestBase.swift in Sources */,
 				DB34DAE11CF4D895008663A6 /* TestUtils.swift in Sources */,
 				DB6741241CE29A0700EA71D2 /* TimeEntries.swift in Sources */,
+				DBBCCC761D3EE45A003F8B13 /* StoriesTests.swift in Sources */,
 				DB1281781D14CFC4009FF732 /* Users.swift in Sources */,
 				DB7537671CEF76E100E1FDDB /* MappableObjectTests.swift in Sources */,
 				DB75376B1CEF790100E1FDDB /* TimeEntryTests.swift in Sources */,

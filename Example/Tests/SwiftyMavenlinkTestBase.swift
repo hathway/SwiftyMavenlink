@@ -27,8 +27,10 @@ class SwiftyMavenlinkTestBase: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        // For testing purposes
+        MavenlinkSession.instance.configure("testoath1234")
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()

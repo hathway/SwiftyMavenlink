@@ -35,6 +35,7 @@ public class MavenlinkSession {
     static let apiHost: String! = "https://api.mavenlink.com/api/v1/"
 
     private func request() -> JSONRequest {
+        precondition(oAuthToken != nil, "OAuth token must be configured before making requests")
         let result = JSONRequest()
         result.httpRequest?.setValue("Bearer \(oAuthToken!)", forHTTPHeaderField: "Authorization")
         return result

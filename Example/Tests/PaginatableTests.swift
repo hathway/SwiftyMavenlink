@@ -40,6 +40,9 @@ class PaginatableTests: XCTestCase {
 
         let params: MavenlinkQueryParams = [ "TestQuery" : "TestThing"]
         testObject = PagedResultSet<TimeEntryTestClass>(resource: resource, itemsPerPage: perPage, params: params)
+
+        // For testing purposes
+        MavenlinkSession.instance.configure("testoath1234")
     }
 
     override func tearDown() {

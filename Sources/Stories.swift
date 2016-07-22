@@ -35,11 +35,18 @@ public struct Story: Mappable, MavenlinkResource {
     public private(set) var root_id: Int?
     public private(set) var id: Int?
 
+    public enum StoryType: String {
+        case Task = "task"
+        case Deliverable = "deliverable"
+        case Milestone = "milestone"
+    }
+
     // Enums
     public enum Params: RESTApiParams {
         // bool
         case ShowArchived(_:Bool)
         case AllOnAccount(_:Bool)
+        case Type(_:[StoryType])
 
         public var paramName: String {
             get {
@@ -48,6 +55,8 @@ public struct Story: Mappable, MavenlinkResource {
                     return "show_archived"
                 case .AllOnAccount(_):
                     return "all_on_account"
+                case .Type(_):
+                    return "story_type"
                 }
             }
         }
@@ -60,6 +69,10 @@ public struct Story: Mappable, MavenlinkResource {
                     value = show
                 case .AllOnAccount(let show):
                     value = show
+                case .Type(let types):
+                    value = types.reduce("", combine: { (val: String, type: StoryType) -> String in
+                        return val + type.rawValue
+                    })
                 }
                 return [self.paramName: value]
             }
@@ -98,27 +111,44 @@ public struct Story: Mappable, MavenlinkResource {
     }
 }
 
+extension Story {
+    static func getUpcomingStory(stories: [Story]?, date: NSDate) -> Story? {
+        let now = NSDate()
+        guard let storyArray = stories else { return nil }
+        let nextStory = storyArray.reduce(nil) { (var result, story) -> Story? in
+            if let resultDueDate = result?.due_date, nextDueDate = story.due_date {
+                result = (nextDueDate.timeIntervalSinceDate(resultDueDate) > 0
+                    && now.timeIntervalSinceDate(nextDueDate) > 0)
+                    ? story
+                    : result
+            }
+            return result
+        }
+        return nextStory
+    }
+}
+
 public class StoryService: MavenlinkResourceService<Story> {
-    public class func get(showAllOnAccount: Bool = true, showArchived: Bool = false) -> PagedResultSet<Resource> {
-        var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
-        params += Story.Params.ShowArchived(showArchived).queryParam
-        return super.get(params)
-    }
-
-    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
-        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
-        if let includeArchived = includeArchived {
-            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-        }
-        return super.search(matchingTitle, extraParams: params)
-    }
-
-    public class func getSpecific(id: Int, includeArchived: Bool? = nil) -> Story? {
-        var params: MavenlinkQueryParams = [:]
-        if let includeArchived = includeArchived {
-            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-        }
-        return super.getSpecific(id, params: params)
-    }
+//    public class func get<T:RESTApiParams>(params: [T]? = nil) -> PagedResultSet<Resource> {
+////        var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
+////        params += Story.Params.ShowArchived(showArchived).queryParam
+//        return super.get(params)
+//    }
+//
+//    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
+//        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
+//        if let includeArchived = includeArchived {
+//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+//        }
+//        return super.search(matchingTitle, extraParams: params)
+//    }
+//
+//    public class func getSpecific(id: Int, includeArchived: Bool? = nil) -> Story? {
+//        var params: MavenlinkQueryParams = [:]
+//        if let includeArchived = includeArchived {
+//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+//        }
+//        return super.getSpecific(id, params: params)
+//    }
 }
 

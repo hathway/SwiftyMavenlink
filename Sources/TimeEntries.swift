@@ -38,9 +38,30 @@ public struct TimeEntry: Mappable, MavenlinkResource {
     }
 
     // Enums
-    public enum Params: String {
-        case WorkspaceId = "workspace_id"
-        case BetweenDate = "date_performed_between"
+    public enum Params: RESTApiParams {
+        case WorkspaceId(id: Int)
+        case BetweenDate(start: NSDate, end: NSDate)
+
+        public var paramName: String { get {
+            switch self {
+            case WorkspaceId: return "workspace_id"
+            case BetweenDate: return "date_performed_between"
+            }
+            }
+        }
+
+        public var queryParam: MavenlinkQueryParams { get {
+            let value: AnyObject
+            switch self {
+            case WorkspaceId(let id): value = id
+            case BetweenDate(let start, let end):
+                let startString = ShortDateFormatter.transformToJSON(start)!
+                let endString = ShortDateFormatter.transformToJSON(end)!
+                value = "\(startString):\(endString)"
+            }
+            return [self.paramName: value]
+            }
+        }
     }
 
     mutating public func mapping(map: Map) {
@@ -65,20 +86,13 @@ public struct TimeEntry: Mappable, MavenlinkResource {
 }
 
 // MARK: - REST operations
-public class TimeEntryService {
-    public class func get(workspace: String? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> PagedResultSet<TimeEntry> {
-        var params: MavenlinkQueryParams = [:]
-        if let workspaceId = workspace {
-            params[TimeEntry.Params.WorkspaceId.rawValue] = workspaceId
-        }
-        
-        if let start = startDate,
-            startString = ShortDateFormatter.transformToJSON(start),
-            end = endDate,
-            endString = ShortDateFormatter.transformToJSON(end) {
-            params[TimeEntry.Params.BetweenDate.rawValue] = "\(startString):\(endString)"
-        }
-        
-        return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName, itemsPerPage: 100, params: params)
-    }
+public class TimeEntryService: MavenlinkResourceService<TimeEntry> {
+//    public class func get(workspace: String? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> PagedResultSet<TimeEntry> {
+//        var params: [RESTApiParams] = []
+//        if let workspaceId = workspace {
+//            params.append(TimeEntry.Params.WorkspaceId = workspaceId
+//        }
+//        
+//        return PagedResultSet<TimeEntry>(resource: TimeEntry.resourceName, itemsPerPage: 100, params: params)
+//    }
 }

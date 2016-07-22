@@ -38,7 +38,7 @@ class PaginatableTests: XCTestCase {
             return .Success(response, responseData)
         }
 
-        let params: MavenlinkQueryParams = [ "TestQuery" : "TestThing"]
+        let params: [RESTApiParams] = [GenericParams.Search("Testing 123")]
         testObject = PagedResultSet<TimeEntryTestClass>(resource: resource, itemsPerPage: perPage, params: params)
 
         // For testing purposes

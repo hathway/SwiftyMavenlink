@@ -14,24 +14,20 @@ import ObjectMapper
 public class MavenlinkResourceService<T where T:MavenlinkResource, T:Mappable> {
     public typealias Resource = T
 
-    public class func get(params: MavenlinkQueryParams? = nil) -> PagedResultSet<T> {
+    public class func get(params: [RESTApiParams] = []) -> PagedResultSet<T> {
         return PagedResultSet<T>(resource: T.resourceName, params: params)
     }
 
-    public class func getSpecific(id: Int) -> T? {
-        return getSpecific(id, params: nil)
-    }
-
-    public class func getSpecific(id: Int, params: MavenlinkQueryParams? = nil) -> T? {
-        var finalParams = (params ?? [:])
-        finalParams += GenericParams.Only(id).queryParam
+    public class func getSpecific(id: Int, params: [RESTApiParams] = []) -> T? {
+        var finalParams: [RESTApiParams] = params
+        finalParams.append(GenericParams.Only(id))
         return PagedResultSet<T>(resource: T.resourceName,
                                  params: finalParams).getNextPage()?.first
     }
 
-    public class func search(term: String, extraParams: MavenlinkQueryParams? = nil) -> PagedResultSet<T> {
-        var finalParams = (extraParams ?? [:])
-        finalParams += GenericParams.Search(term).queryParam
+    public class func search(term: String, extraParams: [RESTApiParams] = []) -> PagedResultSet<T> {
+        var finalParams = extraParams
+        finalParams.append(GenericParams.Search(term))
         return PagedResultSet<T>(resource: T.resourceName, params: finalParams)
     }
 }

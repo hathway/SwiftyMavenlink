@@ -103,17 +103,11 @@ extension Users: Hashable {
 }
 
 public class UserService: MavenlinkResourceService<Users> {
-    public class func getVisibleUsers() -> PagedResultSet<Resource> {
-        return PagedResultSet<Resource>(resource: Users.resourceName, params: [:])
-    }
-
     public class func getAccountUsers() -> PagedResultSet<Resource> {
-        return PagedResultSet<Resource>(resource: Users.resourceName, params:
-            Users.Params.OnMyAccount.queryParam
-        )
+        return super.get([Users.Params.OnMyAccount])
     }
 
     public class func getSpecificUsers(userIds: [Int]) -> PagedResultSet<Resource> {
-        return PagedResultSet<Resource>(resource: Users.resourceName, params: Users.Params.SpecificUsers(userIds: userIds).queryParam)
+        return super.get([Users.Params.SpecificUsers(userIds: userIds)])
     }
 }

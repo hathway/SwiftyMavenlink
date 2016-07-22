@@ -82,10 +82,10 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
         }
     }
 
-    init(resource: String, itemsPerPage: Int? = 100, params: MavenlinkQueryParams? = nil) {
+    init(resource: String, itemsPerPage: Int? = 100, params: [RESTApiParams] = []) {
         _resource = resource
         _perPage = itemsPerPage!
-        _queryParams = params ?? [:]
+        _queryParams = params.reduce(MavenlinkQueryParams(), combine: { var new = $0.0; new += $0.1.queryParam; return new }) ?? MavenlinkQueryParams()
     }
 
 

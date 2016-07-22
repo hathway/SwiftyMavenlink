@@ -50,15 +50,45 @@ public struct Workspace: Mappable, MavenlinkResource {
     public private(set) var workspace_invoice_preference_id: Int?
 
     // Enums
-    public enum Params: String {
+    public enum Params: RESTApiParams {
         // bool
-        case IncludeArchived = "include_archived"
+        case IncludeArchived(include: Bool)
         // string of WS title
-        case MatchesTitle = "matching"
+        case MatchesTitle(title :String)
         // string of title, description, or team lead names
-        case Search = "search"
-        // get a specific workspace by ID
-        case Only = "only"
+        case Only(id :Int)
+
+        public var paramName: String {
+            get {
+                switch self {
+                case IncludeArchived:
+                    return "include_archived"
+                // string of WS title
+                case MatchesTitle:
+                    return "matching"
+                // string of title, description, or team lead names
+                case Only:
+                    return "only"
+                }
+            }
+        }
+
+        public var queryParam: MavenlinkQueryParams {
+            get {
+                let value: AnyObject
+                switch self {
+                case IncludeArchived(let include):
+                    value = include
+                // string of WS title
+                case MatchesTitle(let title):
+                    value = title
+                // string of title, description, or team lead names
+                case Only(let id):
+                    value = id
+                }
+                return [self.paramName: value]
+            }
+        }
     }
 
     public init?(_ map: Map) { }
@@ -161,28 +191,20 @@ public struct WorkspaceStatus: Mappable {
 }
 
 public class WorkspaceService: MavenlinkResourceService<Workspace> {
-    public class func get(includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
-        var params: MavenlinkQueryParams = [:]
-        if let includeArchived = includeArchived {
-            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-        }
-        return super.get(params)
-    }
-
-    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
-        var params: MavenlinkQueryParams = [:]
-        if let includeArchived = includeArchived {
-            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-        }
-        return super.search(matchingTitle, extraParams: params)
-    }
-
-    public class func getWorkspace(workspaceId: Int, includeArchived: Bool? = nil) -> Workspace? {
-        var params: MavenlinkQueryParams = [Workspace.Params.Only.rawValue: workspaceId]
-        if let includeArchived = includeArchived {
-            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-        }
-        return super.getSpecific(workspaceId, params: params)
-    }
+//    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
+//        var params: MavenlinkQueryParams = [:]
+//        if let includeArchived = includeArchived {
+//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+//        }
+//        return super.search(matchingTitle, extraParams: params)
+//    }
+//
+//    public class func getWorkspace(workspaceId: Int, includeArchived: Bool? = nil) -> Workspace? {
+//        var params: MavenlinkQueryParams = [Workspace.Params.Only.rawValue: workspaceId]
+//        if let includeArchived = includeArchived {
+//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
+//        }
+//        return super.getSpecific(workspaceId, params: params)
+//    }
 }
 

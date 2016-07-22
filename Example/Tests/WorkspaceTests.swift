@@ -64,7 +64,7 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
     func testWorkspaceSearchParam() {
         let searchTerm = "testing"
         setupQueryParamTestExpectation(GenericParams.Search(searchTerm).paramName, expectedValue: searchTerm, uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.search(searchTerm, includeArchived: false).getNextPage()
+            WorkspaceService.search(searchTerm).getNextPage()
         }
 
     }
@@ -72,29 +72,31 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
     func testWorkspaceMatchingNameParam() {
         let matchingName = "testing"
         setupQueryParamTestExpectation(GenericParams.Search(matchingName).paramName, expectedValue: matchingName, uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.search(matchingName, includeArchived: true).getNextPage()
+            WorkspaceService.search(matchingName).getNextPage()
         }
     }
 
     func testIncludeArchiveParam() {
         let includeArchived = true
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.get(includeArchived).getNextPage()
+        let param = Workspace.Params.IncludeArchived(include: includeArchived)
+        setupQueryParamTestExpectation(param.paramName, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
+            WorkspaceService.get([param]).getNextPage()
         }
 
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.search("test", includeArchived: includeArchived).getNextPage()
-        }
-
-        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.getWorkspace(9999, includeArchived: includeArchived)
-        }
+//        setupQueryParamTestExpectation(.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
+//            WorkspaceService.search("test", includeArchived: includeArchived).getNextPage()
+//        }
+//
+//        setupQueryParamTestExpectation(Workspace.Params.IncludeArchived.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
+//            WorkspaceService.getWorkspace(9999, includeArchived: includeArchived)
+//        }
     }
 
     func testGetSpecificWorkspace() {
         let id = 123458
-        setupQueryParamTestExpectation(Workspace.Params.Only.rawValue, expectedValue: String(id), uriTemplate: uriPath(Workspace)) {
-            WorkspaceService.getWorkspace(id)
+        let param = Workspace.Params.Only(id: id)
+        setupQueryParamTestExpectation(param.paramName, expectedValue: String(id), uriTemplate: uriPath(Workspace)) {
+            WorkspaceService.getSpecific(id)
         }
     }
 }

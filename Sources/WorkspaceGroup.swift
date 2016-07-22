@@ -28,7 +28,7 @@ public struct WorkspaceGroup: Mappable, MavenlinkResource {
         company <- map["company"]
         created_at <- (map["created_at"], LongDateFormatter)
         updated_at <- (map["updated_at"], LongDateFormatter)
-        workspace_ids <- (map["workspace_ids"], IntFormatter)
+        workspace_ids <- (map["workspace_ids"], IntArrayFormatter)
     }
 }
 
@@ -61,7 +61,7 @@ extension WorkspaceGroup {
 
 
 public class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroup> {
-    override public class func get(params: MavenlinkQueryParams? = WorkspaceGroup.Params.IncludeWorkspaces.queryParam) -> PagedResultSet<Resource> {
-        return PagedResultSet<Resource>(resource: Resource.resourceName, params: params)
-    }
+//    override public class func get(params: MavenlinkQueryParams? = WorkspaceGroup.Params.IncludeWorkspaces.queryParam) -> PagedResultSet<Resource> {
+//        return PagedResultSet<Resource>(resource: Resource.resourceName, params: params)
+//    }
 }

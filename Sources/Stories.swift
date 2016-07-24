@@ -41,12 +41,31 @@ public struct Story: Mappable, MavenlinkResource {
         case Milestone = "milestone"
     }
 
+    /*
+    public enum NonIssueState: String {
+        case Started = "started"
+        case NotStarted = "not started"
+        case Completed = "completed"
+    }
+    public enum IssueState: String {
+        case New = "new"
+        case Reopened = "reopened"
+        case InProgress = "in progress"
+        case Blocked = "blocked"
+        case Fixed = "fixed"
+        case Duplicate = "duplicate"
+        case CantRepro = "can't repro"
+        case Resolved = "resolved"
+        case WontFix = "won't fix"
+    }
+ */
+
     // Enums
     public enum Params: RESTApiParams {
         // bool
         case ShowArchived(_:Bool)
         case AllOnAccount(_:Bool)
-        case Type(_:[StoryType])
+        case Type(_:StoryType)
 
         public var paramName: String {
             get {
@@ -69,10 +88,8 @@ public struct Story: Mappable, MavenlinkResource {
                     value = show
                 case .AllOnAccount(let show):
                     value = show
-                case .Type(let types):
-                    value = types.reduce("", combine: { (val: String, type: StoryType) -> String in
-                        return val + type.rawValue
-                    })
+                case .Type(let type):
+                    value = type.rawValue
                 }
                 return [self.paramName: value]
             }
@@ -112,6 +129,25 @@ public struct Story: Mappable, MavenlinkResource {
 }
 
 extension Story {
+
+    public var isCompleted: Bool { get { return self.state == "completed" } }
+
+    public static func nextStoryReducer(accumulator: Story?, current: Story) -> Story? {
+        // If the task is completed, don't return it
+        guard !current.isCompleted else { return accumulator }
+        // If the accumulator is nil, return current if it's not completed
+        guard let accumulatorDue = accumulator?.due_date else {
+            return (!current.isCompleted ? current : nil)
+        }
+        // If current has no due date, don't return it
+        guard let currentDue = current.due_date else { return accumulator }
+
+        // At this point, return the item with the soonest due date
+        return (currentDue.timeIntervalSinceDate(accumulatorDue) < 0)
+            ? current
+            : accumulator
+    }
+
     static func getUpcomingStory(stories: [Story]?, date: NSDate) -> Story? {
         let now = NSDate()
         guard let storyArray = stories else { return nil }

@@ -47,7 +47,7 @@ public enum PaginationError: ErrorType {
     - Caches results that have already been fetched (by this instance only) and uses those results when re-requested by the consumer
  */
 public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
-    typealias ResultType = T
+    public typealias ResultType = T
     public typealias CompletionBlock = (([T]?, PaginationError?) -> Void)
 
     private var _totalItemCount: Int?
@@ -85,9 +85,8 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     init(resource: String, itemsPerPage: Int? = 100, params: [RESTApiParams] = []) {
         _resource = resource
         _perPage = itemsPerPage!
-        _queryParams = params.reduce(MavenlinkQueryParams(), combine: { var new = $0.0; new += $0.1.queryParam; return new }) ?? MavenlinkQueryParams()
+        _queryParams = params.reduce(MavenlinkQueryParams(), combine: paramsReducer) ?? MavenlinkQueryParams()
     }
-
 
     // MARK: Public functions
 

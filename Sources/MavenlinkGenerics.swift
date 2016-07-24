@@ -43,6 +43,12 @@ public protocol RESTApiParams {
     var paramName: String { get }
 }
 
+func paramsReducer(accumulator: MavenlinkQueryParams, current: RESTApiParams) -> MavenlinkQueryParams {
+    var new = accumulator
+    new += current.queryParam
+    return new
+}
+
 public protocol MavenlinkResource {
     static var resourceName: String { get }
 }

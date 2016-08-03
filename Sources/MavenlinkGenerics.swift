@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum GenericParams: RESTApiParams {
+public enum GenericParams: RESTApiParams {
     case Only(_: Int)
     case Search(_: String)
 
-    var paramName: String {
+    public var paramName: String {
         get {
             switch(self) {
             case .Only:
@@ -23,7 +23,7 @@ enum GenericParams: RESTApiParams {
         }
     }
 
-    var queryParam: MavenlinkQueryParams {
+    public var queryParam: MavenlinkQueryParams {
         get {
             let value: AnyObject
             switch(self) {
@@ -32,7 +32,6 @@ enum GenericParams: RESTApiParams {
             case .Search(let searchString):
                 value = searchString
             }
-
             return [self.paramName: value]
         }
     }
@@ -49,6 +48,7 @@ func paramsReducer(accumulator: MavenlinkQueryParams, current: RESTApiParams) ->
     return new
 }
 
-public protocol MavenlinkResource {
+public protocol MavenlinkResource: Hashable {
+    var id: Int? { get }
     static var resourceName: String { get }
 }

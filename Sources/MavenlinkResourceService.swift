@@ -22,7 +22,7 @@ public class MavenlinkResourceService<T where T:MavenlinkResource, T:Mappable> {
         var finalParams: [RESTApiParams] = params
         finalParams.append(GenericParams.Only(id))
         return PagedResultSet<T>(resource: T.resourceName,
-                                 params: finalParams).getNextPage()?.first
+                                 params: finalParams).getNextPage()
     }
 
     public class func search(term: String, extraParams: [RESTApiParams] = []) -> PagedResultSet<T> {

@@ -22,8 +22,8 @@ protocol Paginatable {
         /// The total item count for all items of the request, regardless of whether they've been fetched yet.
     var totalItemCount: Int { get }
 
-    func getNextPage() -> [ResultType]?
-    func getPrevPage() -> [ResultType]?
+    func getNextPage() -> ResultType?
+    func getPrevPage() -> ResultType?
 }
 
 /**
@@ -48,7 +48,7 @@ public enum PaginationError: ErrorType {
  */
 public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     public typealias ResultType = T
-    public typealias CompletionBlock = (([T]?, PaginationError?) -> Void)
+    public typealias CompletionBlock = ((T?, PaginationError?) -> Void)
 
     private var _totalItemCount: Int?
     public var totalItemCount: Int {
@@ -74,7 +74,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     private var _queryParams: MavenlinkQueryParams
     public var queryParams: MavenlinkQueryParams? { get { return _queryParams } }
 
-    private var _resultsCache: [Int: [T]] = [:]
+    private var _resultsCache: [Int: T] = [:]
 
     public var description: String {
         get {
@@ -95,7 +95,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
      - returns: Result set of the next page, or nil if none exist
      */
-    public func getNextPage() -> [T]? {
+    public func getNextPage() -> T? {
         let nextPage: Int
         if let page = _currentPage {
             nextPage = page + 1
@@ -110,7 +110,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
         } catch {
             results = nil
         }
-        return results?.items
+        return results?.result
     }
 
     /**
@@ -118,7 +118,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
      - returns: Result set of the next page, or nil if none exist
      */
-    public func getPrevPage() -> [T]? {
+    public func getPrevPage() -> T? {
         let prevPage: Int
         if let page = _currentPage where page != 0 {
             prevPage = page - 1
@@ -133,7 +133,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
         } catch {
             results = nil
         }
-        return results?.items
+        return results?.result
     }
 
     /**
@@ -153,8 +153,8 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
             (1...self._maxPage).forEach {i in
                 guard let page = try? self.getItems(i),
-                    stuff = page?.items else { return }
-                allItems.appendContentsOf(stuff)
+                    stuff = page?.result else { return }
+                allItems.append(stuff)
             }
 
 //            Async.main {
@@ -168,11 +168,11 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 extension PagedResultSet {
     // MARK: Caching
 
-    private func addItemsToCache(page: Int, items: [T]) {
+    private func addItemsToCache(page: Int, items: T) {
         _resultsCache[page] = items
     }
 
-    private func getCacheForPage(page: Int) -> [T]? {
+    private func getCacheForPage(page: Int) -> T? {
         return _resultsCache[page]
     }
 
@@ -180,7 +180,7 @@ extension PagedResultSet {
 
     private func parseResult(result: JSONResult, addToCache: Bool = false) -> ResultsPage<T>? {
         var totalItemCount = 0
-        var parsedItems: [T] = []
+        var parsedItems: T?
 
         guard let data = result.data as? NSDictionary else { return nil }
 
@@ -188,14 +188,42 @@ extension PagedResultSet {
             totalItemCount = count
         }
 
-        if let items = data[resource] as? NSDictionary {
-            if let mappedItems = Mapper<T>().mapArray(items.map { $0.value })
-                where mappedItems.count != 0 {
-                parsedItems = mappedItems
+        if let results = data["results"] as? NSArray,
+            var mainDict = data as? NSDictionary {
+
+            // Map results entries to their data entries
+            let resultsArray = results.map { $0 as! NSDictionary }
+            var mappedArray: [NSDictionary] = []
+            resultsArray.forEach {
+                if let resultId = $0.objectForKey("id") as? String,
+                    let resultEntity = $0.objectForKey("key") as? String,
+                    let result = mainDict[resultEntity]![resultId],
+                    let final = result as? NSDictionary {
+                    mappedArray.append(final)
+                }
             }
+
+            var finalDict = ["results": mappedArray]
+
+            // Collect the supplemental data
+            let filterKeys = ["results", "count", resource]
+            let associatedDatasets = (mainDict as! NSDictionary).filter { return !filterKeys.contains(($0.key as! String)) }
+            associatedDatasets.forEach { associatedDataset in
+                let elements = (associatedDataset.value as! NSDictionary).map { ($0.value as! NSDictionary) }
+                finalDict[associatedDataset.key as! String] = elements
+            }
+
+            parsedItems = Mapper<T>().map(finalDict)
         }
 
-        return ResultsPage(items: parsedItems, totalCount: totalItemCount)
+//        if let items = data[resource] as? NSDictionary {
+//            if let mappedItems = Mapper<T>().mapArray(items.map { $0.value })
+//                where mappedItems.count != 0 {
+//                parsedItems = mappedItems
+//            }
+//        }
+
+        return ResultsPage(result: parsedItems!, totalCount: totalItemCount)
     }
 
     private func queryParamsAppendedWith(params: MavenlinkQueryParams) -> MavenlinkQueryParams {
@@ -217,7 +245,7 @@ extension PagedResultSet {
         guard page > 0 && page <= _maxPage else { return nil }
 
         if let cachedResults = getCacheForPage(page) {
-            return ResultsPage<T>(items: cachedResults, totalCount: _totalItemCount)
+            return ResultsPage<T>(result: cachedResults, totalCount: _totalItemCount)
         }
 
         let params = queryParamsAppendedWith(
@@ -230,7 +258,7 @@ extension PagedResultSet {
             _totalItemCount = results?.totalCount
         }
 
-        if let items = results?.items {
+        if let items = results?.result {
             addItemsToCache(page, items: items)
         }
         return results
@@ -254,6 +282,6 @@ public enum PagingParams {
  *  Struct that encapsulates a page of results returned by a `PagedResultSet` instance
  */
 internal struct ResultsPage<T:Mappable> {
-    var items: [T]?
+    var result: T
     var totalCount: Int?
 }

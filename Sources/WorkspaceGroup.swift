@@ -9,6 +9,18 @@
 import Foundation
 import ObjectMapper
 
+public struct WorkspaceGroupResultSet: Mappable {
+    public private(set) var results: [WorkspaceGroup]?
+    public private(set) var workspaces: [Workspace]?
+
+    public init?(_ map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        results <- map["results"]
+        workspaces <- map["workspaces"]
+    }
+}
+
 public struct WorkspaceGroup: Mappable, MavenlinkResource {
     public private(set) var id: Int?
     public private(set) var name: String?
@@ -20,7 +32,6 @@ public struct WorkspaceGroup: Mappable, MavenlinkResource {
     public init?(_ map: Map) { }
 
     public static var resourceName: String { get { return "workspace_groups" } }
-    public static var searchable: Bool { get { return false } }
 
     mutating public func mapping(map: Map) {
         id <- (map["id"], IntFormatter)
@@ -60,7 +71,7 @@ extension WorkspaceGroup {
 }
 
 
-public class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroup> {
+public class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroupResultSet> {
 //    override public class func get(params: MavenlinkQueryParams? = WorkspaceGroup.Params.IncludeWorkspaces.queryParam) -> PagedResultSet<Resource> {
 //        return PagedResultSet<Resource>(resource: Resource.resourceName, params: params)
 //    }

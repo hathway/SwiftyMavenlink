@@ -10,6 +10,66 @@ import Foundation
 import SwiftyJSON
 import ObjectMapper
 
+public struct TimeEntryResultSet: Mappable {
+    public private(set) var results: [TimeEntry]?
+    public private(set) var workspaces: [Workspace]?
+    public private(set) var users: [Users]?
+    public private(set) var stories: [Story]?
+
+    public init?(_ map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        results <- map["time_entries"]
+        workspaces <- map["workspaces"]
+        users <- map["users"]
+        stories <- map["stories"]
+    }
+
+    // Enums
+    public enum Params: RESTApiParams {
+        case WorkspaceId(id: Int)
+        case BetweenDate(start: NSDate, end: NSDate)
+        case Include(_: [MavenlinkResource.Type])
+
+        public var paramName: String { get {
+            switch self {
+            case WorkspaceId: return "workspace_id"
+            case BetweenDate: return "date_performed_between"
+            case Include: return "include"
+            }
+            }
+        }
+
+        public var queryParam: MavenlinkQueryParams { get {
+            let value: AnyObject
+            switch self {
+            case WorkspaceId(let id): value = id
+            case BetweenDate(let start, let end):
+                let startString = ShortDateFormatter.transformToJSON(start)!
+                let endString = ShortDateFormatter.transformToJSON(end)!
+                value = "\(startString):\(endString)"
+
+            case Include(let resources):
+                var string = resources.reduce("", combine: { (current, resource) -> String in
+                    let name: String
+                    switch resource {
+                    case is Users.Type:
+                        name = "user"
+                    case is Workspace.Type:
+                        name = "workspace"
+                    default:
+                        name = ""
+                    }
+                    return (name != "" ? name + "," + current : current)
+                })
+                value = string.substringToIndex(string.endIndex.predecessor()) // Remove trailing comma
+            }
+            return [self.paramName: value]
+            }
+        }
+    }
+}
+
 /// Class for TimeEntry resources in MavenLink
 public struct TimeEntry: Mappable, MavenlinkResource {
     // i-vars
@@ -32,38 +92,7 @@ public struct TimeEntry: Mappable, MavenlinkResource {
     public private(set) var approved: Bool?
 
     public init?(_ map: Map) { }
-
-    public static var resourceName: String {
-        get { return "time_entries" }
-    }
-
-    // Enums
-    public enum Params: RESTApiParams {
-        case WorkspaceId(id: Int)
-        case BetweenDate(start: NSDate, end: NSDate)
-
-        public var paramName: String { get {
-            switch self {
-            case WorkspaceId: return "workspace_id"
-            case BetweenDate: return "date_performed_between"
-            }
-            }
-        }
-
-        public var queryParam: MavenlinkQueryParams { get {
-            let value: AnyObject
-            switch self {
-            case WorkspaceId(let id): value = id
-            case BetweenDate(let start, let end):
-                let startString = ShortDateFormatter.transformToJSON(start)!
-                let endString = ShortDateFormatter.transformToJSON(end)!
-                value = "\(startString):\(endString)"
-            }
-            return [self.paramName: value]
-            }
-        }
-    }
-
+    
     mutating public func mapping(map: Map) {
         id <- map["id"]
         created_at <- (map["created_at"], LongDateFormatter)
@@ -83,10 +112,14 @@ public struct TimeEntry: Mappable, MavenlinkResource {
         user_id <- (map["user_id"], IntFormatter)
         approved <- map["approved"]
     }
+
+    public static var resourceName: String {
+        get { return "time_entries" }
+    }
 }
 
 // MARK: - REST operations
-public class TimeEntryService: MavenlinkResourceService<TimeEntry> {
+public class TimeEntryService: MavenlinkResourceService<TimeEntryResultSet> {
 //    public class func get(workspace: String? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> PagedResultSet<TimeEntry> {
 //        var params: [RESTApiParams] = []
 //        if let workspaceId = workspace {

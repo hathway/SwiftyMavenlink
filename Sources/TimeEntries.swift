@@ -10,8 +10,10 @@ import Foundation
 import SwiftyJSON
 import ObjectMapper
 
-public struct TimeEntryResultSet: Mappable {
-    public private(set) var results: [TimeEntry]?
+public struct TimeEntryResultSet: Mappable, MavenlinkResultSet {
+    public typealias Result = TimeEntry
+
+    public private(set) var results: [Result]?
     public private(set) var workspaces: [Workspace]?
     public private(set) var users: [Users]?
     public private(set) var stories: [Story]?
@@ -23,6 +25,10 @@ public struct TimeEntryResultSet: Mappable {
         workspaces <- map["workspaces"]
         users <- map["users"]
         stories <- map["stories"]
+    }
+
+    public static var resourceName: String {
+        get { return TimeEntry.resourceName }
     }
 
     // Enums
@@ -71,9 +77,9 @@ public struct TimeEntryResultSet: Mappable {
 }
 
 /// Class for TimeEntry resources in MavenLink
-public struct TimeEntry: Mappable, MavenlinkResource {
+public struct TimeEntry: Mappable, MavenlinkResource, UniqueResource {
     // i-vars
-    public private(set) var id: String?
+    public private(set) var id: Int?
     public private(set) var created_at: NSDate?
     public private(set) var updated_at: NSDate?
     public private(set) var date_performed: NSDate?
@@ -91,10 +97,12 @@ public struct TimeEntry: Mappable, MavenlinkResource {
     public private(set) var user_id: Int?
     public private(set) var approved: Bool?
 
+    public var hashValue: Int { get { return resourceHash(self) } }
+
     public init?(_ map: Map) { }
     
     mutating public func mapping(map: Map) {
-        id <- map["id"]
+        id <- (map["id"], IntFormatter)
         created_at <- (map["created_at"], LongDateFormatter)
         updated_at <- (map["updated_at"], LongDateFormatter)
         date_performed <- (map["date_performed"], ShortDateFormatter)

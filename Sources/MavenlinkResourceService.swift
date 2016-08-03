@@ -9,13 +9,11 @@
 import Foundation
 import ObjectMapper
 
-
-
-public class MavenlinkResourceService<T where T:MavenlinkResource, T:Mappable> {
+public class MavenlinkResourceService<T where T:MavenlinkResultSet, T:Mappable> {
     public typealias Resource = T
 
     public class func get(params: [RESTApiParams] = []) -> PagedResultSet<T> {
-        return PagedResultSet<T>(resource: T.resourceName, params: params)
+        return PagedResultSet<T>(resource: T.Result.resourceName, params: params)
     }
 
     public class func getSpecific(id: Int, params: [RESTApiParams] = []) -> T? {

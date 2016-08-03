@@ -10,13 +10,27 @@ import Foundation
 import ObjectMapper
 import SwiftyJSON
 
-public struct Users: Mappable, MavenlinkResource {
+public struct UsersResultSet: Mappable, MavenlinkResultSet {
+    public typealias Result = Users
+
+    public private(set) var results: [Result]?
+
+    public init?(_ map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        results <- map["users"]
+    }
+}
+
+public struct Users: Mappable, MavenlinkResource, UniqueResource {
     public private(set) var full_name: String?
     public private(set) var photo_path: NSURL?
     public private(set) var email_address: String?
     public private(set) var headline: String?
     public private(set) var account_id: Int?
     public private(set) var id: Int?
+
+    public var hashValue: Int { get { return resourceHash(self) } }
 
     public init?(_ map: Map) { }
 
@@ -89,25 +103,14 @@ extension Users {
             }
         }
     }
-
 }
 
-public func ==(lhs: Users, rhs: Users) -> Bool {
-    return lhs.id == rhs.id
-}
-
-extension Users: Hashable {
-    public var hashValue: Int {
-        get { return self.id ?? 0 }
-    }
-}
-
-public class UserService: MavenlinkResourceService<Users> {
-    public class func getAccountUsers() -> PagedResultSet<Resource> {
+public class UserService: MavenlinkResourceService<UsersResultSet> {
+    public class func getAccountUsers() -> PagedResultSet<Users> {
         return super.get([Users.Params.OnMyAccount])
     }
 
-    public class func getSpecificUsers(userIds: [Int]) -> PagedResultSet<Resource> {
+    public class func getSpecificUsers(userIds: [Int]) -> PagedResultSet<Users> {
         return super.get([Users.Params.SpecificUsers(userIds: userIds)])
     }
 }

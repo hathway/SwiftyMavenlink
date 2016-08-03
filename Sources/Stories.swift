@@ -9,6 +9,20 @@
 import Foundation
 import ObjectMapper
 
+public struct StoryResultSet: Mappable, MavenlinkResultSet {
+    public typealias Result = TimeEntry
+
+    public private(set) var results: [Result]?
+    public private(set) var workspaces: [Workspace]?
+
+    public init?(_ map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        results <- map["time_entries"]
+        workspaces <- map["workspaces"]
+    }
+}
+
 public struct Story: Mappable, MavenlinkResource {
 
     public private(set) var title: String?
@@ -164,27 +178,6 @@ extension Story {
     }
 }
 
-public class StoryService: MavenlinkResourceService<Story> {
-//    public class func get<T:RESTApiParams>(params: [T]? = nil) -> PagedResultSet<Resource> {
-////        var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
-////        params += Story.Params.ShowArchived(showArchived).queryParam
-//        return super.get(params)
-//    }
-//
-//    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
-//        var params: MavenlinkQueryParams = [Workspace.Params.MatchesTitle.rawValue: matchingTitle]
-//        if let includeArchived = includeArchived {
-//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-//        }
-//        return super.search(matchingTitle, extraParams: params)
-//    }
-//
-//    public class func getSpecific(id: Int, includeArchived: Bool? = nil) -> Story? {
-//        var params: MavenlinkQueryParams = [:]
-//        if let includeArchived = includeArchived {
-//            params[Workspace.Params.IncludeArchived.rawValue] = includeArchived
-//        }
-//        return super.getSpecific(id, params: params)
-//    }
+public class StoryService: MavenlinkResourceService<StoryResultSet> {
 }
 

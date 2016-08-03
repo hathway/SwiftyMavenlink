@@ -8,6 +8,12 @@
 
 import Foundation
 
+
+public protocol RESTApiParams {
+    var queryParam: MavenlinkQueryParams { get }
+    var paramName: String { get }
+}
+
 public enum GenericParams: RESTApiParams {
     case Only(_: Int)
     case Search(_: String)
@@ -37,18 +43,32 @@ public enum GenericParams: RESTApiParams {
     }
 }
 
-public protocol RESTApiParams {
-    var queryParam: MavenlinkQueryParams { get }
-    var paramName: String { get }
-}
-
 func paramsReducer(accumulator: MavenlinkQueryParams, current: RESTApiParams) -> MavenlinkQueryParams {
     var new = accumulator
     new += current.queryParam
     return new
 }
 
-public protocol MavenlinkResource: Hashable {
+
+/////////////////////
+public protocol UniqueResource: Hashable {
     var id: Int? { get }
+    var hashValue: Int { get }
+}
+
+public func ==<T where T:UniqueResource>(lhs: T, rhs: T) -> Bool {
+    return lhs.id == rhs.id
+}
+
+func resourceHash<T where T:UniqueResource>(arg: T) -> Int {
+    return arg.id ?? 0
+}
+
+/////////////////////
+public protocol MavenlinkResource {
     static var resourceName: String { get }
+}
+
+public protocol MavenlinkResultSet {
+    associatedtype Result: MavenlinkResource
 }

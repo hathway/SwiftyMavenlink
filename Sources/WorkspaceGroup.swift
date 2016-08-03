@@ -9,8 +9,10 @@
 import Foundation
 import ObjectMapper
 
-public struct WorkspaceGroupResultSet: Mappable {
-    public private(set) var results: [WorkspaceGroup]?
+public struct WorkspaceGroupResultSet: Mappable, MavenlinkResultSet {
+    public typealias Result = WorkspaceGroup
+
+    public private(set) var results: [Result]?
     public private(set) var workspaces: [Workspace]?
 
     public init?(_ map: Map) { }
@@ -21,13 +23,15 @@ public struct WorkspaceGroupResultSet: Mappable {
     }
 }
 
-public struct WorkspaceGroup: Mappable, MavenlinkResource {
+public struct WorkspaceGroup: Mappable, MavenlinkResource, UniqueResource {
     public private(set) var id: Int?
     public private(set) var name: String?
     public private(set) var company: Bool?
     public private(set) var created_at: NSDate?
     public private(set) var updated_at: NSDate?
     public private(set) var workspace_ids: [Int]?
+
+    public var hashValue: Int { get { return resourceHash(self) } }
 
     public init?(_ map: Map) { }
 

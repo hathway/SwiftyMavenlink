@@ -211,9 +211,9 @@
 			children = (
 				DB180D3E1D21CC8400A462D2 /* Stories.swift */,
 				DB6741231CE29A0700EA71D2 /* TimeEntries.swift */,
-				DBACE8F11CE51BB200F13572 /* Workspaces.swift */,
 				DB1281771D14CFC4009FF732 /* Users.swift */,
 				DB180D401D23251300A462D2 /* WorkspaceGroup.swift */,
+				DBACE8F11CE51BB200F13572 /* Workspaces.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

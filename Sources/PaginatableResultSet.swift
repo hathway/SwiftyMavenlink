@@ -47,8 +47,8 @@ public enum PaginationError: ErrorType {
     - Caches results that have already been fetched (by this instance only) and uses those results when re-requested by the consumer
  */
 public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
-    public typealias ResultType = T
-    public typealias CompletionBlock = ((T?, PaginationError?) -> Void)
+    public typealias ResultSetType = T
+    public typealias CompletionBlock = (([T]?, PaginationError?) -> Void)
 
     private var _totalItemCount: Int?
     public var totalItemCount: Int {
@@ -78,7 +78,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
     public var description: String {
         get {
-            return "\(resource): resultType=\(ResultType.self); totalCount=\(_totalItemCount); currentPage=\(_currentPage);"
+            return "\(resource): resultType=\(ResultSetType.self); totalCount=\(_totalItemCount); currentPage=\(_currentPage);"
         }
     }
 

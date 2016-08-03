@@ -9,11 +9,12 @@
 import Foundation
 import ObjectMapper
 
-public struct WorkspaceResultSet: Mappable {
-    public private(set) var results: [Workspace]?
+public struct WorkspaceResultSet: Mappable, MavenlinkResultSet {
+    public typealias Result = Workspace
+
+    public private(set) var results: [Result]?
     public private(set) var participants: [Users]?
     public private(set) var workspace_groups: [WorkspaceGroup]?
-
 
     // Enums
     public enum Params: RESTApiParams {
@@ -63,11 +64,9 @@ public struct WorkspaceResultSet: Mappable {
         participants <- map["users"]
         workspace_groups <- map["workspace_groups"]
     }
-
-    public static var resourceName: String { get { return "workspaces" } }
 }
 
-public struct Workspace: Mappable, MavenlinkResource {
+public struct Workspace: Mappable, MavenlinkResource, UniqueResource {
     public private(set) var access_level: String?
     public private(set) var archived: Bool?
     public private(set) var budget_used: String?
@@ -106,6 +105,8 @@ public struct Workspace: Mappable, MavenlinkResource {
     public private(set) var total_expenses_in_cents: Int?
     public private(set) var updated_at: NSDate?
     public private(set) var workspace_invoice_preference_id: Int?
+
+    public var hashValue: Int { get { return resourceHash(self) } }
 
     public init?(_ map: Map) { }
     mutating public func mapping(map: Map) {
@@ -151,18 +152,6 @@ public struct Workspace: Mappable, MavenlinkResource {
     }
 
     public static var resourceName: String { get { return "workspaces" } }
-}
-
-public func ==<T where T:MavenlinkResource>(lhs: T, rhs: T) -> Bool {
-    return (lhs.id ?? 0) == (rhs.id ?? 0)
-}
-
-extension MavenlinkResource {
-    public var hashValue: Int {
-        get {
-            return self.id ?? 0
-        }
-    }
 }
 
 public struct WorkspaceStatus: Mappable {

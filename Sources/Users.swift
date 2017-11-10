@@ -11,14 +11,14 @@ import ObjectMapper
 import SwiftyJSON
 
 public struct Users: Mappable, MavenlinkResource {
-    public private(set) var full_name: String?
-    public private(set) var photo_path: NSURL?
-    public private(set) var email_address: String?
-    public private(set) var headline: String?
-    public private(set) var account_id: Int?
-    public private(set) var id: Int?
+    public fileprivate(set) var full_name: String?
+    public fileprivate(set) var photo_path: URL?
+    public fileprivate(set) var email_address: String?
+    public fileprivate(set) var headline: String?
+    public fileprivate(set) var account_id: Int?
+    public fileprivate(set) var id: Int?
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     public static var resourceName: String { get { return "users" } }
     public static var searchable: Bool { get { return false } }
@@ -37,32 +37,32 @@ extension Users {
     // Enums
     public enum Params: RESTApiParams {
         // bool
-        case OnMyAccount
+        case onMyAccount
         // only return users that are active participants in the given Workspace
-        case ParticipantIn(workspaceId: Int)
+        case participantIn(workspaceId: Int)
         // only return users that are on the given Account. This filter is not available in conjunction with the on_my_account option.
-        case ByAccount(accountId: Int)
+        case byAccount(accountId: Int)
         // only return users that are in at least one Workspace as a consultant
-        case ConsultantsOnly(enabled: Bool)
+        case consultantsOnly(enabled: Bool)
         // only return users that are in at least one Workspace as a client
-        case ClientsOnly(enabled: Bool)
+        case clientsOnly(enabled: Bool)
         // Get a specific user
-        case SpecificUsers(userIds: [Int])
+        case specificUsers(userIds: [Int])
 
         public var paramName: String {
             get {
                 switch(self) {
-                case .OnMyAccount:
+                case .onMyAccount:
                     return "on_my_account"
-                case .ParticipantIn:
+                case .participantIn:
                     return "participant_in"
-                case .ByAccount:
+                case .byAccount:
                     return "account_id"
-                case .ConsultantsOnly:
+                case .consultantsOnly:
                     return "consultants_only"
-                case ClientsOnly:
+                case .clientsOnly:
                     return "clients_only"
-                case .SpecificUsers:
+                case .specificUsers:
                     return "only"
                 }
             }
@@ -72,18 +72,24 @@ extension Users {
             get {
                 let value: AnyObject
                 switch(self) {
-                case .OnMyAccount:
-                    value = true
-                case .ParticipantIn(let id):
-                    value = id
-                case .ByAccount(let id):
-                    value = id
-                case .ConsultantsOnly:
-                    value = true
-                case ClientsOnly:
-                    value = true
-                case .SpecificUsers(let userIds):
-                    value = userIds.toJSONString()
+                case .onMyAccount:
+                    value = true as AnyObject
+                    break
+                case .participantIn(let id):
+                    value = id as AnyObject
+                    break
+                case .byAccount(let id):
+                    value = id as AnyObject
+                    break
+                case .consultantsOnly:
+                    value = true as AnyObject
+                    break
+                case .clientsOnly:
+                    value = true as AnyObject
+                    break
+                case .specificUsers(let userIds):
+                    value = userIds.toJSONString() as AnyObject
+                    break
                 }
                 return [self.paramName: value]
             }
@@ -102,12 +108,12 @@ extension Users: Hashable {
     }
 }
 
-public class UserService: MavenlinkResourceService<Users> {
-    public class func getAccountUsers() -> PagedResultSet<Resource> {
-        return super.get([Users.Params.OnMyAccount])
+open class UserService: MavenlinkResourceService<Users> {
+    open class func getAccountUsers() -> PagedResultSet<Resource> {
+        return super.get([Users.Params.onMyAccount])
     }
 
-    public class func getSpecificUsers(userIds: [Int]) -> PagedResultSet<Resource> {
-        return super.get([Users.Params.SpecificUsers(userIds: userIds)])
+    open class func getSpecificUsers(_ userIds: [Int]) -> PagedResultSet<Resource> {
+        return super.get([Users.Params.specificUsers(userIds: userIds)])
     }
 }

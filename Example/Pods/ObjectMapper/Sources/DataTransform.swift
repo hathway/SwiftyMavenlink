@@ -1,12 +1,12 @@
 //
-//  DateTransform.swift
+//  DataTransform.swift
 //  ObjectMapper
 //
-//  Created by Tristan Himmelman on 2014-10-13.
+//  Created by Yagrushkin, Evgeny on 8/30/16.
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2014-2015 Hearst
+//  Copyright (c) 2014-2016 Hearst
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,28 +28,23 @@
 
 import Foundation
 
-public class DateTransform: TransformType {
-	public typealias Object = NSDate
-	public typealias JSON = Double
-
+open class DataTransform: TransformType {
+	public typealias Object = Data
+	public typealias JSON = String
+	
 	public init() {}
-
-	public func transformFromJSON(value: AnyObject?) -> NSDate? {
-		if let timeInt = value as? Double {
-			return NSDate(timeIntervalSince1970: NSTimeInterval(timeInt))
+	
+	open func transformFromJSON(_ value: Any?) -> Data? {
+		guard let string = value as? String else{
+			return nil
 		}
-		
-		if let timeStr = value as? String {
-			return NSDate(timeIntervalSince1970: NSTimeInterval(atof(timeStr)))
-		}
-		
-		return nil
+		return Data(base64Encoded: string)
 	}
-
-	public func transformToJSON(value: NSDate?) -> Double? {
-		if let date = value {
-			return Double(date.timeIntervalSince1970)
+	
+	open func transformToJSON(_ value: Data?) -> String? {
+		guard let data = value else{
+			return nil
 		}
-		return nil
+		return data.base64EncodedString()
 	}
 }

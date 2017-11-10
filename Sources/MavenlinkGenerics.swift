@@ -9,15 +9,15 @@
 import Foundation
 
 enum GenericParams: RESTApiParams {
-    case Only(_: Int)
-    case Search(_: String)
+    case only(_: Int)
+    case search(_: String)
 
     var paramName: String {
         get {
             switch(self) {
-            case .Only:
+            case .only:
                 return "only"
-            case .Search:
+            case .search:
                 return "search"
             }
         }
@@ -27,10 +27,10 @@ enum GenericParams: RESTApiParams {
         get {
             let value: AnyObject
             switch(self) {
-            case .Only(let id):
-                value = id
-            case .Search(let searchString):
-                value = searchString
+            case .only(let id):
+                value = id as AnyObject
+            case .search(let searchString):
+                value = searchString as AnyObject
             }
 
             return [self.paramName: value]
@@ -43,7 +43,7 @@ public protocol RESTApiParams {
     var paramName: String { get }
 }
 
-func paramsReducer(accumulator: MavenlinkQueryParams, current: RESTApiParams) -> MavenlinkQueryParams {
+func paramsReducer(_ accumulator: MavenlinkQueryParams, current: RESTApiParams) -> MavenlinkQueryParams {
     var new = accumulator
     new += current.queryParam
     return new

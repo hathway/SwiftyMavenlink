@@ -15,7 +15,7 @@ class MapableObjectTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        mappingResult = Mapper<TestClass>().map(JsonStringTest)
+        mappingResult = Mapper<TestClass>().map(JSONString: JsonStringTest)
     }
 
     override func tearDown() {
@@ -38,7 +38,7 @@ struct TestClass: Mappable {
     var testProperty: String?
     var otherProperty: String?
 
-    init?(_ map: Map) { }
+    init?(map: Map) { }
 
     mutating func mapping(map: Map) {
         testProperty <- map["TestProperty"]

@@ -10,14 +10,14 @@ import Foundation
 import ObjectMapper
 
 public struct WorkspaceGroup: Mappable, MavenlinkResource {
-    public private(set) var id: Int?
-    public private(set) var name: String?
-    public private(set) var company: Bool?
-    public private(set) var created_at: NSDate?
-    public private(set) var updated_at: NSDate?
-    public private(set) var workspace_ids: [Int]?
+    public fileprivate(set) var id: Int?
+    public fileprivate(set) var name: String?
+    public fileprivate(set) var company: Bool?
+    public fileprivate(set) var created_at: Date?
+    public fileprivate(set) var updated_at: Date?
+    public fileprivate(set) var workspace_ids: [Int]?
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     public static var resourceName: String { get { return "workspace_groups" } }
     public static var searchable: Bool { get { return false } }
@@ -35,12 +35,12 @@ public struct WorkspaceGroup: Mappable, MavenlinkResource {
 extension WorkspaceGroup {
     public enum Params: RESTApiParams {
         /// Include the workspace IDs contained in each group in the response. 
-        case IncludeWorkspaces
+        case includeWorkspaces
 
         public var paramName: String {
             get {
                 switch(self) {
-                case .IncludeWorkspaces:
+                case .includeWorkspaces:
                     return "include"
                 }
             }
@@ -50,8 +50,8 @@ extension WorkspaceGroup {
             get {
                 let value: AnyObject
                 switch(self) {
-                case .IncludeWorkspaces:
-                    value = "workspaces"
+                case .includeWorkspaces:
+                    value = "workspaces" as AnyObject
                 }
                 return [self.paramName: value]
             }
@@ -60,7 +60,7 @@ extension WorkspaceGroup {
 }
 
 
-public class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroup> {
+open class WorkspaceGroupService: MavenlinkResourceService<WorkspaceGroup> {
 //    override public class func get(params: MavenlinkQueryParams? = WorkspaceGroup.Params.IncludeWorkspaces.queryParam) -> PagedResultSet<Resource> {
 //        return PagedResultSet<Resource>(resource: Resource.resourceName, params: params)
 //    }

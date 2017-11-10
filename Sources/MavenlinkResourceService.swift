@@ -11,23 +11,23 @@ import ObjectMapper
 
 
 
-public class MavenlinkResourceService<T where T:MavenlinkResource, T:Mappable> {
+open class MavenlinkResourceService<T> where T:MavenlinkResource, T:Mappable {
     public typealias Resource = T
 
-    public class func get(params: [RESTApiParams] = []) -> PagedResultSet<T> {
+    open class func get(_ params: [RESTApiParams] = []) -> PagedResultSet<T> {
         return PagedResultSet<T>(resource: T.resourceName, params: params)
     }
 
-    public class func getSpecific(id: Int, params: [RESTApiParams] = []) -> T? {
+    open class func getSpecific(_ id: Int, params: [RESTApiParams] = []) -> T? {
         var finalParams: [RESTApiParams] = params
-        finalParams.append(GenericParams.Only(id))
+        finalParams.append(GenericParams.only(id))
         return PagedResultSet<T>(resource: T.resourceName,
                                  params: finalParams).getNextPage()?.first
     }
 
-    public class func search(term: String, extraParams: [RESTApiParams] = []) -> PagedResultSet<T> {
+    open class func search(_ term: String, extraParams: [RESTApiParams] = []) -> PagedResultSet<T> {
         var finalParams = extraParams
-        finalParams.append(GenericParams.Search(term))
+        finalParams.append(GenericParams.search(term))
         return PagedResultSet<T>(resource: T.resourceName, params: finalParams)
     }
 }

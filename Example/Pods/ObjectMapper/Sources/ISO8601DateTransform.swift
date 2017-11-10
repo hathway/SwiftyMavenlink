@@ -1,12 +1,12 @@
 //
-//  URLTransform.swift
+//  ISO8601DateTransform.swift
 //  ObjectMapper
 //
-//  Created by Tristan Himmelman on 2014-10-27.
+//  Created by Jean-Pierre Mouilleseaux on 21 Nov 2014.
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2014-2015 Hearst
+//  Copyright (c) 2014-2016 Hearst
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,23 +28,20 @@
 
 import Foundation
 
-public class URLTransform: TransformType {
-	public typealias Object = NSURL
-	public typealias JSON = String
-
-	public init() {}
-
-	public func transformFromJSON(value: AnyObject?) -> NSURL? {
-		if let URLString = value as? String {
-			return NSURL(string: URLString)
-		}
-		return nil
-	}
-
-	public func transformToJSON(value: NSURL?) -> String? {
-		if let URL = value {
-			return URL.absoluteString
-		}
-		return nil
+public extension DateFormatter {
+	public convenience init(withFormat format : String, locale : String) {
+		self.init()
+		self.locale = Locale(identifier: locale)
+		dateFormat = format
 	}
 }
+
+open class ISO8601DateTransform: DateFormatterTransform {
+	
+	static let reusableISODateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ssZZZZZ", locale: "en_US_POSIX")
+
+	public init() {
+		super.init(dateFormatter: ISO8601DateTransform.reusableISODateFormatter)
+	}
+}
+

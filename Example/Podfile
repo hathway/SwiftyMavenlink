@@ -3,7 +3,7 @@ use_frameworks!
 target 'SwiftyMavenlink_Tests' do
   pod 'SwiftyMavenlink', :path => '../'
 
-  pod 'JSONRequest'
+  pod 'JSONRequest',   :git => 'git@github.com:hathway/JSONRequest.git'
   pod 'SwiftyJSON'
   pod 'ObjectMapper'
 

@@ -22,23 +22,23 @@ class PaginatableTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("time_entries", ofType: "json")!
+        let path = Bundle(for: type(of: self)).path(forResource: "time_entries", ofType: "json")!
         let data = NSData(contentsOfFile: path)!
-        let dataPages = JSON(data: data).arrayObject!
+        guard let dataPages = try? JSON(data: data as Data).arrayObject! else { return }
         stub(uri("/api/v1/time_entries.json")) { (request) -> (Response) in
-            let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
 
-            guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
-                pageNum = Int(page) else {
-                    let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[0], options: NSJSONWritingOptions())
-                    return .Success(response, responseData)
+            guard let page = getQueryStringParameter(url: request.url!.absoluteString, param: "page"),
+                let pageNum = Int(page) else {
+                    let responseData = try! JSONSerialization.data(withJSONObject: dataPages[0], options: JSONSerialization.WritingOptions())
+                    return .success(response, Download.content(responseData))
             }
 
-            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum-1], options: NSJSONWritingOptions())
-            return .Success(response, responseData)
+            let responseData = try! JSONSerialization.data(withJSONObject: dataPages[pageNum-1], options: JSONSerialization.WritingOptions())
+            return .success(response, Download.content(responseData))
         }
 
-        let params: [RESTApiParams] = [GenericParams.Search("Testing 123")]
+        let params: [RESTApiParams] = [GenericParams.search("Testing 123")]
         testObject = PagedResultSet<TimeEntryTestClass>(resource: resource, itemsPerPage: perPage, params: params)
 
         // For testing purposes
@@ -99,7 +99,7 @@ public struct TimeEntryTestClass: Mappable {
     public var entityId: Int?
     public var name: String?
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     mutating public func mapping(map: Map) {
         entityId <- (map["id"], IntFormatter)

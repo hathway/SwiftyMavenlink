@@ -13,12 +13,12 @@ class WorkspaceGroupTests: SwiftyMavenlinkTestBase {
 
     override func setUp() {
         super.setUp()
-        self.setUpFixtures(WorkspaceGroup)
+        self.setUpFixtures(testClass: WorkspaceGroup.self)
     }
 
     func testMapping() {
-        let jsonText = self.singleJsonFixture(WorkspaceGroup)
-        let result = Mapper<WorkspaceGroup>().map(jsonText)!
+        let jsonText = self.singleJsonFixture(testClass: WorkspaceGroup.self)
+        let result = Mapper<WorkspaceGroup>().map(JSONString: jsonText)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.id, message)
         XCTAssertNotNil(result.name, message)
@@ -28,8 +28,8 @@ class WorkspaceGroupTests: SwiftyMavenlinkTestBase {
 
     func testGetSpecific() {
         let id = 12345
-        let param = GenericParams.Only(id).queryParam.first!.0
-        setupQueryParamTestExpectation(param, expectedValue: String(id), uriTemplate: uriPath(WorkspaceGroup)) {
+        let param = GenericParams.only(id).queryParam.first!.0
+        setupQueryParamTestExpectation(paramName: param, expectedValue: String(id) as AnyObject, uriTemplate: uriPath(testClass: WorkspaceGroup)) {
             WorkspaceGroupService.getSpecific(id)
         }
     }

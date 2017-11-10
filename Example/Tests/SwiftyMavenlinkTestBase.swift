@@ -12,17 +12,17 @@ class SwiftyMavenlinkTestBase: XCTestCase {
     }
 
     func singleJsonFixture<T: MavenlinkResource>(testClass: T.Type) -> String {
-        let path = NSBundle(forClass: SwiftyMavenlinkTestBase.self).pathForResource("\(testClass.resourceName)_single", ofType: "json")!
+        let path = Bundle(for: SwiftyMavenlinkTestBase.self).path(forResource: "\(testClass.resourceName)_single", ofType: "json")!
         return try! String(contentsOfFile: path)
     }
 
-    func fullJson<T: MavenlinkResource>(testClass: T.Type) -> NSData {
-        let path = NSBundle(forClass: SwiftyMavenlinkTestBase.self).pathForResource(testClass.resourceName, ofType: "json")!
-        return NSData(contentsOfFile: path)!
+    func fullJson<T: MavenlinkResource>(testClass: T.Type) -> Data {
+        guard let url = Bundle(for: SwiftyMavenlinkTestBase.self).url(forResource: testClass.resourceName, withExtension: "json") else { return Data() }
+        return (try? Data(contentsOf: url)) ?? Data()
     }
 
     func setUpFixtures<T: MavenlinkResource>(testClass: T.Type) {
-        stub(uri(self.uriPath(testClass)), builder: jsonData(fullJson(testClass)))
+        stub(uri(self.uriPath(testClass: testClass)), jsonData(fullJson(testClass: testClass)))
     }
 
     override func setUp() {

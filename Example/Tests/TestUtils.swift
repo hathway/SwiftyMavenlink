@@ -22,19 +22,19 @@ func getQueryStringParameter(url: String, param: String) -> String? {
 extension XCTestCase {
 
     func setupQueryParamTestExpectation(paramName: String, expectedValue: AnyObject, uriTemplate: String, executionBlock: () -> Void) {
-        let expectation = expectationWithDescription("GET request")
+        let testExpectation = expectation(description: "GET request")
         stub(uri(uriTemplate)) { (request) -> (Response) in
-            if let responseValue = getQueryStringParameter(request.URL!.absoluteString, param: paramName) {
+            if let responseValue = getQueryStringParameter(url: request.url!.absoluteString, param: paramName) {
                 XCTAssertTrue(expectedValue.isEqual(responseValue), "\(paramName) in REST request is \(responseValue), but should be equal to \(expectedValue)")
             } else {
                 XCTFail("\(paramName) was not present in REST request")
             }
-            expectation.fulfill()
-            return .Success(NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!, NSData())
+            testExpectation.fulfill()
+            return .success(HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, Download.noContent)
         }
 
         executionBlock()
-        waitForExpectationsWithTimeout(4, handler: nil)
+        waitForExpectations(timeout: 4, handler: nil)
     }
     
 }

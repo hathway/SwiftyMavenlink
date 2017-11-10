@@ -10,64 +10,64 @@ import Foundation
 import ObjectMapper
 
 public struct Workspace: Mappable, MavenlinkResource {
-    public private(set) var access_level: String?
-    public private(set) var archived: Bool?
-    public private(set) var budget_used: String?
-    public private(set) var budget_used_in_cents: Int?
-    public private(set) var budgeted: Bool?
-    public private(set) var can_create_line_items: Bool?
-    public private(set) var can_invite: Bool?
-    public private(set) var change_orders_enabled: Bool?
-    public private(set) var client_role_name: String?
-    public private(set) var consultant_role_name: String?
-    public private(set) var created_at: NSDate?
-    public private(set) var creator_id: Int?
-    public private(set) var currency: String?
-    public private(set) var currency_base_unit: Int?
-    public private(set) var currency_symbol: String?
-    public private(set) var default_rate: String?
-    public private(set) var workspace_description: String?
-    public private(set) var due_date: NSDate?
-    public private(set) var effective_due_date: NSDate?
-    public private(set) var exclude_archived_stories_percent_complete: Bool?
-    public private(set) var expenses_in_burn_rate: Bool?
-    public private(set) var has_budget_access: Bool?
-    public private(set) var id: Int?
-    public private(set) var over_budget: Bool?
-    public private(set) var percentage_complete: Int?
-    public private(set) var posts_require_privacy_decision: Bool?
-    public private(set) var price: String?
-    public private(set) var price_in_cents: Int?
-    public private(set) var rate_card_id: Int?
-    public private(set) var require_expense_approvals: Bool?
-    public private(set) var require_time_approvals: Bool?
-    public private(set) var start_date: NSDate?
-    public private(set) var status: WorkspaceStatus?
-    public private(set) var tasks_default_non_billable: Bool?
-    public private(set) var title: String?
-    public private(set) var total_expenses_in_cents: Int?
-    public private(set) var updated_at: NSDate?
-    public private(set) var workspace_invoice_preference_id: Int?
+    public fileprivate(set) var access_level: String?
+    public fileprivate(set) var archived: Bool?
+    public fileprivate(set) var budget_used: String?
+    public fileprivate(set) var budget_used_in_cents: Int?
+    public fileprivate(set) var budgeted: Bool?
+    public fileprivate(set) var can_create_line_items: Bool?
+    public fileprivate(set) var can_invite: Bool?
+    public fileprivate(set) var change_orders_enabled: Bool?
+    public fileprivate(set) var client_role_name: String?
+    public fileprivate(set) var consultant_role_name: String?
+    public fileprivate(set) var created_at: Date?
+    public fileprivate(set) var creator_id: Int?
+    public fileprivate(set) var currency: String?
+    public fileprivate(set) var currency_base_unit: Int?
+    public fileprivate(set) var currency_symbol: String?
+    public fileprivate(set) var default_rate: String?
+    public fileprivate(set) var workspace_description: String?
+    public fileprivate(set) var due_date: Date?
+    public fileprivate(set) var effective_due_date: Date?
+    public fileprivate(set) var exclude_archived_stories_percent_complete: Bool?
+    public fileprivate(set) var expenses_in_burn_rate: Bool?
+    public fileprivate(set) var has_budget_access: Bool?
+    public fileprivate(set) var id: Int?
+    public fileprivate(set) var over_budget: Bool?
+    public fileprivate(set) var percentage_complete: Int?
+    public fileprivate(set) var posts_require_privacy_decision: Bool?
+    public fileprivate(set) var price: String?
+    public fileprivate(set) var price_in_cents: Int?
+    public fileprivate(set) var rate_card_id: Int?
+    public fileprivate(set) var require_expense_approvals: Bool?
+    public fileprivate(set) var require_time_approvals: Bool?
+    public fileprivate(set) var start_date: Date?
+    public fileprivate(set) var status: WorkspaceStatus?
+    public fileprivate(set) var tasks_default_non_billable: Bool?
+    public fileprivate(set) var title: String?
+    public fileprivate(set) var total_expenses_in_cents: Int?
+    public fileprivate(set) var updated_at: Date?
+    public fileprivate(set) var workspace_invoice_preference_id: Int?
 
     // Enums
     public enum Params: RESTApiParams {
         // bool
-        case IncludeArchived(include: Bool)
+        case includeArchived(include: Bool)
         // string of WS title
-        case MatchesTitle(title :String)
+        case matchesTitle(title :String)
         // string of title, description, or team lead names
-        case Only(id :Int)
+        case only(id :Int)
 
         public var paramName: String {
             get {
                 switch self {
-                case IncludeArchived:
+                case .includeArchived:
                     return "include_archived"
                 // string of WS title
-                case MatchesTitle:
+                case .matchesTitle:
                     return "matching"
                 // string of title, description, or team lead names
-                case Only:
+                case .only:
                     return "only"
                 }
             }
@@ -77,21 +77,21 @@ public struct Workspace: Mappable, MavenlinkResource {
             get {
                 let value: AnyObject
                 switch self {
-                case IncludeArchived(let include):
-                    value = include
+                case .includeArchived(let include):
+                    value = include as AnyObject
                 // string of WS title
-                case MatchesTitle(let title):
-                    value = title
+                case .matchesTitle(let title):
+                    value = title as AnyObject
                 // string of title, description, or team lead names
-                case Only(let id):
-                    value = id
+                case .only(let id):
+                    value = id as AnyObject
                 }
                 return [self.paramName: value]
             }
         }
     }
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     public static var resourceName: String { get { return "workspaces" } }
     public static var searchable: Bool { get { return true } }
@@ -166,23 +166,23 @@ public struct WorkspaceStatus: Mappable {
 
         public var priorityStatus: Int {
             switch self {
-            case Red:
+            case .Red:
                 return 1
-            case Yellow:
+            case .Yellow:
                 return 2
-            case Green:
+            case .Green:
                 return 3
-            case LightGreen:
+            case .LightGreen:
                 return 4
-            case Blue:
+            case .Blue:
                 return 5
-            case Grey:
+            case .Grey:
                 return 6
             }
         }
     }
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
     mutating public func mapping(map: Map) {
         color <- map["color"]
         message <- map["message"]
@@ -190,7 +190,7 @@ public struct WorkspaceStatus: Mappable {
     }
 }
 
-public class WorkspaceService: MavenlinkResourceService<Workspace> {
+open class WorkspaceService: MavenlinkResourceService<Workspace> {
 //    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {
 //        var params: MavenlinkQueryParams = [:]
 //        if let includeArchived = includeArchived {

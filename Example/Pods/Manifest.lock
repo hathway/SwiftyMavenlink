@@ -1,42 +1,49 @@
 PODS:
-  - AsyncSwift (1.7.2)
-  - JSONRequest (0.4.0)
-  - Mockingjay (1.2.1):
-    - Mockingjay/Core (= 1.2.1)
-    - Mockingjay/XCTest (= 1.2.1)
-  - Mockingjay/Core (1.2.1):
-    - URITemplate (~> 1.3)
-  - Mockingjay/XCTest (1.2.1):
+  - AsyncSwift (2.0.4)
+  - JSONRequest (0.5.0)
+  - Mockingjay (2.0.0):
+    - Mockingjay/Core (= 2.0.0)
+    - Mockingjay/XCTest (= 2.0.0)
+  - Mockingjay/Core (2.0.0):
+    - URITemplate (~> 2.0)
+  - Mockingjay/XCTest (2.0.0):
     - Mockingjay/Core
-  - ObjectMapper (1.3.0)
-  - SwiftyJSON (2.3.2)
+  - ObjectMapper (3.1.0)
+  - SwiftyJSON (4.0.0)
   - SwiftyMavenlink (0.0.1):
     - AsyncSwift
     - JSONRequest
     - ObjectMapper
     - SwiftyJSON
-  - URITemplate (1.3.1)
+  - URITemplate (2.0.3)
 
 DEPENDENCIES:
-  - JSONRequest
+  - JSONRequest (from `git@github.com:hathway/JSONRequest.git`)
   - Mockingjay
   - ObjectMapper
   - SwiftyJSON
   - SwiftyMavenlink (from `../`)
 
 EXTERNAL SOURCES:
+  JSONRequest:
+    :git: git@github.com:hathway/JSONRequest.git
   SwiftyMavenlink:
-    :path: "../"
+    :path: ../
+
+CHECKOUT OPTIONS:
+  JSONRequest:
+    :commit: 66f0ec80ba61ccd7d829c0ea38b32a5ec7a5a917
+    :git: git@github.com:hathway/JSONRequest.git
 
 SPEC CHECKSUMS:
-  AsyncSwift: 46a78bceb11f0e5bb52747f740d9692ec78d2d7c
-  JSONRequest: 12d3364607e70ff76cdd295b0c9c3e98e7c92bdb
-  Mockingjay: cc4249c2ed9b21fbc9adabf6329d7473212b4251
-  ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  AsyncSwift: 65775a7b32e740609b24969ece3de58723b9dc3e
+  JSONRequest: 42fb721505dd37ffd1654df56a42fcdd7aa31461
+  Mockingjay: 7122a3fc0597aa63438e4cd9b71b7bc8aac05b87
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyMavenlink: 74dff9bb86dee74e64d24b54ae9750f6c10871da
-  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
+  URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
 
-PODFILE CHECKSUM: 686d811ff0fd613883d74850312bfc7108f20521
+PODFILE CHECKSUM: 7169f65c6a0a72db96da54e61c85891c29e8b61d
 
-COCOAPODS: 1.0.0.beta.8
+COCOAPODS: 1.3.1

@@ -16,19 +16,19 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
 
     override func setUp() {
         super.setUp()
-        let dataPages = JSON(data: self.fullJson(TimeEntry)).arrayObject!
+        guard let dataPages = try? JSON(data: self.fullJson(testClass: TimeEntry.self)).arrayObject! else { return }
 
-        stub(uri(uriPath(TimeEntry))) { (request) -> (Response) in
-            let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
+        stub(uri(uriPath(testClass: TimeEntry.self))) { (request) -> (Response) in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
 
-            guard let page = getQueryStringParameter(request.URL!.absoluteString, param: "page"),
-                pageNum = Int(page) else {
-                    let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[0], options: NSJSONWritingOptions())
-                    return .Success(response, responseData)
+            guard let page = getQueryStringParameter(url: request.url!.absoluteString, param: "page"),
+                let pageNum = Int(page) else {
+                    let responseData = try! JSONSerialization.data(withJSONObject: dataPages[0], options: JSONSerialization.WritingOptions())
+                    return .success(response, Download.content(responseData))
             }
 
-            let responseData = try! NSJSONSerialization.dataWithJSONObject(dataPages[pageNum], options: NSJSONWritingOptions())
-            return .Success(response, responseData)
+            let responseData = try! JSONSerialization.data(withJSONObject: dataPages[pageNum], options: JSONSerialization.WritingOptions())
+            return .success(response, Download.content(responseData))
         }
     }
     
@@ -38,8 +38,8 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
     }
     
     func testTimeEntryDataMapping() {
-        let singleJson = singleJsonFixture(TimeEntry)
-        let result = Mapper<TimeEntry>().map(singleJson)!
+        let singleJson = singleJsonFixture(testClass: TimeEntry.self)
+        let result = Mapper<TimeEntry>().map(JSONString: singleJson)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.id, message)
         XCTAssertNotNil(result.created_at, message)
@@ -62,17 +62,17 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
 
     func testGet_WorkspaceParameter() {
         let workspaceId = 9999
-        let param = TimeEntry.Params.WorkspaceId(id: workspaceId)
-        setupQueryParamTestExpectation(param.paramName, expectedValue: String(workspaceId), uriTemplate: uriPath(TimeEntry)) {
+        let param = TimeEntry.Params.workspaceId(id: workspaceId)
+        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: String(workspaceId) as AnyObject, uriTemplate: uriPath(testClass: TimeEntry.self)) {
             TimeEntryService.get([param]).getNextPage()
         }
     }
 
     func testGet_TimeParameters() {
         let startTime = NSDate(timeIntervalSinceNow: -(60*60*24*7)), endTime = NSDate()
-        let expectedValue = ShortDateFormatter.transformToJSON(startTime)! + "%3A" + ShortDateFormatter.transformToJSON(endTime)!
-        let param = TimeEntry.Params.BetweenDate(start: startTime, end: endTime)
-        setupQueryParamTestExpectation(param.paramName, expectedValue: expectedValue, uriTemplate: uriPath(TimeEntry)) {
+        let expectedValue = ShortDateFormatter.transformToJSON(startTime as Date)! + ":" + ShortDateFormatter.transformToJSON(endTime as Date)!
+        let param = TimeEntry.Params.betweenDate(start: startTime as Date, end: endTime as Date)
+        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: expectedValue as AnyObject, uriTemplate: uriPath(testClass: TimeEntry.self)) {
             TimeEntryService.get([param]).getNextPage()
         }
     }

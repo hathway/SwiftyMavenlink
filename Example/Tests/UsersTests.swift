@@ -14,12 +14,12 @@ class UsersTests: SwiftyMavenlinkTestBase {
 
     override func setUp() {
         super.setUp()
-        self.setUpFixtures(Users)
+        self.setUpFixtures(testClass: Users.self)
     }
 
     func testTimeEntryDataMapping() {
-        let jsonText = self.singleJsonFixture(Users)
-        let result = Mapper<Users>().map(jsonText)!
+        let jsonText = self.singleJsonFixture(testClass: Users.self)
+        let result = Mapper<Users>().map(JSONString: jsonText)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.full_name, message)
         XCTAssertNotNil(result.photo_path, message)
@@ -31,16 +31,17 @@ class UsersTests: SwiftyMavenlinkTestBase {
 
     func testGetUser() {
         let ids = [12345, 67890]
-        let param = Users.Params.SpecificUsers(userIds: ids).queryParam.first!.0
-        setupQueryParamTestExpectation(param, expectedValue: ids.toJSONString(), uriTemplate: uriPath(Users)) {
+        let enumObj = Users.Params.specificUsers(userIds: ids)
+        let param = enumObj.queryParam.first!.0
+        setupQueryParamTestExpectation(paramName: param, expectedValue: ids.toJSONString() as AnyObject, uriTemplate: uriPath(testClass: Users.self)) {
             UserService.getSpecificUsers(ids).getNextPage()
         }
     }
 
     func testGetUserList() {
         let id = 5725577
-        let param = GenericParams.Only(id).queryParam.first!.0
-        setupQueryParamTestExpectation(param, expectedValue: String(id), uriTemplate: uriPath(Users)) {
+        let param = GenericParams.only(id).queryParam.first!.0
+        setupQueryParamTestExpectation(paramName: param, expectedValue: String(id) as AnyObject, uriTemplate: uriPath(testClass: Users.self)) {
             UserService.getSpecific(id)
         }
     }

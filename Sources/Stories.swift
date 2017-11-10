@@ -11,29 +11,29 @@ import ObjectMapper
 
 public struct Story: Mappable, MavenlinkResource {
 
-    public private(set) var title: String?
-    public private(set) var description: String?
-    public private(set) var updated_at: NSDate?
-    public private(set) var created_at: NSDate?
-    public private(set) var due_date: NSDate?
-    public private(set) var start_date: NSDate?
-    public private(set) var story_type: String?
-    public private(set) var state: String?
-    public private(set) var position: Int?
-    public private(set) var archived: Bool?
-    public private(set) var deleted_at: NSDate?
-    public private(set) var sub_story_count: Int?
-    public private(set) var percentage_complete: Int?
-    public private(set) var priority: String?
-    public private(set) var has_proofing_access: Bool?
-    public private(set) var ancestor_ids: [Int]?
-    public private(set) var subtree_depth: Int?
-    public private(set) var time_trackable: Bool?
-    public private(set) var workspace_id: Int?
-    public private(set) var creator_id: Int?
-    public private(set) var parent_id: Int?
-    public private(set) var root_id: Int?
-    public private(set) var id: Int?
+    public fileprivate(set) var title: String?
+    public fileprivate(set) var description: String?
+    public fileprivate(set) var updated_at: Date?
+    public fileprivate(set) var created_at: Date?
+    public fileprivate(set) var due_date: Date?
+    public fileprivate(set) var start_date: Date?
+    public fileprivate(set) var story_type: String?
+    public fileprivate(set) var state: String?
+    public fileprivate(set) var position: Int?
+    public fileprivate(set) var archived: Bool?
+    public fileprivate(set) var deleted_at: Date?
+    public fileprivate(set) var sub_story_count: Int?
+    public fileprivate(set) var percentage_complete: Int?
+    public fileprivate(set) var priority: String?
+    public fileprivate(set) var has_proofing_access: Bool?
+    public fileprivate(set) var ancestor_ids: [Int]?
+    public fileprivate(set) var subtree_depth: Int?
+    public fileprivate(set) var time_trackable: Bool?
+    public fileprivate(set) var workspace_id: Int?
+    public fileprivate(set) var creator_id: Int?
+    public fileprivate(set) var parent_id: Int?
+    public fileprivate(set) var root_id: Int?
+    public fileprivate(set) var id: Int?
 
     public enum StoryType: String {
         case Task = "task"
@@ -63,18 +63,18 @@ public struct Story: Mappable, MavenlinkResource {
     // Enums
     public enum Params: RESTApiParams {
         // bool
-        case ShowArchived(_:Bool)
-        case AllOnAccount(_:Bool)
-        case Type(_:StoryType)
+        case showArchived(_:Bool)
+        case allOnAccount(_:Bool)
+        case type(_:StoryType)
 
         public var paramName: String {
             get {
                 switch self {
-                case .ShowArchived(_):
+                case .showArchived(_):
                     return "show_archived"
-                case .AllOnAccount(_):
+                case .allOnAccount(_):
                     return "all_on_account"
-                case .Type(_):
+                case .type(_):
                     return "story_type"
                 }
             }
@@ -84,19 +84,19 @@ public struct Story: Mappable, MavenlinkResource {
             get {
                 var value: AnyObject
                 switch self {
-                case .ShowArchived(let show):
-                    value = show
-                case .AllOnAccount(let show):
-                    value = show
-                case .Type(let type):
-                    value = type.rawValue
+                case .showArchived(let show):
+                    value = show as AnyObject
+                case .allOnAccount(let show):
+                    value = show as AnyObject
+                case .type(let type):
+                    value = type.rawValue as AnyObject
                 }
                 return [self.paramName: value]
             }
         }
     }
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     public static var resourceName: String { get { return "stories" } }
     public static var searchQueryParam: String { get { return "search" } }
@@ -132,7 +132,7 @@ extension Story {
 
     public var isCompleted: Bool { get { return self.state == "completed" } }
 
-    public static func nextStoryReducer(accumulator: Story?, current: Story) -> Story? {
+    public static func nextStoryReducer(_ accumulator: Story?, current: Story) -> Story? {
         // If the task is completed, don't return it
         guard !current.isCompleted else { return accumulator }
         // If the accumulator is nil, return current if it's not completed
@@ -143,18 +143,18 @@ extension Story {
         guard let currentDue = current.due_date else { return accumulator }
 
         // At this point, return the item with the soonest due date
-        return (currentDue.timeIntervalSinceDate(accumulatorDue) < 0)
+        return (currentDue.timeIntervalSince(accumulatorDue) < 0)
             ? current
             : accumulator
     }
 
-    static func getUpcomingStory(stories: [Story]?, date: NSDate) -> Story? {
-        let now = NSDate()
+    static func getUpcomingStory(_ stories: [Story]?, date: Date) -> Story? {
+        let now = Date()
         guard let storyArray = stories else { return nil }
-        let nextStory = storyArray.reduce(nil) { (var result, story) -> Story? in
-            if let resultDueDate = result?.due_date, nextDueDate = story.due_date {
-                result = (nextDueDate.timeIntervalSinceDate(resultDueDate) > 0
-                    && now.timeIntervalSinceDate(nextDueDate) > 0)
+        let nextStory = storyArray.reduce(nil) { (result, story) -> Story? in
+            if let resultDueDate = result?.due_date, let nextDueDate = story.due_date {
+                return (nextDueDate.timeIntervalSince(resultDueDate) > 0
+                    && now.timeIntervalSince(nextDueDate) > 0)
                     ? story
                     : result
             }
@@ -164,7 +164,7 @@ extension Story {
     }
 }
 
-public class StoryService: MavenlinkResourceService<Story> {
+open class StoryService: MavenlinkResourceService<Story> {
 //    public class func get<T:RESTApiParams>(params: [T]? = nil) -> PagedResultSet<Resource> {
 ////        var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
 ////        params += Story.Params.ShowArchived(showArchived).queryParam

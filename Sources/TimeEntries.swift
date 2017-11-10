@@ -13,25 +13,25 @@ import ObjectMapper
 /// Class for TimeEntry resources in MavenLink
 public struct TimeEntry: Mappable, MavenlinkResource {
     // i-vars
-    public private(set) var id: String?
-    public private(set) var created_at: NSDate?
-    public private(set) var updated_at: NSDate?
-    public private(set) var date_performed: NSDate?
-    public private(set) var story_id: Int?
-    public private(set) var time_in_minutes: Int?
-    public private(set) var billable: Bool?
-    public private(set) var notes: String?
-    public private(set) var rate_in_cents: Int?
-    public private(set) var currency: String?
-    public private(set) var currency_symbol: String?
-    public private(set) var currency_base_unit: Int?
-    public private(set) var user_can_edit: Bool?
-    public private(set) var taxable: Bool?
-    public private(set) var workspace_id: Int?
-    public private(set) var user_id: Int?
-    public private(set) var approved: Bool?
+    public fileprivate(set) var id: String?
+    public fileprivate(set) var created_at: Date?
+    public fileprivate(set) var updated_at: Date?
+    public fileprivate(set) var date_performed: Date?
+    public fileprivate(set) var story_id: Int?
+    public fileprivate(set) var time_in_minutes: Int?
+    public fileprivate(set) var billable: Bool?
+    public fileprivate(set) var notes: String?
+    public fileprivate(set) var rate_in_cents: Int?
+    public fileprivate(set) var currency: String?
+    public fileprivate(set) var currency_symbol: String?
+    public fileprivate(set) var currency_base_unit: Int?
+    public fileprivate(set) var user_can_edit: Bool?
+    public fileprivate(set) var taxable: Bool?
+    public fileprivate(set) var workspace_id: Int?
+    public fileprivate(set) var user_id: Int?
+    public fileprivate(set) var approved: Bool?
 
-    public init?(_ map: Map) { }
+    public init?(map: Map) { }
 
     public static var resourceName: String {
         get { return "time_entries" }
@@ -39,13 +39,13 @@ public struct TimeEntry: Mappable, MavenlinkResource {
 
     // Enums
     public enum Params: RESTApiParams {
-        case WorkspaceId(id: Int)
-        case BetweenDate(start: NSDate, end: NSDate)
+        case workspaceId(id: Int)
+        case betweenDate(start: Date, end: Date)
 
         public var paramName: String { get {
             switch self {
-            case WorkspaceId: return "workspace_id"
-            case BetweenDate: return "date_performed_between"
+            case .workspaceId: return "workspace_id"
+            case .betweenDate: return "date_performed_between"
             }
             }
         }
@@ -53,11 +53,11 @@ public struct TimeEntry: Mappable, MavenlinkResource {
         public var queryParam: MavenlinkQueryParams { get {
             let value: AnyObject
             switch self {
-            case WorkspaceId(let id): value = id
-            case BetweenDate(let start, let end):
+            case .workspaceId(let id): value = id as AnyObject
+            case .betweenDate(let start, let end):
                 let startString = ShortDateFormatter.transformToJSON(start)!
                 let endString = ShortDateFormatter.transformToJSON(end)!
-                value = "\(startString):\(endString)"
+                value = "\(startString):\(endString)" as AnyObject
             }
             return [self.paramName: value]
             }
@@ -86,7 +86,7 @@ public struct TimeEntry: Mappable, MavenlinkResource {
 }
 
 // MARK: - REST operations
-public class TimeEntryService: MavenlinkResourceService<TimeEntry> {
+open class TimeEntryService: MavenlinkResourceService<TimeEntry> {
 //    public class func get(workspace: String? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> PagedResultSet<TimeEntry> {
 //        var params: [RESTApiParams] = []
 //        if let workspaceId = workspace {

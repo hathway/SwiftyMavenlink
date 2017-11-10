@@ -14,12 +14,12 @@ class StoriesTests: SwiftyMavenlinkTestBase {
     
     override func setUp() {
         super.setUp()
-        self.setUpFixtures(Story)
+        self.setUpFixtures(testClass: Story.self)
     }
     
     func testStoryDataMapping() {
-        let jsonText = self.singleJsonFixture(Story)
-        let result = Mapper<Story>().map(jsonText)!
+        let jsonText = self.singleJsonFixture(testClass: Story.self)
+        let result = Mapper<Story>().map(JSONString: jsonText)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.title, message)
         XCTAssertNotNil(result.description, message)

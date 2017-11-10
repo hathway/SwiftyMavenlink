@@ -33,10 +33,10 @@ protocol Paginatable {
  - ParseError: A JSON parsing error was encountered
  - OutOfRange: The page or items that were requsted are outside the known range of results
  */
-public enum PaginationError: ErrorType {
-    case NoData
-    case ParseError
-    case OutOfRange
+public enum PaginationError: Error {
+    case noData
+    case parseError
+    case outOfRange
 }
 
 /** 
@@ -46,12 +46,12 @@ public enum PaginationError: ErrorType {
     - Makes dealing with paged results generic regardless of the specific resource being returned
     - Caches results that have already been fetched (by this instance only) and uses those results when re-requested by the consumer
  */
-public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
+open class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     public typealias ResultType = T
     public typealias CompletionBlock = (([T]?, PaginationError?) -> Void)
 
-    private var _totalItemCount: Int?
-    public var totalItemCount: Int {
+    fileprivate var _totalItemCount: Int?
+    open var totalItemCount: Int {
         get {
             assert(_totalItemCount != nil,
                    "totalItemCount cannot be accessed until results have been fetched")
@@ -59,24 +59,24 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
         }
     }
 
-    private var _perPage: Int
-    private var _currentPage: Int?
-    private var _maxPage: Int {
+    fileprivate var _perPage: Int
+    fileprivate var _currentPage: Int?
+    fileprivate var _maxPage: Int {
         get {
             guard let total = _totalItemCount else { return NSIntegerMax }
             return Int(ceil(Double(total) / Double(_perPage)))
         }
     }
 
-    private var _resource: String
-    public var resource: String { get { return _resource } }
+    fileprivate var _resource: String
+    open var resource: String { get { return _resource } }
 
-    private var _queryParams: MavenlinkQueryParams
-    public var queryParams: MavenlinkQueryParams? { get { return _queryParams } }
+    fileprivate var _queryParams: MavenlinkQueryParams
+    open var queryParams: MavenlinkQueryParams? { get { return _queryParams } }
 
-    private var _resultsCache: [Int: [T]] = [:]
+    fileprivate var _resultsCache: [Int: [T]] = [:]
 
-    public var description: String {
+    open var description: String {
         get {
             return "\(resource): resultType=\(ResultType.self); totalCount=\(_totalItemCount); currentPage=\(_currentPage);"
         }
@@ -85,7 +85,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
     init(resource: String, itemsPerPage: Int? = 100, params: [RESTApiParams] = []) {
         _resource = resource
         _perPage = itemsPerPage!
-        _queryParams = params.reduce(MavenlinkQueryParams(), combine: paramsReducer) ?? MavenlinkQueryParams()
+        _queryParams = params.reduce(MavenlinkQueryParams(), paramsReducer) ?? MavenlinkQueryParams()
     }
 
     // MARK: Public functions
@@ -95,7 +95,7 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
      - returns: Result set of the next page, or nil if none exist
      */
-    public func getNextPage() -> [T]? {
+    open func getNextPage() -> [T]? {
         let nextPage: Int
         if let page = _currentPage {
             nextPage = page + 1
@@ -118,9 +118,9 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
      - returns: Result set of the next page, or nil if none exist
      */
-    public func getPrevPage() -> [T]? {
+    open func getPrevPage() -> [T]? {
         let prevPage: Int
-        if let page = _currentPage where page != 0 {
+        if let page = _currentPage, page != 0 {
             prevPage = page - 1
         } else {
             prevPage = 1
@@ -142,19 +142,19 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
      - parameter completion: block that will be called when the results have been fetched, or if an error occurs.
      */
-    public func preloadData(completion: CompletionBlock) {
+    open func preloadData(_ completion: @escaping CompletionBlock) {
         Async.background {
             // Get total count so we can parallelize the rest of the fetching
-            guard let result = self.getItems(1, offset: 0) where result.totalCount != 0 else { completion(nil, .NoData); return }
-            guard let totalCount = result.totalCount else { completion(nil, .ParseError); return }
+            guard let result = self.getItems(1, offset: 0), result.totalCount != 0 else { completion(nil, .noData); return }
+            guard let totalCount = result.totalCount else { completion(nil, .parseError); return }
             self._totalItemCount = totalCount
 
             var allItems: [T] = []
 
             (1...self._maxPage).forEach {i in
                 guard let page = try? self.getItems(i),
-                    stuff = page?.items else { return }
-                allItems.appendContentsOf(stuff)
+                    let stuff = page?.items else { return }
+                allItems.append(contentsOf: stuff)
             }
 
 //            Async.main {
@@ -168,17 +168,17 @@ public class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 extension PagedResultSet {
     // MARK: Caching
 
-    private func addItemsToCache(page: Int, items: [T]) {
+    fileprivate func addItemsToCache(_ page: Int, items: [T]) {
         _resultsCache[page] = items
     }
 
-    private func getCacheForPage(page: Int) -> [T]? {
+    fileprivate func getCacheForPage(_ page: Int) -> [T]? {
         return _resultsCache[page]
     }
 
     // MARK: Private methods
 
-    private func parseResult(result: JSONResult, addToCache: Bool = false) -> ResultsPage<T>? {
+    fileprivate func parseResult(_ result: JSONResult, addToCache: Bool = false) -> ResultsPage<T>? {
         var totalItemCount = 0
         var parsedItems: [T] = []
 
@@ -189,8 +189,8 @@ extension PagedResultSet {
         }
 
         if let items = data[resource] as? NSDictionary {
-            if let mappedItems = Mapper<T>().mapArray(items.map { $0.value })
-                where mappedItems.count != 0 {
+            if let mappedItems = Mapper<T>().mapArray(JSONObject: items.map { $0.value }),
+                mappedItems.count != 0 {
                 parsedItems = mappedItems
             }
         }
@@ -198,22 +198,22 @@ extension PagedResultSet {
         return ResultsPage(items: parsedItems, totalCount: totalItemCount)
     }
 
-    private func queryParamsAppendedWith(params: MavenlinkQueryParams) -> MavenlinkQueryParams {
+    fileprivate func queryParamsAppendedWith(_ params: MavenlinkQueryParams) -> MavenlinkQueryParams {
         guard queryParams != nil else { return params }
         var result: MavenlinkQueryParams = params
         result += queryParams!
         return result
     }
 
-    private func getItems(limit: Int = 1, offset: Int = 0) -> ResultsPage<T>? {
+    fileprivate func getItems(_ limit: Int = 1, offset: Int = 0) -> ResultsPage<T>? {
         let response = MavenlinkSession.instance.get(
             resource + ".json",
-            params: queryParamsAppendedWith(PagingParams.Indexed(offset: offset, limit: limit)
+            params: queryParamsAppendedWith(PagingParams.indexed(offset: offset, limit: limit)
                 .getQueryParams()))
         return parseResult(response)
     }
 
-    internal func getItems(page: Int) throws -> ResultsPage<T>? {
+    internal func getItems(_ page: Int) throws -> ResultsPage<T>? {
         guard page > 0 && page <= _maxPage else { return nil }
 
         if let cachedResults = getCacheForPage(page) {
@@ -221,7 +221,7 @@ extension PagedResultSet {
         }
 
         let params = queryParamsAppendedWith(
-            PagingParams.Page(page: page, perPage: _perPage).getQueryParams())
+            PagingParams.page(page: page, perPage: _perPage).getQueryParams())
 
         let result = MavenlinkSession.instance.get(resource + ".json", params: params)
         let results = self.parseResult(result)
@@ -238,13 +238,13 @@ extension PagedResultSet {
 }
 
 public enum PagingParams {
-    case Page(page: Int, perPage: Int)
-    case Indexed(offset: Int, limit: Int)
+    case page(page: Int, perPage: Int)
+    case indexed(offset: Int, limit: Int)
 
     func getQueryParams() -> MavenlinkQueryParams {
         switch self {
-        case Page(let page, let per): return ["page": page, "per_page": per]
-        case .Indexed(let offset, let limit): return ["offset": offset, "limit": limit]
+        case .page(let page, let per): return ["page": page as AnyObject, "per_page": per as AnyObject]
+        case .indexed(let offset, let limit): return ["offset": offset as AnyObject, "limit": limit as AnyObject]
         }
     }
 }

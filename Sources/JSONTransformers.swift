@@ -14,28 +14,28 @@ public enum MavenlinkDateFormat: String {
     case Long = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
 }
 
-public class MavenlinkDateTransform: TransformType {
-    public typealias Object = NSDate
+open class MavenlinkDateTransform: TransformType {
+    public typealias Object = Date
     public typealias JSON = String
 
-    private var formatter: NSDateFormatter
+    fileprivate var formatter: DateFormatter
 
     public init(format: MavenlinkDateFormat) {
-        formatter = NSDateFormatter()
+        formatter = DateFormatter()
         formatter.dateFormat = format.rawValue
-        formatter.timeZone = NSTimeZone(abbreviation: "GMT")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
     }
 
-    public func transformFromJSON(value: AnyObject?) -> NSDate? {
+    open func transformFromJSON(_ value: Any?) -> Date? {
         if let timeStr = value as? String {
-            return formatter.dateFromString(timeStr)
+            return formatter.date(from: timeStr)
         }
         return nil
     }
 
-    public func transformToJSON(value: NSDate?) -> String? {
+    open func transformToJSON(_ value: Date?) -> String? {
         if let date = value {
-            return formatter.stringFromDate(date)
+            return formatter.string(from: date)
         }
         return nil
     }
@@ -47,24 +47,24 @@ let IntFormatter = NumericalStringConverter()
 let IntArrayFormatter = NumericalArrayConverter()
 let URLFormatter = URLTransform()
 
-public class MavenlinkShortDateTransform: MavenlinkDateTransform {
+open class MavenlinkShortDateTransform: MavenlinkDateTransform {
     init() {
         super.init(format: .Short)
     }
 }
 
-public class MavenlinkLongDateTransform: MavenlinkDateTransform {
+open class MavenlinkLongDateTransform: MavenlinkDateTransform {
     init() {
         super.init(format: .Long)
-        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX")
     }
 }
 
-public class NumericalArrayConverter: TransformType {
+open class NumericalArrayConverter: TransformType {
     public typealias Object = [Int]
     public typealias JSON = [String]
     public init() {}
-    public func transformFromJSON(value: AnyObject?) -> Object? {
+    open func transformFromJSON(_ value: Any?) -> Object? {
         guard let array = value as? [String] else { return [] }
         var numArray: [Int] = []
         array.forEach { value in
@@ -74,38 +74,43 @@ public class NumericalArrayConverter: TransformType {
         }
         return numArray
     }
-    public func transformToJSON(value: Object?) -> JSON? {
+    open func transformToJSON(_ value: Object?) -> JSON? {
         return value?.map { String($0) }
     }
 }
 
-public class NumericalStringConverter: TransformType {
+open class NumericalStringConverter: TransformType {
     public typealias Object = Int
     public typealias JSON = String
     public init() {}
-    public func transformFromJSON(value: AnyObject?) -> Object? {
-        return value?.integerValue
+    open func transformFromJSON(_ value: Any?) -> Object? {
+        if let intValue = value as? Int {
+            return intValue
+        }
+        guard let stringValue = value as? String else { return nil }
+        guard let intValue = Int(stringValue) else { return nil }
+        return intValue
     }
-    public func transformToJSON(value: Object?) -> JSON? {
-        return String(value)
+    open func transformToJSON(_ value: Object?) -> JSON? {
+        return String(describing: value)
     }
 }
 
-public class URLTransform: TransformType {
-    public typealias Object = NSURL
+open class URLTransform: TransformType {
+    public typealias Object = URL
     public typealias JSON = String
     public init() {}
-    public func transformFromJSON(value: AnyObject?) -> Object? {
+    open func transformFromJSON(_ value: Any?) -> Object? {
         guard let urlString = value as? String else { return nil }
-        return NSURL(string: urlString)
+        return URL(string: urlString)
     }
-    public func transformToJSON(value: Object?) -> JSON? {
-        return String(value)
+    open func transformToJSON(_ value: Object?) -> JSON? {
+        return String(describing: value)
     }
 }
 
 extension Array {
     func toJSONString() -> String {
-        return self.reduce("") { $0 + "," + String($1) }
+        return self.reduce("") { $0 + "," + String(describing: $1) }
     }
 }

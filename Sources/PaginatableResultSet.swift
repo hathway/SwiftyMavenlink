@@ -158,6 +158,7 @@ open class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
             }
 
 //            Async.main {
+            
                 completion(allItems, nil)
 //            }
         }

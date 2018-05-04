@@ -30,6 +30,7 @@ public struct TimeEntry: Mappable, MavenlinkResource {
     public fileprivate(set) var workspace_id: Int?
     public fileprivate(set) var user_id: Int?
     public fileprivate(set) var approved: Bool?
+    public fileprivate(set) var active_submission_id: Int?
 
     public init?(map: Map) { }
 
@@ -82,6 +83,7 @@ public struct TimeEntry: Mappable, MavenlinkResource {
         workspace_id <- (map["workspace_id"], IntFormatter)
         user_id <- (map["user_id"], IntFormatter)
         approved <- map["approved"]
+        active_submission_id <- (map["active_submission_id"], IntFormatter)
     }
 }
 

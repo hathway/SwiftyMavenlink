@@ -34,7 +34,7 @@ class UsersTests: SwiftyMavenlinkTestBase {
         let enumObj = Users.Params.specificUsers(userIds: ids)
         let param = enumObj.queryParam.first!.0
         setupQueryParamTestExpectation(paramName: param, expectedValue: ids.toJSONString() as AnyObject, uriTemplate: uriPath(testClass: Users.self)) {
-            UserService.getSpecificUsers(ids).getNextPage()
+           _ = UserService.getSpecificUsers(ids).getNextPage()
         }
     }
 
@@ -42,7 +42,7 @@ class UsersTests: SwiftyMavenlinkTestBase {
         let id = 5725577
         let param = GenericParams.only(id).queryParam.first!.0
         setupQueryParamTestExpectation(paramName: param, expectedValue: String(id) as AnyObject, uriTemplate: uriPath(testClass: Users.self)) {
-            UserService.getSpecific(id)
+            _ = UserService.getSpecific(id)
         }
     }
 

@@ -9,6 +9,20 @@
 import Foundation
 import ObjectMapper
 
+public struct Tag: Mappable {
+    public fileprivate(set) var title: String?
+    public fileprivate(set) var status: Int?
+    public fileprivate(set) var id: Int?
+
+    public init?(map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        title <- map["title"]
+        status <- map["status"]
+        id <- (map["id"], IntFormatter)
+    }
+}
+
 public struct Story: Mappable, MavenlinkResource {
 
     public fileprivate(set) var title: String?
@@ -18,7 +32,7 @@ public struct Story: Mappable, MavenlinkResource {
     public fileprivate(set) var due_date: Date?
     public fileprivate(set) var start_date: Date?
     public fileprivate(set) var story_type: String?
-    public fileprivate(set) var state: String?
+    public fileprivate(set) var state: StoryState?
     public fileprivate(set) var position: Int?
     public fileprivate(set) var archived: Bool?
     public fileprivate(set) var deleted_at: Date?
@@ -34,11 +48,57 @@ public struct Story: Mappable, MavenlinkResource {
     public fileprivate(set) var parent_id: Int?
     public fileprivate(set) var root_id: Int?
     public fileprivate(set) var id: Int?
+    public fileprivate(set) var workspaces: [Workspace]?
+    public fileprivate(set) var tags: [Tag]?
 
     public enum StoryType: String {
         case Task = "task"
         case Deliverable = "deliverable"
         case Milestone = "milestone"
+    }
+
+    public enum StoryState: String {
+        case notStarted = "not started"
+        case started
+        case completed
+        case new
+        case reopened
+        case inProgress = "in progress"
+        case blocked
+        case fixed
+        case duplicate
+        case cantRepro = "can't repro"
+        case resolved
+        case wontFix = "won't fix"
+
+        public var title: String {
+            switch self {
+            case .notStarted:
+                return "Not Started"
+            case .started:
+                return "Started"
+            case .completed:
+                return "Completed"
+            case .new:
+                return "New"
+            case .reopened:
+                return "Re-opened"
+            case .inProgress:
+                return "In Progress"
+            case .blocked:
+                return "Blocked"
+            case .fixed:
+                return "Fixed"
+            case .duplicate:
+                return "Duplicate"
+            case .cantRepro:
+                return "Can't Reproduce"
+            case .resolved:
+                return "Resolved"
+            case .wontFix:
+                return "Won't Fix"
+            }
+        }
     }
 
     /*
@@ -60,12 +120,30 @@ public struct Story: Mappable, MavenlinkResource {
     }
  */
 
+    public enum Include: String {
+        case workspace
+        case parent
+        case tags
+    }
+
+    public enum Order: String {
+        case updated_at
+        case created_at
+        case importance
+        case position
+    }
+
     // Enums
     public enum Params: RESTApiParams {
         // bool
-        case showArchived(_:Bool)
-        case allOnAccount(_:Bool)
-        case type(_:StoryType)
+        case showArchived(_: Bool)
+        case allOnAccount(_: Bool)
+        case type(_: StoryType)
+        case include(_: [Include])
+        case order(_: Order, isAscending: Bool)
+        case withValidDates
+        case withoutPastCompleted
+        case activeBetween(startDate: Date, endDate: Date)
 
         public var paramName: String {
             get {
@@ -76,6 +154,16 @@ public struct Story: Mappable, MavenlinkResource {
                     return "all_on_account"
                 case .type(_):
                     return "story_type"
+                case .include(_):
+                    return "include"
+                case .order(_, _):
+                    return "order"
+                case .withValidDates:
+                    return "with_start_or_due_date"
+                case .withoutPastCompleted:
+                    return "without_past_completed"
+                case .activeBetween(_, _):
+                    return "active_between"
                 }
             }
         }
@@ -90,6 +178,17 @@ public struct Story: Mappable, MavenlinkResource {
                     value = show as AnyObject
                 case .type(let type):
                     value = type.rawValue as AnyObject
+                case .include(let objects):
+                    value = objects.map { $0.rawValue }.joined(separator: ",") as AnyObject
+                case .order(let type, let ascendingOrder):
+                    value = "\(type.rawValue):\(ascendingOrder ? "asc" : "desc")" as AnyObject
+                case .withValidDates:
+                    value = String(true) as AnyObject
+                case .withoutPastCompleted:
+                    value = String(true) as AnyObject
+                case .activeBetween(let startDate, let endDate):
+                    let formatter = ShortDateFormatter.formatter
+                    value = "\(formatter.string(from: startDate)):\(formatter.string(from: endDate))" as AnyObject
                 }
                 return [self.paramName: value]
             }
@@ -130,7 +229,7 @@ public struct Story: Mappable, MavenlinkResource {
 
 extension Story {
 
-    public var isCompleted: Bool { get { return self.state == "completed" } }
+    public var isCompleted: Bool { get { return self.state == .completed } }
 
     public static func nextStoryReducer(_ accumulator: Story?, current: Story) -> Story? {
         // If the task is completed, don't return it
@@ -166,9 +265,9 @@ extension Story {
 
 open class StoryService: MavenlinkResourceService<Story> {
 //    public class func get<T:RESTApiParams>(params: [T]? = nil) -> PagedResultSet<Resource> {
-////        var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
-////        params += Story.Params.ShowArchived(showArchived).queryParam
-//        return super.get(params)
+//          var params: MavenlinkQueryParams = Story.Params.AllOnAccount(showAllOnAccount).queryParam
+//          params += Story.Params.ShowArchived(showArchived).queryParam
+//          return super.get(params)
 //    }
 //
 //    public class func search(matchingTitle: String, includeArchived: Bool? = nil) -> PagedResultSet<Resource> {

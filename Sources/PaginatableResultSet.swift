@@ -78,14 +78,14 @@ open class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
 
     open var description: String {
         get {
-            return "\(resource): resultType=\(ResultType.self); totalCount=\(_totalItemCount); currentPage=\(_currentPage);"
+            return "\(resource): resultType=\(ResultType.self); totalCount=\(String(describing: _totalItemCount)); currentPage=\(String(describing: _currentPage));"
         }
     }
 
     init(resource: String, itemsPerPage: Int? = 100, params: [RESTApiParams] = []) {
         _resource = resource
         _perPage = itemsPerPage!
-        _queryParams = params.reduce(MavenlinkQueryParams(), paramsReducer) ?? MavenlinkQueryParams()
+        _queryParams = params.reduce(MavenlinkQueryParams(), paramsReducer)
     }
 
     // MARK: Public functions
@@ -158,6 +158,7 @@ open class PagedResultSet<T:Mappable>: Paginatable, CustomStringConvertible {
             }
 
 //            Async.main {
+            
                 completion(allItems, nil)
 //            }
         }

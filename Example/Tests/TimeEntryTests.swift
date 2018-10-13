@@ -64,7 +64,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         let workspaceId = 9999
         let param = TimeEntry.Params.workspaceId(id: workspaceId)
         setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: String(workspaceId) as AnyObject, uriTemplate: uriPath(testClass: TimeEntry.self)) {
-            TimeEntryService.get([param]).getNextPage()
+            _ = TimeEntryService.get([param]).getNextPage()
         }
     }
 
@@ -73,7 +73,7 @@ class TimeEntryTests: SwiftyMavenlinkTestBase {
         let expectedValue = ShortDateFormatter.transformToJSON(startTime as Date)! + ":" + ShortDateFormatter.transformToJSON(endTime as Date)!
         let param = TimeEntry.Params.betweenDate(start: startTime as Date, end: endTime as Date)
         setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: expectedValue as AnyObject, uriTemplate: uriPath(testClass: TimeEntry.self)) {
-            TimeEntryService.get([param]).getNextPage()
+            _ = TimeEntryService.get([param]).getNextPage()
         }
     }
 }

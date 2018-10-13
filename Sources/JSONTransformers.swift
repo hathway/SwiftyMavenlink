@@ -18,7 +18,7 @@ open class MavenlinkDateTransform: TransformType {
     public typealias Object = Date
     public typealias JSON = String
 
-    fileprivate var formatter: DateFormatter
+    fileprivate(set) var formatter: DateFormatter
 
     public init(format: MavenlinkDateFormat) {
         formatter = DateFormatter()

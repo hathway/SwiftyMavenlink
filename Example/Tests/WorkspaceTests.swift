@@ -13,7 +13,7 @@ import ObjectMapper
 class WorkspaceTests: SwiftyMavenlinkTestBase {
     
     func testTimeEntryDataMapping() {
-        let jsonText = self.singleJsonFixture(testClass: Workspace)
+        let jsonText = self.singleJsonFixture(testClass: Workspace.self)
         let result = Mapper<Workspace>().map(JSONString: jsonText)!
         let message = "No properties should be nil, mapping test data should always succeed"
         XCTAssertNotNil(result.access_level, message)
@@ -63,24 +63,24 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
 
     func testWorkspaceSearchParam() {
         let searchTerm = "testing"
-        setupQueryParamTestExpectation(paramName: GenericParams.search(searchTerm).paramName, expectedValue: searchTerm as AnyObject, uriTemplate: uriPath(testClass: Workspace)) {
-            WorkspaceService.search(searchTerm).getNextPage()
+        setupQueryParamTestExpectation(paramName: GenericParams.search(searchTerm).paramName, expectedValue: searchTerm as AnyObject, uriTemplate: uriPath(testClass: Workspace.self)) {
+            _ = WorkspaceService.search(searchTerm).getNextPage()
         }
 
     }
 
     func testWorkspaceMatchingNameParam() {
         let matchingName = "testing"
-        setupQueryParamTestExpectation(paramName: GenericParams.search(matchingName).paramName, expectedValue: matchingName as AnyObject, uriTemplate: uriPath(testClass: Workspace)) {
-            WorkspaceService.search(matchingName).getNextPage()
+        setupQueryParamTestExpectation(paramName: GenericParams.search(matchingName).paramName, expectedValue: matchingName as AnyObject, uriTemplate: uriPath(testClass: Workspace.self)) {
+            _ = WorkspaceService.search(matchingName).getNextPage()
         }
     }
 
     func testIncludeArchiveParam() {
         let includeArchived = true
         let param = Workspace.Params.includeArchived(include: includeArchived)
-        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: "1" as AnyObject, uriTemplate: uriPath(testClass: Workspace)) {
-            WorkspaceService.get([param]).getNextPage()
+        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: "1" as AnyObject, uriTemplate: uriPath(testClass: Workspace.self)) {
+            _ = WorkspaceService.get([param]).getNextPage()
         }
 
 //        setupQueryParamTestExpectation(.rawValue, expectedValue: "1", uriTemplate: uriPath(Workspace)) {
@@ -95,8 +95,8 @@ class WorkspaceTests: SwiftyMavenlinkTestBase {
     func testGetSpecificWorkspace() {
         let id = 123458
         let param = Workspace.Params.only(id: id)
-        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: String(id) as AnyObject, uriTemplate: uriPath(testClass: Workspace)) {
-            WorkspaceService.getSpecific(id)
+        setupQueryParamTestExpectation(paramName: param.paramName, expectedValue: String(id) as AnyObject, uriTemplate: uriPath(testClass: Workspace.self)) {
+            _ = WorkspaceService.getSpecific(id)
         }
     }
 }

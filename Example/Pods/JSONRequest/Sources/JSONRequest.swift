@@ -9,7 +9,8 @@
 import Foundation
 import SystemConfiguration
 
-public typealias JSONObject = Dictionary<String, Any>
+public typealias JSONObject = [String: Any]
+public typealias APITripTimeObject = (path: String, tripTime: TimeInterval)
 
 public enum JSONError: Error {
     case invalidURL
@@ -70,17 +71,31 @@ public extension JSONResult {
 
 open class JSONRequest {
 
-    fileprivate(set) var request: NSMutableURLRequest?
-
     open static var log: ((String) -> Void)?
-    open static var userAgent: String?
-    open static var requestTimeout = 5.0
-    open static var resourceTimeout = 10.0
-    open static var requestCachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
-
-    open var httpRequest: NSMutableURLRequest? {
-        return request
+    open static var userAgent: String? {
+        didSet {
+            if let value = userAgent {
+                sessionConfig.httpAdditionalHeaders = ["User-Agent": value]
+            } else {
+                sessionConfig.httpAdditionalHeaders?.removeValue(forKey: "User-Agent")
+            }
+            updateSessionConfig()
+        }
     }
+    open static var requestTimeout = 5.0 {
+        didSet { updateSessionConfig() }
+    }
+    open static var resourceTimeout = 10.0 {
+        didSet { updateSessionConfig() }
+    }
+    open static var requestCachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy {
+        didSet { updateSessionConfig() }
+    }
+    open static var isURLCacheEnabled: Bool = true {
+        didSet { updateSessionConfig() }
+    }
+
+    open static let serviceTripTimeNotification = NSNotification.Name("JSON_REQUEST_TRIP_TIME_NOTIFICATION")
 
     /* Used for dependency injection of outside URLSessions (keep nil to use default) */
     private var urlSession: URLSession?
@@ -88,30 +103,73 @@ open class JSONRequest {
     /* Set to false during testing to avoid test failures due to lack of internet access */
     internal static var requireNetworkAccess = true
 
+    /* Delegate that allows additional configurations to be made to the URLSessionConfiguration used for the JSONRequest instance.
+        This delegate will be called *after* JSONRequest configures the instance for its needs. Keep in mind making
+        significant changes to the URLSessionConfiguration object could cause undefined behavior that JSONRequest cannot control.
+    */
+    public static var sessionConfigurationDelegate: ((URLSessionConfiguration) -> Void)?
+
     /* Omit the session parameter to use the default URLSession */
     public init(session: URLSession? = nil) {
         urlSession = session
-        request = NSMutableURLRequest()
+    }
+
+    private static var _sessionConfig: URLSessionConfiguration?
+    private static var sessionConfig: URLSessionConfiguration {
+        guard _sessionConfig == nil else { return _sessionConfig! }
+        _sessionConfig = URLSessionConfiguration.default
+        // FYI, from Apple's documentation: NSURLSession won't attempt to cache a file larger than 5% of the cache size
+        // https://goo.gl/CpVNqZ
+        return _sessionConfig!
+    }
+
+    open static var maxEstimatedResponseMegabytes: Int = 5 {
+        didSet { updateSessionConfig() }
+    }
+
+    private static var urlSession: URLSession! = nil
+
+    private static func updateSessionConfig() {
+        sessionConfig.requestCachePolicy = requestCachePolicy
+        sessionConfig.timeoutIntervalForResource = resourceTimeout
+        sessionConfig.timeoutIntervalForRequest = requestTimeout
+        let capacity: Int = (maxEstimatedResponseMegabytes * 20) * 1024 * 1024 // max response should be less than 5% of cache size
+        let urlCache: URLCache? = isURLCacheEnabled ? URLCache(memoryCapacity: capacity, diskCapacity: capacity, diskPath: nil) : nil
+        sessionConfig.urlCache = urlCache
+        JSONRequest.sessionConfigurationDelegate?(sessionConfig)
+        urlSession = URLSession(configuration: JSONRequest.sessionConfig)
     }
 
     // MARK: Non-public business logic (testable but not public outside the module)
 
     func submitAsyncRequest(method: JSONRequestHttpVerb, url: String,
                             queryParams: JSONObject? = nil, payload: Any? = nil,
-                            headers: JSONObject? = nil, complete: @escaping (JSONResult) -> Void) {
+                            headers: JSONObject? = nil, timeOut: TimeInterval? = nil, complete: @escaping (JSONResult) -> Void) {
         if (isConnectedToNetwork() == false) && (JSONRequest.requireNetworkAccess) {
             let error = JSONError.noInternetConnection
             complete(.failure(error: error, response: nil, body: nil))
             return
         }
 
-        updateRequest(method: method, url: url, queryParams: queryParams)
-        updateRequest(headers: headers)
-        updateRequest(payload: payload)
+        var request = URLRequest(url: URL(string: url)!,
+                                 cachePolicy: JSONRequest.requestCachePolicy,
+                                 timeoutInterval: timeOut ?? JSONRequest.requestTimeout)
 
+        updateRequest(&request, method: method, url: url, queryParams: queryParams)
+        updateRequest(&request, headers: headers)
+        updateRequest(&request, payload: payload)
+
+        let session = (timeOut == urlSession?.configuration.timeoutIntervalForRequest
+            ? (urlSession ?? networkSession())
+            : networkSession(forcedTimeout: timeOut))
         let start = Date()
-        let session = urlSession ?? networkSession()
-        let task = session.dataTask(with: request! as URLRequest) { (data, response, error) in
+
+        let cachedResponse: CachedURLResponse? = session.configuration.urlCache?.cachedResponse(for: request)
+        if cachedResponse == nil {
+            removeCachingHeaders(&request)
+        }
+
+        let task = session.dataTask(with: request) { (data, response, error) in
             let elapsed = -start.timeIntervalSinceNow
             self.traceResponse(elapsed: elapsed, responseData: data,
                                httpResponse: response as? HTTPURLResponse,
@@ -122,67 +180,92 @@ open class JSONRequest {
                                                 body: self.body(fromData: data))
                 complete(result)
                 return
+            } else if let httpResponse = (response as? HTTPURLResponse),
+                httpResponse.statusCode == 304,
+                let cachedResponseObj = cachedResponse {
+                /*  For some rediculous reason, there are cases where the cache contains a response for the HTTP request (as verified
+                 by the conditional check above), but that cached response isn't passed transparently to us as a 200OK response, and is
+                 instead a 304, which throws the consumer out of wack since there's no guarantee they have cached the data themselves.
+
+                 So, if we got a 304, AND we have a cached response object, let's parse & process that instead here. Yay for caching >:-(
+                 */
+                print("Unexpected 304 returned when a cached value exists. Parsing & returning cached response")
+                self.traceResponse(elapsed: elapsed, responseData: cachedResponseObj.data,
+                                   httpResponse: cachedResponseObj.response as? HTTPURLResponse,
+                                   error: error as NSError?)
+                let result = self.parse(data: cachedResponseObj.data, response: cachedResponseObj.response)
+                complete(result)
+            } else {
+                let result = self.parse(data: data, response: response)
+                complete(result)
             }
-            let result = self.parse(data: data, response: response)
-            complete(result)
         }
         trace(task: task)
         task.resume()
     }
 
-    func networkSession() -> URLSession {
-        let config = URLSessionConfiguration.default
-        config.requestCachePolicy = JSONRequest.requestCachePolicy
-        config.timeoutIntervalForRequest = JSONRequest.requestTimeout
-        config.timeoutIntervalForResource = JSONRequest.resourceTimeout
-        if let userAgent = JSONRequest.userAgent {
-            config.httpAdditionalHeaders = ["User-Agent": userAgent]
+    func networkSession(forcedTimeout: TimeInterval? = nil) -> URLSession {
+        let config = JSONRequest.sessionConfig
+        if let timeout = forcedTimeout {
+            config.timeoutIntervalForRequest = timeout
+            config.timeoutIntervalForResource = timeout
         }
-        return URLSession(configuration: config)
+        let session = URLSession(configuration: config)
+        if forcedTimeout == nil {
+            // if there isn't a custom timeout, set the member variable with this new session we've created for future use.
+            urlSession = session
+        }
+        return session
     }
 
     func submitSyncRequest(method: JSONRequestHttpVerb, url: String,
                            queryParams: JSONObject? = nil,
                            payload: Any? = nil,
-                           headers: JSONObject? = nil) -> JSONResult {
+                           headers: JSONObject? = nil,
+                           timeOut: TimeInterval? = nil) -> JSONResult {
 
-        let semaphore = DispatchSemaphore(value: 0)
         var requestResult: JSONResult = JSONResult.failure(error: JSONError.unknownError,
                                                            response: nil, body: nil)
+
+        let semaphore = DispatchSemaphore(value: 0)
         submitAsyncRequest(method: method, url: url, queryParams: queryParams,
-                           payload: payload, headers: headers) { result in
+                           payload: payload, headers: headers, timeOut: timeOut) { result in
                             requestResult = result
                             semaphore.signal()
         }
         // Wait for the request to complete
-        while semaphore.wait(timeout: DispatchTime.now()) == .timedOut {
-            let intervalDate = Date(timeIntervalSinceNow: 0.01) // 10 milliseconds
-            RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: intervalDate)
-        }
+        semaphore.wait()    // Timeout will be handled by the HTTP layer
         return requestResult
     }
 
-    func updateRequest(method: JSONRequestHttpVerb, url: String,
+    func updateRequest(_ request: inout URLRequest,
+                       method: JSONRequestHttpVerb, url: String,
                        queryParams: JSONObject? = nil) {
-        request?.url = createURL(urlString: url, queryParams: queryParams)
-        request?.httpMethod = method.rawValue
+        request.url = createURL(urlString: url, queryParams: queryParams)
+        request.httpMethod = method.rawValue
     }
 
-    func updateRequest(headers: JSONObject?) {
-        request?.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request?.setValue("application/json", forHTTPHeaderField: "Accept")
+    func updateRequest(_ request: inout URLRequest, headers: JSONObject?) {
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         if let headers = headers {
             for (headerName, headerValue) in headers {
-                request?.setValue(String(describing: headerValue), forHTTPHeaderField: headerName)
+                request.setValue(String(describing: headerValue), forHTTPHeaderField: headerName)
             }
         }
     }
 
-    func updateRequest(payload: Any?) {
+    func removeCachingHeaders(_ request: inout URLRequest) {
+        request.setValue(nil, forHTTPHeaderField: "If-None-Match")
+        request.setValue(nil, forHTTPHeaderField: "If-Modified-Since")
+    }
+
+    func updateRequest(_ request: inout URLRequest,
+                       payload: Any?) {
         guard let payload = payload else {
             return
         }
-        request?.httpBody = objectToJSON(object: payload)
+        request.httpBody = objectToJSON(object: payload)
     }
 
     open func createURL(urlString: String, queryParams: JSONObject?) -> URL? {
@@ -253,6 +336,9 @@ open class JSONRequest {
         if let method = task.currentRequest?.httpMethod {
             log("HTTP Method: \(method)")
         }
+        if let path = task.currentRequest?.url?.path {
+            log("PATH: \(path)")
+        }
         if let url = task.currentRequest?.url?.absoluteString {
             log("Url: \(url)")
         }
@@ -273,8 +359,11 @@ open class JSONRequest {
 
         log("<<<<<<<<<< JSON Response <<<<<<<<<<")
         log("Time Elapsed: \(elapsed)")
-        if let url = request?.url {
+        if let url = httpResponse?.url {
             log("Url: \(url.absoluteString)")
+            log("PATH: \(url.path)")
+            let apiTripObject = APITripTimeObject(path: url.path, tripTime: elapsed)
+            NotificationCenter.default.post(name: JSONRequest.serviceTripTimeNotification, object: apiTripObject)
         }
         if let statusCode = httpResponse?.statusCode {
             log("Status Code: \(statusCode)")

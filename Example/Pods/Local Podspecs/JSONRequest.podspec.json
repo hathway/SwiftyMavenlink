@@ -1,6 +1,6 @@
 {
   "name": "JSONRequest",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "summary": "JSONRequest is a tiny Swift library for Synchronous and Asynchronous HTTP JSON requests.",
   "homepage": "http://github.com/hathway/JSONRequest",
   "license": {
@@ -18,7 +18,8 @@
   },
   "source": {
     "git": "https://github.com/hathway/JSONRequest.git",
-    "tag": "0.5.0"
+    "tag": "0.7.0"
   },
-  "source_files": "Sources/*.swift"
+  "source_files": "Sources/*.swift",
+  "swift_version": "4.0"
 }

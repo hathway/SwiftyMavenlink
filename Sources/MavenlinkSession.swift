@@ -30,16 +30,14 @@ protocol RestSession {
  */
 
 open class MavenlinkSession {
-    open static let instance: MavenlinkSession = MavenlinkSession()
-    fileprivate var oAuthToken: String?
-    static let apiHost: String! = "https://api.mavenlink.com/api/v1/"
-
-    fileprivate func request() -> JSONRequest {
-        precondition(oAuthToken != nil, "OAuth token must be configured before making requests")
-        let result = JSONRequest()
-        result.httpRequest?.setValue("Bearer \(oAuthToken!)", forHTTPHeaderField: "Authorization")
-        return result
+    public static let instance: MavenlinkSession = MavenlinkSession()
+    fileprivate var oAuthToken: String? {
+        didSet {
+            authHeader = JSONObject(dictionaryLiteral: ("Authorization", "Bearer \(oAuthToken!)"))
+        }
     }
+    private var authHeader: JSONObject!
+    static let apiHost: String! = "https://api.mavenlink.com/api/v1/"
 
     open func configure(_ oAuthToken: String) {
         precondition(oAuthToken != "", "oAuthToken parameter cannot be blank")
@@ -50,7 +48,7 @@ open class MavenlinkSession {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.failure(error: JSONError.invalidURL, response: nil, body: nil)
         }
-        return request().get(url: url, queryParams: params)
+        return JSONRequest().get(url: url, queryParams: params, headers: authHeader)
     }
 
     func post(_ urlPath: String, params: MavenlinkQueryParams? = nil,
@@ -58,7 +56,7 @@ open class MavenlinkSession {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.failure(error: JSONError.invalidURL, response: nil, body: nil)
         }
-        return request().post(url: url, queryParams: params, payload: payload)
+        return JSONRequest().post(url: url, queryParams: params, payload: payload, headers: authHeader)
     }
 
     func put(_ urlPath: String, params: MavenlinkQueryParams? = nil,
@@ -66,12 +64,12 @@ open class MavenlinkSession {
         guard let url = MavenlinkSession.buildUrl(urlPath) else {
             return JSONResult.failure(error: JSONError.invalidURL, response: nil, body: nil)
         }
-        return request().put(url: url, queryParams: params, payload: payload)
+        return JSONRequest().put(url: url, queryParams: params, payload: payload, headers: authHeader)
     }
 
     class func buildUrl(_ urlPath: String) -> String? {
         return URL(string: apiHost)?
-            .appendingPathComponent(urlPath ?? "")
+            .appendingPathComponent(urlPath)
             .absoluteString
     }
 }
